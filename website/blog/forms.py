@@ -5,31 +5,20 @@ from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, F
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 from .models import Post
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 
 
 class PostAdminForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('body', 'title')
+        fields = ('body', 'title', 'author', 'slug')
 
-    title = forms.CharField()
-
-    body = forms.CharField(
-        widget=forms.Textarea(),
-    )
-
-    user = User.objects.all()
-
-    author = forms.ChoiceField(
-        choices=(
-            [(o.id, str(o)) for o in User.objects.all()]
-        ),
-        widget=forms.Select,
-    )
+    def __init__(self, *args, **kwargs):
+        super(PostAdminForm, self).__init__(*args, **kwargs)
 
     checkboxes = forms.MultipleChoiceField(
         choices=(
-            ('option_one', "Option one is this and that be sure to include why it's great"),
+            ('option_one', _('Option 1')),
             ('option_two', 'Option two can also be checked and included in form results'),
             ('option_three', 'Option three can yes, you guessed it also be checked and included in form results')
         ),
@@ -50,11 +39,7 @@ class PostAdminForm(forms.ModelForm):
         choices=(('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')),
     )
 
-
-
-    # Uni-form
     helper = FormHelper()
-    #helper.form_class = 'form-horizontal'
     helper.layout = Layout(
         HTML("""
             <div class="col-md-6">
@@ -65,16 +50,15 @@ class PostAdminForm(forms.ModelForm):
                 
                 <div class="box-body">
         """),
-        Field('title', css_class=''),
         Field('body', rows="10", css_class='input-xlarge'),
         HTML("""
             </div></div></div>
-            <div class="col-md-6"><div class="box box-info"><div class="box-header with-border">
-            <h3 class="box-title">Metadatas</h3></div><div class="box-body">
+            <div class="col-md-6"><div class="box box-success"><div class="box-header with-border">
+            <h3 class="box-title">""" + _('Metadatas') + """</h3></div><div class="box-body">
         """),
-        'author',
-
-        # Div('text_input', 'textarea', 'radio_buttons', style="background: black;", title="Explication title", css_class="bigdivs"),
+        Field('title', css_class=''),
+        Field('author'),
+        Field('slug'),
         Field('checkboxes', style="background: #FAFAFA; padding: 10px;"),
         AppendedText('appended_text', '.00'),
         PrependedText('prepended_text', '<input type="checkbox" checked="checked" value="" id="" name="">',

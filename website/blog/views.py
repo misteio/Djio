@@ -6,8 +6,7 @@ from django.contrib.auth.models import User
 
 
 def post_list(request):
-    posts = Post.published.all()
-    print(posts)
+    posts = Post.objects.all()
     return render(request, 'blog/admin/post/list.html', {'posts': posts})
 
 
@@ -38,8 +37,24 @@ def post_form_admin(request):
             # Save the comment to the database
             new_post.save()
     else:
-        post_form = PostAdminForm(instance = get_object_or_404(Post, id=1))
+        post_form = PostAdminForm()
 
     return render(request, 'blog/admin/post/form.html', {'form': post_form})
 
 
+def post_update_admin(request, post_id):
+    if request.method == 'POST':
+        author = get_object_or_404(User, id=request.POST.get("author"))
+        post_form = PostAdminForm(data=request.POST)
+
+        if post_form.is_valid():
+            # Create Comment object but don't save to database yet
+            new_post = post_form.save(commit=False)
+            new_post.author = author
+            # Save the comment to the database
+            new_post.save()
+    else:
+        _post = get_object_or_404(Post, id=post_id)
+        post_form = PostAdminForm(instance=get_object_or_404(Post, id=post_id))
+
+    return render(request, 'blog/admin/post/form.html', {'form': post_form})

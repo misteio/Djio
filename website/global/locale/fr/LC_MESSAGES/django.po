@@ -17,27 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: blog/forms.py:33
-msgid "Option 1"
+#: global/templates/admin/main_sidebar/menu.html:4
+#: global/templates/admin/main_sidebar/menu.html:14
+msgid "Main Navigation"
 msgstr ""
 
-#: blog/forms.py:72
-msgid "Metadatas"
-msgstr "Métadonnées"
-
-#: blog/templates/blog/admin/post/form.html:10
-msgid "Create a Post"
-msgstr "Création d'un post"
-
-#: blog/templates/blog/admin/post/form.html:11
-msgid "form"
+#: global/templates/admin/main_sidebar/menu.html:13
+msgid "Summary"
 msgstr ""
 
-#: website/settings.py:117
-msgid "English"
-msgstr "Anglais"
+#: global/templates/admin/main_sidebar/menu.html:49
+msgid "List"
+msgstr ""
 
-#: website/settings.py:118
-msgid "French"
-msgstr "Français"
+#: global/templates/admin/main_sidebar/menu.html:50
+msgid "Creation"
+msgstr ""
