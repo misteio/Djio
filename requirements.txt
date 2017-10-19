@@ -1,2 +1,4 @@
 django
 pytz
+django-debug-toolbar
+django-crispy-forms
