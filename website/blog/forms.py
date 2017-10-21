@@ -5,6 +5,7 @@ from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, F
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 from .models import Post
 from django.utils.translation import ugettext as _
+from core.utils import getCol
 
 
 class PostAdminForm(forms.ModelForm):

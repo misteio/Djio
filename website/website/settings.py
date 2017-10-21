@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'crispy_forms',
     'widget_tweaks',
-    'global',
+    'core',
     'blog',
 ]
 
