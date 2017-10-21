@@ -4,14 +4,13 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, Fieldset
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 from .models import Post
-from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 
 class PostAdminForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('body', 'title', 'author', 'slug')
+        fields = ('body', 'title', 'author', 'slug', 'status')
 
     def __init__(self, *args, **kwargs):
         super(PostAdminForm, self).__init__(*args, **kwargs)
@@ -59,6 +58,7 @@ class PostAdminForm(forms.ModelForm):
         Field('title', css_class=''),
         Field('author'),
         Field('slug'),
+        Field('status'),
         Field('checkboxes', style="background: #FAFAFA; padding: 10px;"),
         AppendedText('appended_text', '.00'),
         PrependedText('prepended_text', '<input type="checkbox" checked="checked" value="" id="" name="">',

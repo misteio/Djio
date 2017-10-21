@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.conf import settings
 
 urlpatterns = [
+    url(r'^', include('global.urls', namespace='global', app_name='global')),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('blog.urls', namespace='blog', app_name='blog')),
 ]
 if settings.DEBUG:

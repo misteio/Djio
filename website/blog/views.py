@@ -3,8 +3,10 @@ from django.views.generic import ListView
 from .models import Post
 from .forms import PostAdminForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import permission_required
 
 
+@permission_required(('admin'), '/admin/login')
 def post_list(request):
     posts = Post.objects.all()
     return render(request, 'blog/admin/post/list.html', {'posts': posts})
