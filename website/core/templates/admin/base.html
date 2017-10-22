@@ -12,6 +12,7 @@
     <link href="{% static 'css/admin/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/admin/font-awesome.css' %}" rel="stylesheet">
     <link href="{% static 'css/admin/ionicons.css' %}" rel="stylesheet">
+    <link href="{% static 'css/admin/dataTables.bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/admin/AdminLTE.css' %}" rel="stylesheet">
     <link href="{% static 'css/admin/izitoast.css' %}" rel="stylesheet">
     <link href="{% static 'css/admin/skins/_all-skins.min.css' %}" rel="stylesheet">
@@ -418,8 +419,9 @@
 <!-- Bootstrap 3.3.7 -->
 <script src="{% static 'js/admin/bootstrap.js' %}"></script>
 <script src="{% static 'js/admin/ckeditor/ckeditor.js' %}"></script>
-<script src="{% static 'js/admin/noty.js' %}"></script>
 <script src="{% static 'js/admin/izitoast.js' %}"></script>
+<script src="{% static 'js/admin/dataTables.js' %}"></script>
+<script src="{% static 'js/admin/dataTables.bootstrap.js' %}"></script>
 <!-- SlimScroll -->
 <script src="{% static 'js/admin/jquery.slimscroll.js' %}"></script>
 <!-- FastClick -->
@@ -433,8 +435,8 @@
         $('.sidebar-menu').tree()
         {% for message in messages %}
             iziToast.{{ message.tags }}({
-                title: 'Hey',
-                message: 'What would you like to add?'
+                title: '{{ message.tags }}',
+                message: '{{ message }}'
             });
         {% endfor %}
     })

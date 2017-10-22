@@ -1,17 +1,12 @@
-from django.db import models
 from model_utils.models import SoftDeletableModel
-from model_utils.fields import SplitField
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.core.validators import MinLengthValidator
 from core.mixins import Timestamped
 from simple_history.models import HistoricalRecords
-
-
-class PublishedManager(models.Manager):
-    def get_queryset(self):
-        return super(PublishedManager, self).get_queryset().filter(status='published')
+from django.db import models
+from .managers import PublishedManager, LazyLoadAuthorManager
 
 
 class Post(Timestamped, SoftDeletableModel):
@@ -26,9 +21,12 @@ class Post(Timestamped, SoftDeletableModel):
     resume = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
-    objects = models.Manager() # The default manager.
-    published = PublishedManager() # The Dahl-specific manager.
     history = HistoricalRecords()
+
+    # Managers
+    objects = models.Manager()  # The default manager.
+    published = PublishedManager()  # The Dahl-specific manager.
+    admin_load = LazyLoadAuthorManager()  # The Dahl-specific manager.
 
     class Meta:
         ordering = ('-publish',)
