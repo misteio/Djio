@@ -13,6 +13,7 @@
     <link href="{% static 'css/admin/font-awesome.css' %}" rel="stylesheet">
     <link href="{% static 'css/admin/ionicons.css' %}" rel="stylesheet">
     <link href="{% static 'css/admin/AdminLTE.css' %}" rel="stylesheet">
+    <link href="{% static 'css/admin/izitoast.css' %}" rel="stylesheet">
     <link href="{% static 'css/admin/skins/_all-skins.min.css' %}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -198,7 +199,6 @@
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 {% block breadcrumb %}{% endblock %}
-
             </ol>
         </section>
         <section class="content">
@@ -417,6 +417,9 @@
 <script src="{% static 'js/admin/jquery.js' %}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{% static 'js/admin/bootstrap.js' %}"></script>
+<script src="{% static 'js/admin/ckeditor/ckeditor.js' %}"></script>
+<script src="{% static 'js/admin/noty.js' %}"></script>
+<script src="{% static 'js/admin/izitoast.js' %}"></script>
 <!-- SlimScroll -->
 <script src="{% static 'js/admin/jquery.slimscroll.js' %}"></script>
 <!-- FastClick -->
@@ -428,7 +431,17 @@
 <script>
     $(document).ready(function () {
         $('.sidebar-menu').tree()
+        {% for message in messages %}
+            iziToast.{{ message.tags }}({
+                title: 'Hey',
+                message: 'What would you like to add?'
+            });
+        {% endfor %}
     })
 </script>
+
+{% block extrafoot %}{% endblock %}
+
+
 </body>
 </html>

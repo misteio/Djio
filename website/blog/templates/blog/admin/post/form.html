@@ -1,6 +1,7 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 {% block title %}Create{% endblock %}
+{% block title_block %}Create a Blog Post{% endblock %}
 
 {% block content %}
   <!-- Content Wrapper. Contains page content -->
@@ -12,4 +13,12 @@
       </div>
 
     <!-- /.content -->
+{% endblock %}
+
+
+{% block extrafoot %}
+<script>
+        CKEDITOR.replace( 'ckeditor');
+</script>
+
 {% endblock %}

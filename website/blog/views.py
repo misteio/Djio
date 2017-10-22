@@ -4,11 +4,13 @@ from .models import Post
 from .forms import PostAdminForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
-
+from django.contrib import messages
 
 @permission_required(('admin'), '/admin/login')
 def post_list(request):
     posts = Post.objects.all()
+    messages.error(request, "Huge success!")
+
     return render(request, 'blog/admin/post/list.html', {'posts': posts})
 
 
@@ -55,6 +57,7 @@ def post_update_admin(request, post_id):
             update_post = post_form.save(commit=False)
             update_post.author = author
             update_post.save()
+            messages.error(request, "Huge success!")
     else:
         _post = get_object_or_404(Post, id=post_id)
         post_form = PostAdminForm(instance=get_object_or_404(Post, id=post_id))

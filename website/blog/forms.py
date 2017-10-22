@@ -42,7 +42,7 @@ class PostAdminForm(forms.ModelForm):
     helper = FormHelper()
     helper.layout = Layout(
         HTML(open_box_form('col-md-6', _('Text of body'))),
-        Field('body', rows="10", css_class='input-xlarge'),
+        Field('body', rows="10", css_class='input-xlarge ckeditor'),
         HTML(close_box_form() + open_box_form('col-md-6', _('Metadatas'), 'box-success')),
         Field('title', css_class=''),
         Field('author'),
