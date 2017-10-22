@@ -47,16 +47,17 @@ def post_form_admin(request):
 def post_update_admin(request, post_id):
     if request.method == 'POST':
         author = get_object_or_404(User, id=request.POST.get("author"))
-        post_form = PostAdminForm(data=request.POST)
+        post = get_object_or_404(Post, id=post_id)
+        post_form = PostAdminForm(data=request.POST, instance=post)
 
         if post_form.is_valid():
             # Create Comment object but don't save to database yet
-            new_post = post_form.save(commit=False)
-            new_post.author = author
-            # Save the comment to the database
-            new_post.save()
+            update_post = post_form.save(commit=False)
+            update_post.author = author
+            update_post.save()
     else:
         _post = get_object_or_404(Post, id=post_id)
         post_form = PostAdminForm(instance=get_object_or_404(Post, id=post_id))
+        #post_form = PostAdminForm(instance=Post.history.get(id=14))
 
     return render(request, 'blog/admin/post/form.html', {'form': post_form})

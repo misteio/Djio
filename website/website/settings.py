@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'crispy_forms',
     'widget_tweaks',
+    'simple_history',
     'core',
     'blog',
 ]
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 INTERNAL_IPS = ["127.0.0.1"]
@@ -143,3 +145,5 @@ STATIC_URL = '/static/'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+AUTHOR_CREATED_BY_FIELD_NAME = 'created_by'

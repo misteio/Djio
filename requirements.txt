@@ -3,3 +3,5 @@ pytz
 django-debug-toolbar
 django-crispy-forms
 django-widget-tweaks
+django-model-utils
+django-simple-history

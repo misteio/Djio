@@ -5,7 +5,7 @@ from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, F
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 from .models import Post
 from django.utils.translation import ugettext as _
-from core.utils import getCol
+from core.utils import open_box_form, close_box_form
 
 
 class PostAdminForm(forms.ModelForm):
@@ -41,29 +41,16 @@ class PostAdminForm(forms.ModelForm):
 
     helper = FormHelper()
     helper.layout = Layout(
-        HTML("""
-            <div class="col-md-6">
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Text</h3>
-                    </div>
-                
-                <div class="box-body">
-        """),
+        HTML(open_box_form('col-md-6', _('Text of body'))),
         Field('body', rows="10", css_class='input-xlarge'),
-        HTML("""
-            </div></div></div>
-            <div class="col-md-6"><div class="box box-success"><div class="box-header with-border">
-            <h3 class="box-title">""" + _('Metadatas') + """</h3></div><div class="box-body">
-        """),
+        HTML(close_box_form() + open_box_form('col-md-6', _('Metadatas'), 'box-success')),
         Field('title', css_class=''),
         Field('author'),
         Field('slug'),
         Field('status'),
         Field('checkboxes', style="background: #FAFAFA; padding: 10px;"),
         AppendedText('appended_text', '.00'),
-        PrependedText('prepended_text', '<input type="checkbox" checked="checked" value="" id="" name="">',
-                      active=True),
+        PrependedText('prepended_text', '<input type="checkbox" checked="checked" value="" id="" name="">',active=True),
         PrependedText('prepended_text_two', '@'),
         'multicolon_select',
         FormActions(
