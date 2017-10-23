@@ -42,12 +42,11 @@
                             {% else %}
                                 <span class="label label-success">{{ post.status }}</span>
                             {% endif %}
-
                         </td>
                         <td>
-                            <a href="{% url 'blog:post_list' %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
-                            <a href="{% url 'blog:post_list' %}"><button type="button" class="btn btn-warning"><i class="fa fa-clone"></i> {% trans "Clone" %}</button></a>
-                            <a href="{% url 'blog:post_list' %}"><button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
+                            <a href="{% url 'blog:post_update_admin' post_id=post.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
+                            <a href="{% url 'blog:post_clone_admin' post_id=post.id %}"><button type="button" class="btn btn-warning"><i class="fa fa-clone"></i> {% trans "Clone" %}</button></a>
+                            <a href="{% url 'blog:post_delete_admin' post_id=post.id %}"><button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
                         </td>
                     </tr>
                 {% endfor %}

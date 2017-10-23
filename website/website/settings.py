@@ -59,7 +59,8 @@ MIDDLEWARE = [
 
 INTERNAL_IPS = ["127.0.0.1"]
 
-STATIC_ROOT = "/media/miste/Lastorm/Gits/Djio/static/"
+STATIC_ROOT = '/media/miste/Lastorm/Gits/Djio/static/'
+MEDIA_ROOT = '/media/miste/Lastorm/Gits/Djio/media'
 
 ROOT_URLCONF = 'website.urls'
 

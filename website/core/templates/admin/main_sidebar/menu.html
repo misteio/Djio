@@ -10,8 +10,8 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="{% url 'blog:post_list' %}"><i class="fa fa-circle-o"></i> {% trans "Summary" %}</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> {% trans "Main Navigation" %}</a></li>
+            <li><a href="{% url 'blog:post_list_admin' %}"><i class="fa fa-circle-o"></i> {% trans "Summary" %}</a></li>
+            <li><a href="{% url 'blog:post_create_admin' %}"><i class="fa fa-circle-o"></i> {% trans "Main Navigation" %}</a></li>
         </ul>
     </li>
     <li class="treeview">
@@ -46,8 +46,8 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="{% url 'blog:post_list' %}"><i class="fa fa-list"></i> {% trans "List" %}</a></li>
-            <li><a href="{% url 'blog:post_form_admin' %}"><i class="fa fa-pencil"></i> {% trans "Creation" %}</a></li>
+            <li><a href="{% url 'blog:post_list_admin' %}"><i class="fa fa-list"></i> {% trans "List" %}</a></li>
+            <li><a href="{% url 'blog:post_create_admin' %}"><i class="fa fa-pencil"></i> {% trans "Creation" %}</a></li>
         </ul>
     </li>
     <li class="treeview">

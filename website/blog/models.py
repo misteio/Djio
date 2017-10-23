@@ -9,7 +9,7 @@ from django.db import models
 from .managers import PublishedManager, LazyLoadAuthorManager
 
 
-class Post(Timestamped, SoftDeletableModel):
+class Post(Timestamped):
     STATUS_CHOICES = (
         ('draft', 'Draft'),
         ('published', 'Published'),

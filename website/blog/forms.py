@@ -1,5 +1,5 @@
 from django import forms
-
+from django.db import models
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, Fieldset
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
@@ -61,3 +61,12 @@ class PostAdminForm(forms.ModelForm):
                 </div> </div>
             """),
     )
+
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager, self).get_queryset().filter(status='published')
+
+
+class LazyLoadAuthorManager(models.Manager):
+    def get_queryset(self):
+        return super(LazyLoadAuthorManager, self).get_queryset().select_related('author')

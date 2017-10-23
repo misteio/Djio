@@ -435,7 +435,6 @@
         $('.sidebar-menu').tree()
         {% for message in messages %}
             iziToast.{{ message.tags }}({
-                title: '{{ message.tags }}',
                 message: '{{ message }}'
             });
         {% endfor %}
