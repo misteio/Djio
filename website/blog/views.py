@@ -40,13 +40,26 @@ def post_update_admin(request, post_id):
         messages.success(request, _("You have update post : " + post.title))
         return redirect('blog:post_list_admin')
 
-    return render(request, 'blog/admin/post/form.html', {'form': post_form})
+    post_history = Post.history.filter(id=post_id).order_by('-history_id')
+    return render(request, 'blog/admin/post/form.html', {'form': post_form, 'post_history': post_history})
 
 
 @permission_required(('admin'), '/admin/login')
 def post_clone_admin(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     post_form = BlogFactory.upsert(request, post)
+    if post_form.is_valid():
+        messages.success(request, _("You have clone post : " + post.title))
+        return redirect('blog:post_list_admin')
+
+    return render(request, 'blog/admin/post/form.html', {'form': post_form})
+
+
+@permission_required(('admin'), '/admin/login')
+def post_revert_admin(request, post_id, history_id):
+    post = get_object_or_404(Post, id=post_id)
+    historical_post = Post.history.get(history_id=history_id)
+    post_form = BlogFactory.upsert(request, post, historical_post)
     if post_form.is_valid():
         messages.success(request, _("You have clone post : " + post.title))
         return redirect('blog:post_list_admin')

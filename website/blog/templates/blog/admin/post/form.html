@@ -3,22 +3,46 @@
 {% block title %}Create{% endblock %}
 {% block title_block %}Create a Blog Post{% endblock %}
 
+{% block history %}
+    {% if '/update/' in request.path %}
+            <li class="dropdown messages-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-history"></i>
+                    <span class="label label-success">{{ post_history.count }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header">You have {{ post_history.count }} versions available</li>
+                    {% for post_historical in post_history %}
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li><!-- start message -->
+                                    <a href="{% url 'blog:post_revert_admin' post_id=post_historical.id history_id=post_historical.history_id %}">
+                                        <small><i class="fa fa-clock-o"></i> {{ post_historical.history_date }} </small>
+                                        <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ post_historical.history_user.username }}</div>
+                                    </a>
+                                </li>
+                                <!-- end message -->
+                            </ul>
+                        </li>
+                    {% endfor %}
+                    <li class="footer"><a href="#">See All Versions</a></li>
+                </ul>
+            </li>
+    {% endif %}
+{% endblock %}
+
+
 {% block content %}
-  <!-- Content Wrapper. Contains page content -->
-    <!-- Content Header (Page header) -->
-
-      <div class="row">
-        {% load crispy_forms_tags %}
-        {% crispy form %}
-      </div>
-
-    <!-- /.content -->
+  <div class="row">
+    {% load crispy_forms_tags %}
+    {% crispy form %}
+  </div>
 {% endblock %}
 
 
 {% block extrafoot %}
-<script>
-        CKEDITOR.replace( 'ckeditor');
-</script>
-
+    <script>
+            CKEDITOR.replace( 'ckeditor');
+    </script>
 {% endblock %}

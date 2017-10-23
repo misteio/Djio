@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from .forms import PostAdminForm
 
 class BlogFactory():
-    def upsert(request, post=None):
+    def upsert(request, post=None, historical_post=None):
         if request.method == 'POST':
             author = get_object_or_404(User, id=request.POST.get("author"))
             if post:
@@ -21,7 +21,9 @@ class BlogFactory():
             else:
                 return post_form
         else:
-            if post:
+            if post and historical_post:
+                post_form = PostAdminForm(instance=historical_post)
+            elif post:
                 post_form = PostAdminForm(instance=post)
             else:
                 post_form = PostAdminForm()
