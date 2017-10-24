@@ -6,6 +6,9 @@ from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
 from .factory import BlogFactory
 
+###################################################################################
+############################### ADMINISTRATION#####################################
+###################################################################################
 
 @permission_required(('admin'), '/admin/login')
 def post_list_admin(request):
@@ -14,22 +17,12 @@ def post_list_admin(request):
 
 
 @permission_required(('admin'), '/admin/login')
-def post_detail(request, year, month, day, post):
-    post = get_object_or_404(Post, slug=post,
-                                   status='published',
-                                   publish__year=year,
-                                   publish__month=month,
-                                   publish__day=day)
-    return render(request, 'blog/admin/post/detail.html', {'post': post})
-
-
-@permission_required(('admin'), '/admin/login')
-def post_form_admin(request):
+def post_create_admin(request):
     post_form = BlogFactory.upsert(request)
     if post_form.is_valid():
         messages.success(request, _("You have create a new post"))
         return redirect('blog:post_list_admin')
-    return render(request, 'blog/admin/post/form.html', {'form': post_form})
+    return render(request, 'blog/admin/post/form.html', {'form': post_form, 'action': _("Create")})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -41,7 +34,7 @@ def post_update_admin(request, post_id):
         return redirect('blog:post_list_admin')
 
     post_history = Post.history.filter(id=post_id).order_by('-history_id')
-    return render(request, 'blog/admin/post/form.html', {'form': post_form, 'post_history': post_history})
+    return render(request, 'blog/admin/post/form.html', {'form': post_form, 'post_history': post_history, 'action': _("Update")})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -52,7 +45,7 @@ def post_clone_admin(request, post_id):
         messages.success(request, _("You have clone post : " + post.title))
         return redirect('blog:post_list_admin')
 
-    return render(request, 'blog/admin/post/form.html', {'form': post_form})
+    return render(request, 'blog/admin/post/form.html', {'form': post_form, 'action': _("Clone")})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -64,7 +57,7 @@ def post_revert_admin(request, post_id, history_id):
         messages.success(request, _("You have clone post : " + post.title))
         return redirect('blog:post_list_admin')
 
-    return render(request, 'blog/admin/post/form.html', {'form': post_form})
+    return render(request, 'blog/admin/post/form.html', {'form': post_form, 'action': _("Revert")})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -74,3 +67,15 @@ def post_delete_admin(request, post_id):
     messages.warning(request, _("You have deleted post : " + post.title))
     return redirect('blog:post_list_admin')
 
+
+###################################################################################
+################################### FRONT #########################################
+###################################################################################
+@permission_required(('admin'), '/admin/login')
+def post_detail(request, year, month, day, post):
+    post = get_object_or_404(Post, slug=post,
+                                   status='published',
+                                   publish__year=year,
+                                   publish__month=month,
+                                   publish__day=day)
+    return render(request, 'blog/admin/post/detail.html', {'post': post})

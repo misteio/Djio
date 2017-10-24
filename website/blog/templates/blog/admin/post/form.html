@@ -1,7 +1,13 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
+{% trans "my string" as action %}
+
 {% block title %}Create{% endblock %}
-{% block title_block %}Create a Blog Post{% endblock %}
+{% block title_block %}{{ action }} Blog Post{% endblock %}
+{% block breadcrumb %}
+    <li><a href="#">{% trans "Blog" %}</a></li>
+    <li class="active">{{ action }}</li>
+{% endblock %}
 
 {% block history %}
     {% if '/update/' in request.path %}

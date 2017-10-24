@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     # post admin
     url(r'^admin/blog$', views.post_list_admin, name='post_list_admin'),
-    url(r'^admin/blog/create$', views.post_form_admin, name='post_create_admin'),
+    url(r'^admin/blog/create$', views.post_create_admin, name='post_create_admin'),
     url(r'^admin/blog/update/(?P<post_id>[0-9]+)/$', views.post_update_admin, name='post_update_admin'),
     url(r'^admin/blog/clone/(?P<post_id>[0-9]+)/$', views.post_clone_admin, name='post_clone_admin'),
     url(r'^admin/blog/revert/(?P<post_id>[0-9]+)/(?P<history_id>[0-9]+)/$', views.post_revert_admin, name='post_revert_admin'),

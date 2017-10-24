@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'simple_history',
+    'django_js_reverse',
     'core',
     'blog',
 ]
