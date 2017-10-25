@@ -16,11 +16,18 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
+from django.views.i18n import javascript_catalog
+
+
+js_info_dict = {
+    'packages': ('your.app.package',),
+}
 
 urlpatterns = [
     url(r'^', include('core.urls', namespace='core', app_name='core')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('blog.urls', namespace='blog', app_name='blog')),
+    url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
 ]
 if settings.DEBUG:
     import debug_toolbar

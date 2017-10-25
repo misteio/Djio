@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-19 15:11+0000\n"
+"POT-Creation-Date: 2017-10-25 10:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,108 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: blog/forms.py:33
+#: blog/forms.py:21
 msgid "Option 1"
 msgstr ""
 
-#: blog/forms.py:72
+#: blog/forms.py:44
+msgid "Text of body"
+msgstr ""
+
+#: blog/forms.py:46
 msgid "Metadatas"
 msgstr "Métadonnées"
 
-#: blog/templates/blog/admin/post/form.html:10
-msgid "Create a Post"
-msgstr "Création d'un post"
-
-#: blog/templates/blog/admin/post/form.html:11
-msgid "form"
+#: blog/templates/blog/admin/post/form.html:3
+msgid "my string"
 msgstr ""
 
-#: website/settings.py:117
+#: blog/templates/blog/admin/post/form.html:8
+#: blog/templates/blog/admin/post/list.html:7
+msgid "Blog"
+msgstr ""
+
+#: blog/templates/blog/admin/post/list.html:5
+msgid "Blog Post"
+msgstr ""
+
+#: blog/templates/blog/admin/post/list.html:5
+#: blog/templates/blog/admin/post/list.html:8
+msgid "List"
+msgstr ""
+
+#: blog/templates/blog/admin/post/list.html:15
+#, fuzzy
+#| msgid "Create a Post"
+msgid "Create a new Post"
+msgstr "Création d'un post"
+
+#: blog/templates/blog/admin/post/list.html:25
+msgid "Title"
+msgstr ""
+
+#: blog/templates/blog/admin/post/list.html:26
+msgid "Author"
+msgstr ""
+
+#: blog/templates/blog/admin/post/list.html:27
+msgid "Publication Date"
+msgstr ""
+
+#: blog/templates/blog/admin/post/list.html:28
+msgid "Status"
+msgstr ""
+
+#: blog/templates/blog/admin/post/list.html:29
+msgid "Actions"
+msgstr ""
+
+#: blog/templates/blog/admin/post/list.html:46
+msgid "Edit"
+msgstr ""
+
+#: blog/templates/blog/admin/post/list.html:47 blog/views.py:48
+msgid "Clone"
+msgstr ""
+
+#: blog/templates/blog/admin/post/list.html:48
+msgid "Delete"
+msgstr ""
+
+#: blog/views.py:23
+msgid "You have create a new post"
+msgstr ""
+
+#: blog/views.py:25
+#, fuzzy
+#| msgid "Create a Post"
+msgid "Create"
+msgstr "Création d'un post"
+
+#: blog/views.py:33
+msgid "You have update post : "
+msgstr ""
+
+#: blog/views.py:37
+msgid "Update"
+msgstr ""
+
+#: blog/views.py:45 blog/views.py:57
+msgid "You have clone post : "
+msgstr ""
+
+#: blog/views.py:60
+msgid "Revert"
+msgstr ""
+
+#: blog/views.py:67
+msgid "You have deleted post : "
+msgstr ""
+
+#: website/settings.py:122
 msgid "English"
 msgstr "Anglais"
 
-#: website/settings.py:118
+#: website/settings.py:123
 msgid "French"
 msgstr "Français"

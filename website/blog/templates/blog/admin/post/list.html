@@ -45,7 +45,7 @@
                         <td>
                             <a href="{% url 'blog:post_update_admin' post_id=post.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
                             <a href="{% url 'blog:post_clone_admin' post_id=post.id %}"><button type="button" class="btn btn-warning"><i class="fa fa-clone"></i> {% trans "Clone" %}</button></a>
-                            <a href="#"><button type="button" class="btn btn-danger" data-id="{{ post.id }}"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
+                            <a href="#"><button type="button" class="btn btn-danger" data-id="{{ post.id }}" data-title="{{ post.title }}"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -67,27 +67,7 @@
         })
 
         $(".btn-danger").click(function () {
-            var post_id = $( this ).data('id');
-            iziToast.question({
-                timeout: 20000,
-                close: false,
-                overlay: true,
-                toastOnce: true,
-                id: 'question',
-                zindex: 999,
-                title: 'Hey',
-                message: '{% trans "Are you sure to delete this ?" %}',
-                position: 'center',
-                buttons: [
-                    ['<button><b>{% trans "Yes" %}</b></button>', function (instance, toast) {
-                        instance.hide(toast, { transitionOut: 'fadeOut' }, 'button');
-                        window.location = Urls['blog:post_delete_admin']({ post_id: post_id});
-                    }, true],
-                    ['<button>{% trans "No" %}</button>', function (instance, toast) {
-                        instance.hide(toast, { transitionOut: 'fadeOut' }, 'button');
-                    }]
-                ],
-            });
+            activeClickDelete(Urls['blog:post_delete_admin']({ post_id:  $( this ).data('id')}), $( this ).data('title'));
         })
     </script>
 {% endblock %}

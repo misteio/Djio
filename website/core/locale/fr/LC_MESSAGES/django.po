@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-19 15:11+0000\n"
+"POT-Creation-Date: 2017-10-25 10:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: core/templates/admin/auth/user/change_password.html:6
+#: core/templates/admin/auth/user/change_password.html:7
+#: core/templates/admin/auth/user/change_password.html:11
+msgid "Password Change"
+msgstr ""
+
+#: core/templates/admin/auth/user/change_password.html:6
+#: core/templates/admin/auth/user/change_password.html:7
+#: core/templates/admin/auth/user/change_password.html:10
+msgid "User"
+msgstr ""
+
+#: core/templates/admin/login.html:45
+#, python-format
+msgid ""
+"You are authenticated as %(username)s, but are not authorized to access this "
+"page. Would you like to login to a different account?"
+msgstr ""
+
+#: core/templates/admin/login.html:54
+msgid "Sign in to start your session"
+msgstr ""
+
 #: core/templates/admin/main_sidebar/menu.html:4
 #: core/templates/admin/main_sidebar/menu.html:14
 msgid "Main Navigation"
@@ -32,4 +56,12 @@ msgstr ""
 
 #: core/templates/admin/main_sidebar/menu.html:50
 msgid "Creation"
+msgstr ""
+
+#: core/utils.py:16
+msgid "Cancel"
+msgstr ""
+
+#: core/utils.py:16
+msgid "Submit"
 msgstr ""
