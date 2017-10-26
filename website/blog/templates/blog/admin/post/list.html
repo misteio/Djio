@@ -8,6 +8,35 @@
     <li class="active">{% trans "List" %}</li>
 {% endblock %}
 
+{% block deleted %}
+        <li class="dropdown messages-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-trash"></i>
+                <span class="label label-danger">{{ deleted_posts.count }}</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="header">{{ deleted_posts.count }} {% trans "deleted posts" %}</li>
+                {% for deleted_post in deleted_posts|slice:":10" %}
+                    <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                            <li><!-- start message -->
+                                <a href="{% url 'blog:post_revert_admin' post_id=deleted_post.id history_id=deleted_post.history_id %}">
+                                    <div class="pull-right text-danger">{{ deleted_post.title }}</div><br/>
+                                    <small class="text-muted"><i class="fa fa-clock-o"></i> {{ deleted_post.history_date }} </small>
+                                    <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ deleted_post.history_user.username }}</div>
+                                </a>
+                            </li>
+                            <!-- end message -->
+                        </ul>
+                    </li>
+                {% endfor %}
+                <li class="footer"><a href="#">{% trans "See All Deleted posts" %}</a></li>
+            </ul>
+        </li>
+{% endblock %}
+
+
 {% block content %}
     <!-- Default box -->
     <div class="box">
@@ -37,15 +66,15 @@
                         <td>{{ post.publish }}</td>
                         <td>
                             {% if post.status == 'draft' %}
-                                <span class="label label-warning">{{ post.status }}</span>
+                                <span class="label label-warning">{% trans "Draft" %}</span>
                             {% else %}
-                                <span class="label label-success">{{ post.status }}</span>
+                                <span class="label label-success">{% trans "Published" %}</span>
                             {% endif %}
                         </td>
                         <td>
                             <a href="{% url 'blog:post_update_admin' post_id=post.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
                             <a href="{% url 'blog:post_clone_admin' post_id=post.id %}"><button type="button" class="btn btn-warning"><i class="fa fa-clone"></i> {% trans "Clone" %}</button></a>
-                            <a href="#"><button type="button" class="btn btn-danger" data-id="{{ post.id }}" data-title="{{ post.title }}"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
+                            <a href="#" onClick="return false"><button type="button" class="btn btn-danger" data-id="{{ post.id }}" data-title="{{ post.title }}"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -66,7 +95,7 @@
             responsive: true
         })
 
-        $(".btn-danger").click(function () {
+        $("#blog-list").on('click', '.btn-danger', function(){
             activeClickDelete(Urls['blog:post_delete_admin']({ post_id:  $( this ).data('id')}), $( this ).data('title'));
         })
     </script>

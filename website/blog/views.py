@@ -13,7 +13,8 @@ from .factory import BlogFactory
 @permission_required(('admin'), '/admin/login')
 def post_list_admin(request):
     posts = Post.admin_load.all()
-    return render(request, 'blog/admin/post/list.html', {'posts': posts})
+    deleted_posts = Post.history.filter(history_type='-').order_by('-history_id')
+    return render(request, 'blog/admin/post/list.html', {'posts': posts, 'deleted_posts': deleted_posts})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -33,8 +34,8 @@ def post_update_admin(request, post_id):
         messages.success(request, _("You have update post : " + post.title))
         return redirect('blog:post_list_admin')
 
-    post_history = Post.history.filter(id=post_id).order_by('-history_id')
-    return render(request, 'blog/admin/post/form.html', {'form': post_form, 'post_history': post_history, 'action': _("Update")})
+    historical_posts = Post.history.filter(id=post_id).order_by('-history_id')
+    return render(request, 'blog/admin/post/form.html', {'form': post_form, 'historical_posts': historical_posts, 'action': _("Update")})
 
 
 @permission_required(('admin'), '/admin/login')

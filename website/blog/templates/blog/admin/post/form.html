@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
-{% trans "my string" as action %}
+{% load staticfiles %}
 
 {% block title %}Create{% endblock %}
 {% block title_block %}{{ action }} Blog Post{% endblock %}
@@ -14,25 +14,25 @@
             <li class="dropdown messages-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-history"></i>
-                    <span class="label label-success">{{ post_history.count }}</span>
+                    <span class="label label-success">{{ historical_posts.count }}</span>
                 </a>
                 <ul class="dropdown-menu">
                     <li class="header">You have {{ post_history.count }} versions available</li>
-                    {% for post_historical in post_history %}
+                    {% for historical_post in historical_posts|slice:":10" %}
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
                                 <li><!-- start message -->
-                                    <a href="{% url 'blog:post_revert_admin' post_id=post_historical.id history_id=post_historical.history_id %}">
-                                        <small><i class="fa fa-clock-o"></i> {{ post_historical.history_date }} </small>
-                                        <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ post_historical.history_user.username }}</div>
+                                    <a href="{% url 'blog:post_revert_admin' post_id=historical_post.id history_id=historical_post.history_id %}">
+                                        <small class="text-muted"><i class="fa fa-clock-o"></i> {{ historical_post.history_date }} </small>
+                                        <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ historical_post.history_user.username }}</div>
                                     </a>
                                 </li>
                                 <!-- end message -->
                             </ul>
                         </li>
                     {% endfor %}
-                    <li class="footer"><a href="#">See All Versions</a></li>
+                    <li class="footer"><a href="#">{% trans "See All Versions" %}</a></li>
                 </ul>
             </li>
     {% endif %}
@@ -49,6 +49,14 @@
 
 {% block extrafoot %}
     <script>
-            CKEDITOR.replace( 'ckeditor');
+        $( document ).ready(function() {
+            CKEDITOR.replace( 'body',{
+                filebrowserImageUploadUrl: '/admin/ckupload/',
+                language: 'en',
+                customConfig: '{% static "js/admin/ckeditor/ckeditor_config.js" %}',
+                extraPlugins: 'embed,autoembed,image2,justify,templates,pageinsertion,autogrow',
+            });
+        });
+
     </script>
 {% endblock %}
