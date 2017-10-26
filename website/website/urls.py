@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.views.i18n import javascript_catalog
+from django.conf.urls.static import  static
 
 
 js_info_dict = {
@@ -28,7 +29,11 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('blog.urls', namespace='blog', app_name='blog')),
     url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
+    url(r'^admin/roxyfileman/', include('roxyfileman.urls')),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [

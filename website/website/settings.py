@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'simple_history',
     'django_js_reverse',
+    'roxyfileman',
     'core',
     'blog',
 ]
@@ -61,7 +62,8 @@ MIDDLEWARE = [
 INTERNAL_IPS = ["127.0.0.1"]
 
 STATIC_ROOT = '/media/miste/Lastorm/Gits/Djio/static/'
-MEDIA_ROOT = '/media/miste/Lastorm/Gits/Djio/media'
+MEDIA_ROOT = '/media/miste/Lastorm/Gits/Djio/media/'
+MEDIA_URL = 'media/'
 
 ROOT_URLCONF = 'website.urls'
 
@@ -149,3 +151,4 @@ STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 AUTHOR_CREATED_BY_FIELD_NAME = 'created_by'
+ROXY_INTEGRATION = 'ckeditor'

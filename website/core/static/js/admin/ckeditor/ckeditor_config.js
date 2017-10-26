@@ -19,10 +19,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.imageBrowser_listUrl = "/admin/static/images_list.json";
 	config.protectedSource.push(/<i[^>]*><\/i>/g);
 	config.extraAllowedContent = 'span(*)';
-	config.filebrowserBrowseUrl = 'http://172.104.181.128/filemanager/dialog.php?type=1&editor=ckeditor&fldr=&akey=myPrivateKey7777777&crossdomain=1&popup=1&relative_url=1',
-	config.filebrowserUploadUrl = 'http://172.104.181.128/filemanager/dialog.php?type=1&editor=ckeditor&fldr=&akey=myPrivateKey7777777&crossdomain=1&popup=1&relative_url=1',
-	config.filebrowserImageBrowseUrl = 'http://172.104.181.128/filemanager/dialog.php?type=1&editor=ckeditor&fldr=&akey=myPrivateKey7777777&crossdomain=1&popup=1&relative_url=1'
-
+	config.filebrowserBrowseUrl= '/admin/roxyfileman/';
 };
 
 CKEDITOR.stylesSet.add( 'my_styles', [
