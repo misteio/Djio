@@ -72,7 +72,6 @@ def post_delete_admin(request, post_id):
 ###################################################################################
 ################################### FRONT #########################################
 ###################################################################################
-@permission_required(('admin'), '/admin/login')
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post,
                                    status='published',
