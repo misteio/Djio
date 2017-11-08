@@ -4,10 +4,10 @@
     <li class="header">{% trans "Main Navigation" %}</li>
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+        <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+        </span>
         </a>
         <ul class="treeview-menu">
             <li><a href="{% url 'blog:post_list_admin' %}"><i class="fa fa-circle-o"></i> {% trans "Summary" %}</a></li>
@@ -16,11 +16,11 @@
     </li>
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Layout Options</span>
-            <span class="pull-right-container">
-                <span class="label label-primary pull-right">4</span>
-            </span>
+        <i class="fa fa-files-o"></i>
+        <span>Layout Options</span>
+        <span class="pull-right-container">
+        <span class="label label-primary pull-right">4</span>
+        </span>
         </a>
         <ul class="treeview-menu">
             <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
@@ -31,19 +31,19 @@
     </li>
     <li>
         <a href="../widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <span class="pull-right-container">
-                <small class="label pull-right bg-green">Hot</small>
-            </span>
+        <i class="fa fa-th"></i> <span>Widgets</span>
+        <span class="pull-right-container">
+        <small class="label pull-right bg-green">Hot</small>
+        </span>
         </a>
     </li>
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-rss"></i>
-            <span>Blog</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <i class="fa fa-rss"></i>
+        <span>Blog</span>
+        <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+        </span>
         </a>
         <ul class="treeview-menu">
             <li><a href="{% url 'blog:post_list_admin' %}"><i class="fa fa-list"></i> {% trans "List" %}</a></li>
@@ -52,11 +52,11 @@
     </li>
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-laptop"></i>
-            <span>UI Elements</span>
-            <span class="pull-right-container">
-  <i class="fa fa-angle-left pull-right"></i>
-</span>
+        <i class="fa fa-laptop"></i>
+        <span>UI Elements</span>
+        <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+        </span>
         </a>
         <ul class="treeview-menu">
             <li><a href="../UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
@@ -69,10 +69,10 @@
     </li>
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-edit"></i> <span>Forms</span>
-            <span class="pull-right-container">
-  <i class="fa fa-angle-left pull-right"></i>
-</span>
+        <i class="fa fa-edit"></i> <span>Forms</span>
+        <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+        </span>
         </a>
         <ul class="treeview-menu">
             <li><a href="../forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
@@ -82,10 +82,10 @@
     </li>
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-table"></i> <span>Tables</span>
-            <span class="pull-right-container">
-  <i class="fa fa-angle-left pull-right"></i>
-</span>
+        <i class="fa fa-table"></i> <span>Tables</span>
+        <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+        </span>
         </a>
         <ul class="treeview-menu">
             <li><a href="../tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
@@ -94,73 +94,55 @@
     </li>
     <li>
         <a href="../calendar.html">
-            <i class="fa fa-calendar"></i> <span>Calendar</span>
-            <span class="pull-right-container">
-  <small class="label pull-right bg-red">3</small>
-  <small class="label pull-right bg-blue">17</small>
-</span>
+        <i class="fa fa-calendar"></i> <span>Calendar</span>
+        <span class="pull-right-container">
+        <small class="label pull-right bg-red">3</small>
+        <small class="label pull-right bg-blue">17</small>
+        </span>
         </a>
     </li>
     <li>
         <a href="../mailbox/mailbox.html">
-            <i class="fa fa-envelope"></i> <span>Mailbox</span>
-            <span class="pull-right-container">
-  <small class="label pull-right bg-yellow">12</small>
-  <small class="label pull-right bg-green">16</small>
-  <small class="label pull-right bg-red">5</small>
-</span>
+        <i class="fa fa-envelope"></i> <span>Mailbox</span>
+        <span class="pull-right-container">
+        <small class="label pull-right bg-yellow">12</small>
+        <small class="label pull-right bg-green">16</small>
+        <small class="label pull-right bg-red">5</small>
+        </span>
         </a>
     </li>
-    <li class="treeview active">
+
+    <li class="treeview {% if '/wishlist/' in request.path %}active{% endif %}">
         <a href="#">
-            <i class="fa fa-folder"></i> <span>Examples</span>
-            <span class="pull-right-container">
-  <i class="fa fa-angle-left pull-right"></i>
-</span>
+            <i class="fa fa-share"></i> <span>{% trans 'Wishlist' %}</span>
+                <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+        </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
-            <li><a href="profile.html"><i class="fa fa-circle-o"></i> Profile</a></li>
-            <li><a href="login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-            <li><a href="register.html"><i class="fa fa-circle-o"></i> Register</a></li>
-            <li><a href="lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-            <li><a href="404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-            <li><a href="500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-            <li class="active"><a href="blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-            <li><a href="pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-        </ul>
-    </li>
-    <li class="treeview">
-        <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-  <i class="fa fa-angle-left pull-right"></i>
-</span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-circle-o"></i> Level One
+            <li><a href="#"><i class="fa fa-circle-o"></i> {% trans 'Configuration' %}</a></li>
+            <li class="treeview {% if '/wishlist/category' in request.path %}active{% endif %}">
+                <a href="#"><i class="fa fa-circle-o"></i> {% trans 'Category' %}
                     <span class="pull-right-container">
-      <i class="fa fa-angle-left pull-right"></i>
-    </span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                    <li class="treeview">
-                        <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                            <span class="pull-right-container">
-          <i class="fa fa-angle-left pull-right"></i>
-        </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                        </ul>
-                    </li>
+                    <li {% if '/wishlist/category/list' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:category_list_admin' %}"><i class="fa fa-circle-o"></i> {% trans 'List' %}</a></li>
+                    <li {% if '/wishlist/category/create' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:category_create_admin' %}"><i class="fa fa-circle-o"></i> {% trans 'Create' %}</a></li>
                 </ul>
             </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+            <li class="treeview {% if '/wishlist/item' in request.path %}active{% endif %}">
+                <a href="#"><i class="fa fa-circle-o"></i> {% trans 'Item' %}
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li {% if '/wishlist/item/list' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:item_list_admin' %}"><i class="fa fa-circle-o"></i> {% trans 'List' %}</a></li>
+                    <li {% if '/wishlist/item/create' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:item_create_admin' %}"><i class="fa fa-circle-o"></i> {% trans 'Create' %}</a></li>
+                </ul>
+            </li>
         </ul>
     </li>
     <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>

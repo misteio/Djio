@@ -1,0 +1,67 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block title %}Create{% endblock %}
+{% block title_block %}{{ action }} Wishlist Item{% endblock %}
+{% block breadcrumb %}
+    <li><a href="#">{% trans "Wishlist Item" %}</a></li>
+    <li class="active">{{ action }}</li>
+{% endblock %}
+
+{% block history %}
+    {% if '/update/' in request.path %}
+            <li class="dropdown messages-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-history"></i>
+                    <span class="label label-success">{{ historical_items.count }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header">You have {{ item_history.count }} versions available</li>
+                    {% for historical_item in historical_items|slice:":10" %}
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li><!-- start message -->
+                                    <a href="{% url 'wishlist:item_revert_admin' item_id=historical_item.id history_id=historical_item.history_id %}">
+                                        <small class="text-muted"><i class="fa fa-clock-o"></i> {{ historical_item.history_date }} </small>
+                                        <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ historical_item.history_user.username }}</div>
+                                    </a>
+                                </li>
+                                <!-- end message -->
+                            </ul>
+                        </li>
+                    {% endfor %}
+                    <li class="footer"><a href="#">{% trans "See All Versions" %}</a></li>
+                </ul>
+            </li>
+
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+  <div class="row">
+    {% load crispy_forms_tags %}
+    {% crispy form %}
+  </div>
+{% endblock %}
+
+
+{% block extrafoot %}
+    <script>
+        $( document ).ready(function() {
+            CKEDITOR.replace( 'body',{
+                filebrowserImageUploadUrl: '/admin/ckupload/',
+                language: 'en',
+                customConfig: '{% static "js/admin/ckeditor/ckeditor_config.js" %}',
+                extraPlugins: 'embed,autoembed,image2,justify,templates,pageinsertion,autogrow',
+            });
+            $("#image").attr("src", $("#image_input").val());
+            $("#image_input").on('keyup', function(){
+                $("#image").attr("src", $("#image_input").val());
+            });
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block title %}{{ action }}{% endblock %}
+{% block title_block %}{{ action }} {% trans "Category Wishlist" %}{% endblock %}
+{% block breadcrumb %}
+    <li><a href="#">{% trans "Wishlist" %}</a></li>
+    <li><a href="#">{% trans "Category" %}</a></li>
+    <li class="active">{{ action }}</li>
+{% endblock %}
+
+{% block history %}
+    {% if '/update/' in request.path %}
+            <li class="dropdown messages-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-history"></i>
+                    <span class="label label-success">{{ historical_categories.count }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header">You have {{ category_history.count }} versions available</li>
+                    {% for historical_category in historical_categories|slice:":10" %}
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                <li><!-- start message -->
+                                    <a href="{% url 'wishlist:item_revert_admin' category_id=historical_category.id history_id=historical_category.history_id %}">
+                                        <small class="text-muted"><i class="fa fa-clock-o"></i> {{ historical_post.history_date }} </small>
+                                        <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ historical_category.history_user.username }}</div>
+                                    </a>
+                                </li>
+                                <!-- end message -->
+                            </ul>
+                        </li>
+                    {% endfor %}
+                    <li class="footer"><a href="#">{% trans "See All Versions" %}</a></li>
+                </ul>
+            </li>
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+  <div class="row">
+    {% load crispy_forms_tags %}
+    {% crispy form %}
+  </div>
+{% endblock %}
+
+
+{% block extrafoot %}
+{% endblock %}
