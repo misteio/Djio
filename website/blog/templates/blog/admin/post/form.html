@@ -40,8 +40,11 @@
 
 
 {% block content %}
-  <div class="row">
-    {% load crispy_forms_tags %}
+
+<input type="text" id="txtSelectedFile" style="border:1px solid #ccc;cursor:pointer;padding:4px;width:80%;" value="Click here to select a file">
+
+<div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman?integration=custom&type=files&txtFieldId=txtSelectedFile"></div>
+{% load crispy_forms_tags %}
     {% crispy form %}
   </div>
 {% endblock %}
@@ -49,6 +52,28 @@
 
 {% block extrafoot %}
     <script>
+        $("#modal-file").iziModal({
+            history: false,
+            iframe : true,
+            fullscreen: true,
+            headerColor: '#000000',
+            group: 'group1',
+            loop: true,
+            transitionIn: 'bounceInDown',
+            transitionOut: 'bounceOutDown'
+          });
+
+        function selectFileAndClose(){
+           $('#modal-file').iziModal('close');
+        }
+
+
+        $('#txtSelectedFile').click(function() {
+            console.log('test');
+          $('#modal-file').iziModal('open');
+        });
+
+
         $( document ).ready(function() {
             CKEDITOR.replace( 'body',{
                 filebrowserImageUploadUrl: '/admin/ckupload/',
