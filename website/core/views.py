@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import permission_required
 from .forms import PasswordChangeCustomForm
+from .services import ckupload_service
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 
 
 @permission_required(('admin'), '/admin/login')
-def post_list(request):
+def password_change(request):
     if request.method == 'POST':
         form = PasswordChangeCustomForm(request.user, request.POST)
         if form.is_valid():
@@ -21,5 +22,10 @@ def post_list(request):
     return render(request, 'admin/auth/user/change_password.html', {
         'form': form
     })
+
+
+@permission_required(('admin'), '/admin/login')
+def ckeditor_upload(request):
+    ckupload_service(request)
 
 

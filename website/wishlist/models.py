@@ -41,6 +41,7 @@ class Item(Timestamped):
     category = models.ForeignKey(Category, related_name='category_items', blank=True)
     body = models.TextField()
     resume = models.TextField()
+    price = models.FloatField()
     image = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
     url = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
     publish = models.DateTimeField(default=timezone.now)

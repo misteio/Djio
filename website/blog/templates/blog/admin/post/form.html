@@ -41,7 +41,7 @@
 
 {% block content %}
 
-<input type="text" id="txtSelectedFile" style="border:1px solid #ccc;cursor:pointer;padding:4px;width:80%;" value="Click here to select a file">
+<input type="text" id="txtSelectedFile" style="border:1px solid #ccc;cursor:pointer;padding:4px;width:80%;" value="Click here to select a file {{ settings.MEDIA_URL }} bouyaj">
 
 <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman?integration=custom&type=files&txtFieldId=txtSelectedFile"></div>
 {% load crispy_forms_tags %}
@@ -60,7 +60,9 @@
             group: 'group1',
             loop: true,
             transitionIn: 'bounceInDown',
-            transitionOut: 'bounceOutDown'
+            transitionOut: 'bounceOutDown',
+            width: '50%',
+            iframeHeight: '500px'
           });
 
         function selectFileAndClose(){
@@ -69,7 +71,6 @@
 
 
         $('#txtSelectedFile').click(function() {
-            console.log('test');
           $('#modal-file').iziModal('open');
         });
 

@@ -11,7 +11,7 @@ from core.utils import open_box_form, close_box_form
 class ItemAdminForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ('body', 'title', 'author', 'category', 'slug', 'status', 'url', 'image')
+        fields = ('body', 'title', 'author', 'category', 'slug', 'status', 'url', 'image', 'price')
         labels = {
             'body': _('Body of Wishlist item'),
             'title': _('Title'),
@@ -21,6 +21,7 @@ class ItemAdminForm(forms.ModelForm):
             'status': _('Status'),
             'url': _('URL of article'),
             'image': _('Image url'),
+            'price': _('Price'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -38,8 +39,18 @@ class ItemAdminForm(forms.ModelForm):
         Field('status'),
         Field('url'),
         Field('image', id='image_input'),
+        Field('price'),
         HTML("""
-                    <img id="image" src="" width="100px">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-info" id="txtSelectedFile">Select a file</button>
+                        <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman?integration=custom&type=files&txtFieldId=image_input"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <img id="image" src="" class="direct-chat-img" width="100px"> 
+                    </div>
+                    </br></br></br>
+                </div>
                 """),
         FormActions(
             Submit('save_changes', 'Save changes', css_class="btn-primary"),

@@ -16,10 +16,11 @@ CKEDITOR.editorConfig = function( config ) {
 	config.allowedContent = true;
 	config.templates_files=['/static/js/admin/ckeditor/ckeditor_template.js'];
 	config.templates='site';
-	config.imageBrowser_listUrl = "/admin/static/images_list.json";
 	config.protectedSource.push(/<i[^>]*><\/i>/g);
 	config.extraAllowedContent = 'span(*)';
 	config.filebrowserBrowseUrl= '/admin/roxyfileman/';
+	config.filebrowserUploadUrl = '/admin/ckeditor-upload';
+
 };
 
 CKEDITOR.stylesSet.add( 'my_styles', [
