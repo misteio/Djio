@@ -187,11 +187,9 @@
                 canvas: {
                     styles: ['http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css','http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', 'http://localhost:8000/static/css/front/style.default.css'],
                     scripts: ['https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', 'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js']
-
                 },
 
-
-                components: '<div class="txt-red">Hello world maaaaan!</div>',
+                components: window.parent.document.getElementById('text-area').value,
                 style: '.txt-red{color: red}',
                 height: '100%',
                 container : '#gjs',
@@ -222,14 +220,14 @@
                 },
 
                 storageManager:{
-                 // storeComponents: 1,
-                  //storeStyles: 1,
-                     type: 'remote',
+                  storeComponents: 1,
+                  storeStyles: 1,
+                   //  type: 'remote',
                     autosave: false,
                     //urlStore: 'dragdrop/edit/id',
-                    urlLoad: '/admin/json-editor',
-                    contentTypeJson: true,
-                    storeHtml: true,
+                    //urlLoad: '/admin/json-editor',
+                    //contentTypeJson: true,
+                    //storeHtml: true,
                     //storeCss: true,
                 },
 
@@ -529,10 +527,10 @@
 
             var cmdm = editor.Commands;
             cmdm.add('open-github', {
-            run: function(em, sender){
-              sender.set('active',false);
-              window.open('https://github.com/artf/grapesjs', '_blank');
-            },
+                run: function(em, sender){
+                  sender.set('active',false);
+                  window.open('https://github.com/artf/grapesjs', '_blank');
+                },
             });
 
             window.editor = editor;
@@ -569,6 +567,8 @@
             // Store and load events
             editor.on('storage:load', function(e) {
              console.log('Loaded ', e);
+             console.log('run command')
+             console.log(editor.runCommand('gjs-get-inlined-html'));
             });
             editor.on('storage:store', function(e) {
              console.log('Stored ', e);
@@ -577,6 +577,17 @@
                 console.log(editor.getCss())
             });
 
+
+            var pnm = editor.Panels; pnm.addButton('options', [ { id: 'save-html', className: 'fa fa-floppy-o', command: 'save-html', attributes: {title: 'Save to database'} } ])
+
+            cmdm.add('save-html', {
+                run: function(em, sender){
+                    //$(window.parent.document).find('#id_title').attr('value',editor.runCommand('gjs-get-inlined-html'));
+                    var s = window.parent.document.getElementById('text-area');
+                    s.value = editor.getHtml();
+                    window.parent.selectFileAndClose();
+                },
+            });
         </script>
     </body>
 </html>

@@ -44,6 +44,12 @@
 <input type="text" id="txtSelectedFile" style="border:1px solid #ccc;cursor:pointer;padding:4px;width:80%;" value="Click here to select a file {{ settings.MEDIA_URL }} bouyaj">
 
 <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/editor"></div>
+
+
+    <textarea name="textarea" id="text-area"
+   rows="10" cols="50">
+  You can write something here
+</textarea>
 {% load crispy_forms_tags %}
     {% crispy form %}
   </div>
