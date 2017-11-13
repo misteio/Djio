@@ -46,10 +46,6 @@
 <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/editor"></div>
 
 
-    <textarea name="textarea" id="text-area"
-   rows="10" cols="50">
-  You can write something here
-</textarea>
 {% load crispy_forms_tags %}
     {% crispy form %}
   </div>
@@ -79,16 +75,6 @@
 
         $('#txtSelectedFile').click(function() {
           $('#modal-file').iziModal('open');
-        });
-
-
-        $( document ).ready(function() {
-            CKEDITOR.replace( 'body',{
-                filebrowserImageUploadUrl: '/admin/ckupload/',
-                language: 'en',
-                customConfig: '{% static "js/admin/ckeditor/ckeditor_config.js" %}',
-                extraPlugins: 'embed,autoembed,image2,justify,templates,pageinsertion,autogrow',
-            });
         });
 
     </script>
