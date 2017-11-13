@@ -87,7 +87,8 @@
             $("#modal-category").iziModal();
             var category_form = '#category-form';
 
-            $(category_form).submit(function(event) {
+
+            $('body').on('submit', category_form, function(event) {
                 event.preventDefault();
                 $.ajax({
                     url: "{% url 'wishlist:category_create_admin_ajax' %}",
@@ -96,11 +97,12 @@
                     success: function(data) {
                         if (!(data['success'])) {
                             $(category_form).replaceWith(data['form_html']);
+                            category_form = '#category-form';
                         } else {
                             $(category_form).find('.success-message').show();
                             iziToast.success({
                                 title: 'Success',
-                                message: 'Added category' + data.category_title
+                                message: 'Added category : ' + data.category_title
                             });
                             $('#modal-category').iziModal('close');
                             $("#category_select").append($("<option></option>").attr('selected', 'selected').attr("value", data.category_id).text(data.category_title));
