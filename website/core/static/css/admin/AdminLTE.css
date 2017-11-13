@@ -5671,3 +5671,9 @@ table.text-center th {
     white-space: normal !important;
   }
 }
+
+
+.btn-form-right{
+    padding-top: 25px;
+    padding-bottom: 14px;
+}

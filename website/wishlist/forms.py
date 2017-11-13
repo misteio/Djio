@@ -33,25 +33,40 @@ class ItemAdminForm(forms.ModelForm):
         Field('body', rows="10", css_class='input-xlarge', id='body'),
         HTML(close_box_form() + open_box_form('col-lg-3 col-md-12', _('Metadatas'), 'box-success')),
         Field('title', css_class=''),
-        Field('category'),
+        HTML("""
+               <div class="row">
+                   <div class="col-md-6">
+
+               """),
+        Field('category', id="category_select"),
+        HTML("""
+                    </div>
+                       <div class="col-md-6 btn-form-right">
+                           <a href="#" onclick="return false;"  class="btn btn-success" id="categoryFormSelect">Create a Category</a>
+                        </div>
+                   </div>
+                   """),
         Field('author'),
         Field('slug'),
         Field('status'),
         Field('url'),
-        Field('image', id='image_input'),
-        Field('price'),
         HTML("""
-                <div class="row">
-                    <div class="col-md-6">
-                        <button class="btn btn-info" id="txtSelectedFile">Select a file</button>
-                        <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman?integration=custom&type=files&txtFieldId=image_input"></div>
-                    </div>
-                    <div class="col-md-6">
-                        <img id="image" src="" class="direct-chat-img" width="100px"> 
-                    </div>
-                    </br></br></br>
+                   <div class="row">
+                       <div class="col-md-6">
+
+                   """),
+        Field('image', id='image_input'),
+        HTML("""
                 </div>
-                """),
+                   <div class="col-md-6 btn-form-right">
+                      <a href="#" onclick="return false;" class="btn btn-info" id="txtSelectedFile">Select a file</a>
+                        <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman?integration=custom&type=files&txtFieldId=image_input"></div>
+                        <img id="image" src="" class="direct-chat-img" width="100px" style="margin-right:10px"> 
+                    </div>
+               </div>
+               """),
+        Field('price'),
+
         FormActions(
             Submit('save_changes', 'Save changes', css_class="btn-primary"),
             Submit('cancel', 'Cancel'),
@@ -77,8 +92,9 @@ class CategoryAdminForm(forms.ModelForm):
         super(CategoryAdminForm, self).__init__(*args, **kwargs)
 
     helper = FormHelper()
+    helper.form_id = 'category-form'
     helper.layout = Layout(
-        HTML(open_box_form('col-lg-12 col-md-12', _('Name of Category'))),
+        HTML(open_box_form('col-lg-12 col-md-12', _('Category'))),
         Field('title'),
         Field('slug'),
         Field('status'),

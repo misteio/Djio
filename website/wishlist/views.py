@@ -6,6 +6,9 @@ from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
 from .factory import AbstractFactory
 from .forms import ItemAdminForm, CategoryAdminForm
+from crispy_forms.utils import render_crispy_form
+from jsonview.decorators import json_view
+from django.template.context_processors import csrf
 
 
 @permission_required(('admin'), '/admin/login')
@@ -17,34 +20,37 @@ def item_list_admin(request):
 
 @permission_required(('admin'), '/admin/login')
 def item_create_admin(request):
+    category_form = AbstractFactory.upsert(request, CategoryAdminForm)
     item_form = AbstractFactory.upsert(request, ItemAdminForm)
     if item_form.is_valid():
         messages.success(request, _("You have create a new item"))
         return redirect('wishlist:item_list_admin')
-    return render(request, 'wishlist/admin/item/form.html', {'form': item_form, 'action': _("Create")})
+    return render(request, 'wishlist/admin/item/form.html', {'form': item_form, 'category_form': category_form, 'action': _("Create")})
 
 
 @permission_required(('admin'), '/admin/login')
 def item_update_admin(request, item_id):
     item = get_object_or_404(Item, id=item_id)
     item_form = AbstractFactory.upsert(request, ItemAdminForm, item)
+    category_form = AbstractFactory.upsert(request, CategoryAdminForm)
     if item_form.is_valid():
         messages.success(request, _("You have update item : " + item.title))
         return redirect('wishlist:item_list_admin')
 
     historical_items = Item.history.filter(id=item_id).order_by('-history_id')
-    return render(request, 'wishlist/admin/item/form.html', {'form': item_form, 'historical_items': historical_items, 'action': _("Update")})
+    return render(request, 'wishlist/admin/item/form.html', {'form': item_form, 'category_form': category_form, 'historical_items': historical_items, 'action': _("Update")})
 
 
 @permission_required(('admin'), '/admin/login')
 def item_clone_admin(request, item_id):
     item = get_object_or_404(Item, id=item_id)
     item_form = AbstractFactory.upsert(request, ItemAdminForm, item)
+    category_form = AbstractFactory.upsert(request, CategoryAdminForm)
     if item_form.is_valid():
         messages.success(request, _("You have clone item : " + item.title))
         return redirect('wishlist:item_list_admin')
 
-    return render(request, 'wishlist/admin/item/form.html', {'form': item_form, 'action': _("Clone")})
+    return render(request, 'wishlist/admin/item/form.html', {'form': item_form, 'category_form': category_form, 'action': _("Clone")})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -52,11 +58,12 @@ def item_revert_admin(request, item_id, history_id):
     item = get_object_or_404(Item, id=item_id)
     historical_item = Item.history.get(history_id=history_id)
     item_form = AbstractFactory.upsert(request, ItemAdminForm, item, historical_item)
+    category_form = AbstractFactory.upsert(request, CategoryAdminForm)
     if item_form.is_valid():
         messages.success(request, _("You have clone item : " + item.title))
         return redirect('wishlist:item_list_admin')
 
-    return render(request, 'wishlist/admin/item/form.html', {'form': item_form, 'action': _("Revert")})
+    return render(request, 'wishlist/admin/item/form.html', {'form': item_form, 'category_form': category_form, 'action': _("Revert")})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -113,6 +120,20 @@ def category_revert_admin(request, item_id, history_id):
         return redirect('wishlist:category_list_admin')
 
     return render(request, 'wishlist/admin/item/form.html', {'form': category_form, 'action': _("Revert")})
+
+
+@permission_required(('admin'), '/admin/login')
+@json_view
+def ajax_category_save(request):
+    form = CategoryAdminForm(request.POST or None)
+    if form.is_valid():
+        category = form.save()
+        return {'success': True, 'category_id': category.id, 'category_title': category.title}
+
+    ctx = {}
+    ctx.update(csrf(request))
+    form_html = render_crispy_form(form, context=ctx)
+    return {'success': False, 'form_html': form_html}
 
 ###################################################################################
 ################################### FRONT #########################################

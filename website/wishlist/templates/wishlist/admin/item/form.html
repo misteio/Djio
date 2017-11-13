@@ -1,51 +1,50 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 {% load staticfiles %}
-
+{% load crispy_forms_tags %}
 {% block title %}Create{% endblock %}
 {% block title_block %}{{ action }} Wishlist Item{% endblock %}
 {% block breadcrumb %}
     <li><a href="#">{% trans "Wishlist Item" %}</a></li>
     <li class="active">{{ action }}</li>
 {% endblock %}
-
 {% block history %}
     {% if '/update/' in request.path %}
-            <li class="dropdown messages-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-history"></i>
-                    <span class="label label-success">{{ historical_items.count }}</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="header">You have {{ item_history.count }} versions available</li>
-                    {% for historical_item in historical_items|slice:":10" %}
+        <li class="dropdown messages-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-history"></i>
+            <span class="label label-success">{{ historical_items.count }}</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="header">You have {{ item_history.count }} versions available</li>
+                {% for historical_item in historical_items|slice:":10" %}
+                <li>
+                    <!-- inner menu: contains the actual data -->
+                    <ul class="menu">
                         <li>
-                            <!-- inner menu: contains the actual data -->
-                            <ul class="menu">
-                                <li><!-- start message -->
-                                    <a href="{% url 'wishlist:item_revert_admin' item_id=historical_item.id history_id=historical_item.history_id %}">
-                                        <small class="text-muted"><i class="fa fa-clock-o"></i> {{ historical_item.history_date }} </small>
-                                        <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ historical_item.history_user.username }}</div>
-                                    </a>
-                                </li>
-                                <!-- end message -->
-                            </ul>
+                            <!-- start message -->
+                            <a href="{% url 'wishlist:item_revert_admin' item_id=historical_item.id history_id=historical_item.history_id %}">
+                                <small class="text-muted"><i class="fa fa-clock-o"></i> {{ historical_item.history_date }} </small>
+                                <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ historical_item.history_user.username }}</div>
+                            </a>
                         </li>
-                    {% endfor %}
-                    <li class="footer"><a href="#">{% trans "See All Versions" %}</a></li>
-                </ul>
-            </li>
+                        <!-- end message -->
+                    </ul>
+                </li>
+                {% endfor %}
+                <li class="footer"><a href="#">{% trans "See All Versions" %}</a></li>
+            </ul>
+        </li>
     {% endif %}
 {% endblock %}
-
-
 {% block content %}
-  <div class="row">
-    {% load crispy_forms_tags %}
-    {% crispy form %}
-  </div>
+    <div class="row">
+        {% crispy form %}
+    </div>
+    <div id="modal-category">
+        {% crispy category_form %}
+    </div>
 {% endblock %}
-
 
 {% block extrafoot %}
     <script>
@@ -53,6 +52,7 @@
            $('#modal-file').iziModal('close');
            $("#image").attr("src", $("#image_input").val());
         }
+
         $( document ).ready(function() {
             CKEDITOR.replace( 'body',{
                 filebrowserImageUploadUrl: '/admin/ckupload/',
@@ -60,6 +60,7 @@
                 customConfig: '{% static "js/admin/ckeditor/ckeditor_config.js" %}',
                 extraPlugins: 'embed,autoembed,image2,justify,templates,pageinsertion,autogrow',
             });
+
             $("#image").attr("src", $("#image_input").val());
             $("#image_input").on('keyup', function(){
                 $("#image").attr("src", $("#image_input").val());
@@ -67,26 +68,49 @@
 
 
             $("#modal-file").iziModal({
-                history: false,
                 iframe : true,
                 fullscreen: true,
-                headerColor: '#000000',
-                group: 'group1',
-                loop: true,
-                transitionIn: 'bounceInDown',
-                transitionOut: 'bounceOutDown',
                 width: '50%',
-                iframeHeight: '500px'
-          });
+                iframeHeight: '500px',
+                headerColor: '#000000',
+            });
+
+            $('#txtSelectedFile').click(function() {
+                $('#modal-file').iziModal('open');
+            });
+
+            $('#categoryFormSelect').click(function() {
+                $('#modal-category').iziModal('open');
+            });
 
 
-        $('#txtSelectedFile').click(function() {
-          $('#modal-file').iziModal('open');
+            $("#modal-category").iziModal();
+            var category_form = '#category-form';
+
+            $(category_form).submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: "{% url 'wishlist:category_create_admin_ajax' %}",
+                    type: "POST",
+                    data: $(category_form).serialize(),
+                    success: function(data) {
+                        if (!(data['success'])) {
+                            $(category_form).replaceWith(data['form_html']);
+                        } else {
+                            $(category_form).find('.success-message').show();
+                            iziToast.success({
+                                title: 'Success',
+                                message: 'Added category' + data.category_title
+                            });
+                            $('#modal-category').iziModal('close');
+                            $("#category_select").append($("<option></option>").attr('selected', 'selected').attr("value", data.category_id).text(data.category_title));
+                        }
+                    },
+                    error: function() {
+                        $(category_form).find('.error-message').show()
+                    }
+                });
+            });
         });
-
-
-
-        });
-
-    </script>
+</script>
 {% endblock %}
