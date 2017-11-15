@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/wishlist/item/clone/(?P<item_id>[0-9]+)/$', views.item_clone_admin, name='item_clone_admin'),
     url(r'^admin/wishlist/item/revert/(?P<item_id>[0-9]+)/(?P<history_id>[0-9]+)/$', views.item_revert_admin, name='item_revert_admin'),
     url(r'^admin/wishlist/item/delete/(?P<item_id>[0-9]+)/$', views.item_delete_admin, name='item_delete_admin'),
+    url(r'^admin/wishlist/item/swap/(?P<item_id>[0-9]+)/(?P<position>[0-9]+)/$', views.item_swap_position_admin, name='item_swap_position_admin'),
 ]

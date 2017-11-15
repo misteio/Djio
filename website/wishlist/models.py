@@ -5,6 +5,7 @@ from core.mixins import Timestamped
 from simple_history.models import HistoricalRecords
 from django.db import models
 from .managers import PublishedManager, LazyLoadAuthorManager
+from ordered_model.models import OrderedModel
 
 
 class Category(Timestamped):
@@ -30,7 +31,7 @@ class Category(Timestamped):
         return self.title
 
 
-class Item(Timestamped):
+class Item(Timestamped, OrderedModel):
     STATUS_CHOICES = (
         ('draft', 'Draft'),
         ('published', 'Published'),

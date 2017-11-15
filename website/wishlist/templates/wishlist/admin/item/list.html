@@ -52,9 +52,11 @@
             </div>
         </div>
         <div class="box-body">
-            <table id="blog-list" class="table table-bordered table-striped display nowrap" cellspacing="0" width="100%">
+            <table id="wishlist-list" class="table table-bordered table-striped display nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
+                        <th>{% trans "Position" %}</th>
+                        <th>{% trans "Id" %}</th>
                         <th>{% trans "Title" %}</th>
                         <th>{% trans "Author" %}</th>
                         <th>{% trans "Publication Date" %}</th>
@@ -66,7 +68,9 @@
                 <tbody>
                 {% for item in items %}
                     <tr>
-                        <td>{{ item.title }}</td>
+                        <td>{{ item.order }}</td>
+                        <td>{{ item.id }}</td>
+                        <td><i class="fa fa-arrows"></i> {{ item.title }}</td>
                         <td>{{ item.author }}</td>
                         <td>{{ item.publish }}</td>
                         <td>{{ item.category }}</td>
@@ -94,12 +98,34 @@
 
 {% block extrafoot %}
     <script>
-        $('#blog-list').DataTable({
+        var table = $('#wishlist-list').DataTable({
             rowReorder: {
                 selector: 'td:nth-child(2)'
             },
-            responsive: true
+            responsive: true,
+            "columnDefs": [
+            {
+                "targets": [ 1 ],
+                "visible": false,
+                "searchable": false
+            },
+        ]
         })
+
+         table.on( 'row-reorder', function ( e, diff, edit ) {
+            var rowData = table.row( diff[0].node ).data();
+            $.ajax({
+              url: Urls['wishlist:item_swap_position_admin']({ item_id: rowData[1], position: diff[0].newData}),
+              context: document.body
+            }).done(function(data) {
+                console.log(data)
+              iziToast.success({
+                    title: 'Success',
+                    message: data.item_title + ' {% trans "has be moved to position " %}' + data.position
+                });
+            });
+
+        } );
 
         $("#blog-list").on('click', '.btn-danger', function(){
             activeClickDelete(Urls['wishlist:item_delete_admin']({ item_id:  $( this ).data('id')}), $( this ).data('title'));

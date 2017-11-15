@@ -4,13 +4,18 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
-from .factory import AbstractFactory
+from core.factory import AbstractFactory
 from .forms import ItemAdminForm, CategoryAdminForm
 from crispy_forms.utils import render_crispy_form
 from jsonview.decorators import json_view
 from django.template.context_processors import csrf
 
 
+###################################################################################
+################################### BACKOFFICE ####################################
+###################################################################################
+
+############## ITEMS ##############
 @permission_required(('admin'), '/admin/login')
 def item_list_admin(request):
     items = Item.admin_load.all()
@@ -74,6 +79,15 @@ def item_delete_admin(request, item_id):
     return redirect('wishlist:item_list_admin')
 
 
+@permission_required(('admin'), '/admin/login')
+@json_view
+def item_swap_position_admin(request, item_id, position):
+    item = get_object_or_404(Item, id=item_id)
+    item.to(int(position))
+    return {'success': True, 'item_title': item.title, 'position': position}
+
+
+############## CATEGORIES ##############
 @permission_required(('admin'), '/admin/login')
 def category_list_admin(request):
     categories = Category.objects.all()
@@ -139,5 +153,4 @@ def ajax_category_save(request):
 ################################### FRONT #########################################
 ###################################################################################
 def get_list(request):
-
     return render(request, 'wishlist/front/items/list.html')
