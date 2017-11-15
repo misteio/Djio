@@ -11,5 +11,6 @@ urlpatterns = [
 
     #Front
     url(r'^login', views.front_login, name='front_user_login'),
+    url(r'^logout', views.front_logout, name='front_user_logout'),
     url(r'^signup', views.front_signup, name='front_user_signup'),
 ]

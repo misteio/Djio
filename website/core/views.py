@@ -3,10 +3,12 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth import authenticate, login, logout
 from .forms import PasswordChangeCustomForm
 from .services import ckupload_service
-from .forms import LoginForm
+from .forms import LoginForm, UserRegistrationForm
+from .models import Profile
+from .utils import create_action
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
 
 
 @permission_required(('admin'), '/admin/login')
@@ -38,6 +40,8 @@ def editor_html(request):
 
 
 def front_login(request):
+    if request.user.is_active:
+        return redirect(settings.LOGIN_REDIRECT_URL)
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -46,17 +50,36 @@ def front_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponse('Authenticated successfully')
+                    messages.success(request, 'Successful login.')
+                    return redirect(settings.LOGIN_REDIRECT_URL)
                 else:
-                    return HttpResponse('Disabled account')
+                    messages.error(request, 'Account disabled.')
             else:
-                print('error')
+                messages.error(request, 'Login/password incorrect.')
 
     form = LoginForm()
     return render(request, 'front/users/login.html', {'form': form})
 
 
+def front_logout(request):
+    logout(request)
+    return redirect('core:front_user_login')
+
+
 def front_signup(request):
-    return render(request, 'front/users/login.html')
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.save()
+            # Create the user profile
+            profile = Profile.objects.create(user=new_user)
+            create_action(new_user, 'has created an account')
+            return redirect(settings.LOGIN_REDIRECT_URL)
+    else:
+        user_form = UserRegistrationForm()
+    return render(request, 'front/users/signup.html', {'user_form': user_form})
 
 
