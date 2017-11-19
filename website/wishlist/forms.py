@@ -6,6 +6,7 @@ from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 from .models import Item, Category
 from django.utils.translation import ugettext as _
 from core.utils import open_box_form, close_box_form
+from mptt.forms import TreeNodeChoiceField
 
 
 class ItemAdminForm(forms.ModelForm):
@@ -27,6 +28,7 @@ class ItemAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ItemAdminForm, self).__init__(*args, **kwargs)
 
+    category = TreeNodeChoiceField(queryset=Category.objects.all())
     helper = FormHelper()
     helper.layout = Layout(
         HTML(open_box_form('col-lg-9 col-md-12', _('Text of body'))),
@@ -80,12 +82,13 @@ class ItemAdminForm(forms.ModelForm):
 class CategoryAdminForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ('title', 'description', 'slug', 'status')
+        fields = ('title', 'description', 'slug', 'status', 'parent')
         labels = {
             'title': _('Title'),
             'description': _('Description'),
             'slug': _('Slug'),
             'status': _('Status'),
+            'parent': _('Parent'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -99,6 +102,7 @@ class CategoryAdminForm(forms.ModelForm):
         Field('slug'),
         Field('status'),
         Field('description'),
+        Field('parent'),
 
         FormActions(
             Submit('save_changes', 'Save changes', css_class="btn-primary"),
@@ -107,4 +111,54 @@ class CategoryAdminForm(forms.ModelForm):
         HTML("""
                 </div> </div>
             """),
+    )
+
+
+
+class CategoryAdminForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('title', 'description', 'slug', 'status', 'parent')
+        labels = {
+            'title': _('Title'),
+            'description': _('Description'),
+            'slug': _('Slug'),
+            'status': _('Status'),
+            'parent': _('Parent'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryAdminForm, self).__init__(*args, **kwargs)
+
+    helper = FormHelper()
+    helper.form_id = 'category-form'
+    helper.layout = Layout(
+        HTML(open_box_form('col-lg-12 col-md-12', _('Category'))),
+        Field('title'),
+        Field('slug'),
+        Field('status'),
+        Field('description'),
+        Field('parent'),
+
+        FormActions(
+            Submit('save_changes', 'Save changes', css_class="btn-primary"),
+            Submit('cancel', 'Cancel'),
+        ),
+        HTML("""
+                </div> </div>
+            """),
+    )
+
+
+class BookItemForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea(attrs={'rows':4, 'cols':15}) )
+    helper = FormHelper()
+    helper.form_show_labels = False
+    helper.layout = Layout(
+        Field('message', css_class="form-control input-lg", placeholder=_('Write a message')),
+        HTML('''
+                   <p class="text-center">
+                    <button type='submit' class="btn btn-template-main"><i class="fa fa-gift"></i> ''' + _('Make a gift') + '''</button>
+                </p>
+               '''),
     )

@@ -4,7 +4,8 @@ from . import views
 
 urlpatterns = [
     # items front
-    url(r'^wishlist$', views.get_list, name='wishlist_items_list_front'),
+    url(r'^wishlist$', views.items_list, name='items_list_front'),
+    url(r'^wishlist/(?P<category_slug>[-\w]+)/(?P<item_slug>[-\w]+)$', views.item_detail, name='items_detail_front'),
 
     # categories back
     url(r'^admin/wishlist/category/list$', views.category_list_admin, name='category_list_admin'),

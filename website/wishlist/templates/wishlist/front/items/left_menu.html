@@ -1,0 +1,17 @@
+<div class="col-sm-3">
+    <!-- *** MENUS AND FILTERS *** -->
+    <div class="panel panel-default sidebar-menu">
+
+        <div class="panel-heading">
+            <h3 class="panel-title">Categories</h3>
+        </div>
+
+        <div class="panel-body">
+            <ul class="nav nav-pills nav-stacked category-menu">
+                {% for category in categories %}
+                    <li class="active"> <a href="shop-category.html">{{ category.title }} <span class="badge pull-right">{{ category.num_items }}</span></a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

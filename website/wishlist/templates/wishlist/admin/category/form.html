@@ -1,6 +1,7 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title %}{{ action }}{% endblock %}
 {% block title_block %}{{ action }} {% trans "Category Wishlist" %}{% endblock %}
@@ -42,7 +43,6 @@
 
 {% block content %}
   <div class="row">
-    {% load crispy_forms_tags %}
     {% crispy form %}
   </div>
 {% endblock %}

@@ -5,10 +5,14 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
 from core.factory import AbstractFactory
-from .forms import ItemAdminForm, CategoryAdminForm
+from core.utils import create_action
+from .forms import ItemAdminForm, CategoryAdminForm, BookItemForm
 from crispy_forms.utils import render_crispy_form
 from jsonview.decorators import json_view
 from django.template.context_processors import csrf
+from django.db.models import Count
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 ###################################################################################
@@ -149,8 +153,36 @@ def ajax_category_save(request):
     form_html = render_crispy_form(form, context=ctx)
     return {'success': False, 'form_html': form_html}
 
+
 ###################################################################################
 ################################### FRONT #########################################
 ###################################################################################
-def get_list(request):
-    return render(request, 'wishlist/front/items/list.html')
+def items_list(request):
+    categories = Category.objects.annotate(num_items=Count('category_items')).filter(status='published')
+    items = Item.objects.filter(status='published')
+
+    return render(request, 'wishlist/front/items/list.html', {'categories': categories, 'items': items })
+
+
+def item_detail(request, category_slug, item_slug):
+    categories = Category.objects.annotate(num_items=Count('category_items')).filter(status='published')
+
+    item = get_object_or_404(Item.objects.filter(
+        category__slug=category_slug, slug=item_slug
+    ).prefetch_related('participate'))
+
+    form = BookItemForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            item = Item.objects.filter(slug=item_slug).first()
+            item.participate.add(request.user)
+            messages.success(request, _("You have successfully reserved : " + item.title))
+            create_action(request.user, 'has book a gift', item)
+
+            send_mail(_("Message from " + request.user.username + ': ' + request.user.email), form.cleaned_data['message'],
+                      settings.DEFAULT_FROM_EMAIL, settings.EMAIL_RECIPIENTS)
+            return redirect('wishlist:items_list_front')
+
+    return render(request, 'wishlist/front/items/detail.html', {'categories': categories, 'item': item, 'form': form })
+

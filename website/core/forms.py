@@ -39,26 +39,31 @@ class LoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repeat password', widget=forms.PasswordInput)
 
     helper = FormHelper()
     helper.form_show_labels = False
     helper.layout = Layout(
-        Field('password', css_class="form-control input-lg", placeholder="Password"),
-        Field('password2', css_class="form-control input-lg", placeholder="Repeat password"),
-        Field('username', css_class="form-control input-lg", placeholder="Username"),
-        Field('first_name', css_class="form-control input-lg", placeholder="Firstname"),
-        Field('email', css_class="form-control input-lg", placeholder="Email"),
+        HTML('''<div class="row"> '''),
+        Field('username', css_class="form-control input-lg", placeholder=_('Username'), wrapper_class="col-md-12"),
+        Field('email', css_class="form-control input-lg", placeholder=_('Email'), wrapper_class="col-md-12"),
+        HTML(''' <div class= "col-xs-12 col-sm-6 col-md-6"> '''),
+        Field('password', css_class="form-control input-lg", placeholder=_('Password')),
+        HTML('''</div><div class= "col-xs-12 col-sm-6 col-md-6"> '''),
+        Field('password2', css_class="form-control input-lg", placeholder=_('Repeat Password')),
+        HTML(''' </div> </div> <div class="">
+					 ''' + _('By clicking') + ''' <strong class="label label-success">''' +_('Signup') + '''</strong> , ''' + _('you agree to the Terms and Conditions set out by this site, including our Cookie Use.') + '''
+				</div><br/><hr class="colorgraph">
+				'''),
         FormActions(
             Submit('save_changes', 'Sign up', css_class="btn btn-lg btn-success btn-block"),
         ),
     )
-
-
-    class Meta:
-        model = User
-        fields = ('username', 'first_name', 'email')
 
     def clean_password2(self):
         cd = self.cleaned_data

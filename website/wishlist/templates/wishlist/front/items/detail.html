@@ -1,0 +1,118 @@
+{% extends "front/base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans "Error 404" %}{% endblock %}
+
+
+{% block content %}
+
+    <div id="heading-breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Donnez moi pleins de choses </h1>
+                    </div>
+                    <div class="col-md-5">
+                        <ul class="breadcrumb">
+                            <li><a href="index.html">Home</a>
+                            </li>
+                            <li>Cadeau pour le petit Noah</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="container">
+
+            <div class="row">
+                {% include 'wishlist/front/items/left_menu.html' %}
+                    <div class="col-md-9">
+
+                        <div class="row" id="productMain">
+                            <div class="col-sm-6">
+                                <div id="mainImage">
+                                    <img data-zoom="{{ item.image }}" src="{{ item.image }}" alt="" class="img-responsive image-zoom">
+
+                                </div>
+
+                                <div class="ribbon sale">
+                                    <div class="theribbon">SALE</div>
+                                    <div class="ribbon-background"></div>
+                                </div>
+                                <!-- /.ribbon -->
+
+                                <div class="ribbon new">
+                                    <div class="theribbon">NEW</div>
+                                    <div class="ribbon-background"></div>
+                                </div>
+                                <!-- /.ribbon -->
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box">
+                                    <form>
+                                        <div class="sizes">
+                                            <h3>{{ item.title }}</h3>
+
+                                            {% for user in item.participate.all %}
+                                                <label for="{{ user.username }}">
+                                                    <a href="#">{{ user.username|first|upper }}</a>
+                                                </label>
+                                            {% endfor %}
+                                        </div>
+
+                                        <p class="price">{{ item.price }} €</p>
+
+                                        <p class="text-center">
+                                            <a href="{{ item.url }}" target="_blank" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i> {% trans 'See Product' %}</a>
+                                            <button class="btn btn-default btn-gift" title="{% trans 'Make a gift' %}"><i class="fa fa-heart-o"></i>{% trans 'Make a gift' %}</button>
+                                        </p>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        {{ item.body | safe }}
+
+                    </div>
+            </div>
+    </div>
+
+
+
+
+
+    <div id="modal-gift" class="modal-body">
+        {% crispy form %}
+        <br/>
+        <br/>
+    </div>
+
+{% endblock %}
+
+{% block extrafoot %}
+    <script>
+       $(document).ready(function(){
+            $('.image-zoom')
+              .wrap('<span style="display:inline-block"></span>')
+              .css('display', 'block')
+              .parent()
+              .zoom({
+                url: $(this).find('img').attr('data-zoom')
+              });
+
+                $('.btn-gift').click(function() {
+                    event.preventDefault()
+                    $('#modal-gift').iziModal('open');
+                });
+
+                $("#modal-gift").iziModal();
+            });
+    </script>
+{% endblock %}
