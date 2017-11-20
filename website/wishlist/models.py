@@ -50,6 +50,7 @@ class Item(Timestamped, OrderedModel):
     resume = models.TextField()
     price = models.FloatField()
     image = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
+    image_field = models.ImageField(upload_to="item/")
     url = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
     publish = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')

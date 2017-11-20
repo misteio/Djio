@@ -1,6 +1,7 @@
 {% extends "front/base.html" %}
 {% load staticfiles %}
 {% load i18n %}
+{% load thumbnail %}
 
 {% block title %}{% trans "Error 404" %}{% endblock %}
 
@@ -25,101 +26,59 @@
             </div>
         </div>
     <div class="container">
-               <div id="content">
+       <div id="content">
 
 
-                <div class="row">
+        <div class="row">
 
-                {% include 'wishlist/front/items/left_menu.html' %}
+        {% include 'wishlist/front/items/left_menu.html' %}
 
-                    <div class="col-sm-9">
+            <div class="col-sm-9">
+                <div class="row products grid">
 
-                        <p class="text-muted lead">In our Ladies department we offer wide selection of the best products we have found and carefully selected worldwide. Pellentesque habitant morbi tristique senectus et netuss.</p>
-
-                        <div class="row products grid">
-
-                            {% for item in items %}
-                                <div class="col-md-4 col-sm-6 grid-item">
-                                <div class="product">
-                                    <div class="image">
-                                        <a href="{% url 'wishlist:items_detail_front' category_slug=item.category.slug item_slug=item.slug %}">
-                                            <img src="{{ item.image }}" alt="" class="img-responsive image1">
-                                        </a>
-                                    </div>
-                                    <!-- /.image -->
-                                    <div class="text">
-                                        <h3><a href="shop-detail.html">{{ item.title }}</a></h3>
-                                        <p class="price">{{ item.price }} €</p>
-                                        <p class="buttons">
-                                            <a href="shop-detail.html" class="btn btn-default">View detail</a>
-                                            <a href="shop-basket.html" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </p>
-                                    </div>
-                                    <!-- /.text -->
-                                </div>
-                                    <div class="ribbon sale">
-                                        <div class="theribbon">SALE</div>
-                                        <div class="ribbon-background"></div>
-                                    </div>
-                                    <!-- /.ribbon -->
-
-                                    <div class="ribbon new">
-                                        <div class="theribbon">NEW</div>
-                                        <div class="ribbon-background"></div>
-                                    </div>
-                                <!-- /.product -->
-                            </div>
-                            {% endfor %}
-                            <!-- /.col-md-4 -->
-                        </div>
-                        <!-- /.products -->
-
-                        <div class="row">
-
-                            <div class="col-md-12 banner">
-                                <a href="#">
-                                    <img src="img/banner2.jpg" alt="" class="img-responsive">
+                    {% for item in items %}
+                        <div class="col-md-4 col-sm-6 grid-item">
+                        <div class="product">
+                            <div class="image">
+                                <a href="{% url 'wishlist:items_detail_front' category_slug=item.category.slug item_slug=item.slug %}">
+                                    <img src="{{ item.image_field | thumbnail_url:'wishlist_thumbnail' }}" alt="" class="img-responsive image1">
                                 </a>
                             </div>
-
+                            <!-- /.image -->
+                            <div class="text">
+                                <h3><a href="shop-detail.html">{{ item.title }}</a></h3>
+                                <p class="price">{{ item.price }} €</p>
+                                <p class="buttons">
+                                    <a href="shop-detail.html" class="btn btn-default">View detail</a>
+                                    <a href="shop-basket.html" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                </p>
+                            </div>
+                            <!-- /.text -->
                         </div>
+                            <div class="ribbon sale">
+                                <div class="theribbon">SALE</div>
+                                <div class="ribbon-background"></div>
+                            </div>
+                            <!-- /.ribbon -->
 
-
-                        <div class="pages">
-
-                            <p class="loadMore">
-                                <a href="#" class="btn btn-template-main"><i class="fa fa-chevron-down"></i> Load more</a>
-                            </p>
-
-                            <ul class="pagination">
-                                <li><a href="#">&laquo;</a>
-                                </li>
-                                <li class="active"><a href="#">1</a>
-                                </li>
-                                <li><a href="#">2</a>
-                                </li>
-                                <li><a href="#">3</a>
-                                </li>
-                                <li><a href="#">4</a>
-                                </li>
-                                <li><a href="#">5</a>
-                                </li>
-                                <li><a href="#">&raquo;</a>
-                                </li>
-                            </ul>
-                        </div>
-
-
+                            <div class="ribbon new">
+                                <div class="theribbon">NEW</div>
+                                <div class="ribbon-background"></div>
+                            </div>
+                        <!-- /.product -->
                     </div>
-                    <!-- /.col-md-9 -->
-
-                    <!-- *** RIGHT COLUMN END *** -->
-
+                    {% endfor %}
+                    <!-- /.col-md-4 -->
                 </div>
-
-
-                <!-- /.col-sm-6 -->
+                <!-- /.products -->
             </div>
+            <!-- /.col-md-9 -->
+            <!-- *** RIGHT COLUMN END *** -->
+        </div>
+
+
+        <!-- /.col-sm-6 -->
+    </div>
     </div>
             <!-- /.container -->
 {% endblock %}
