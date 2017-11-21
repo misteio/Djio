@@ -1,23 +1,24 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth import authenticate, login, logout
 from .forms import PasswordChangeCustomForm
 from .services import ckupload_service
-from .forms import LoginForm, UserRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
 from .utils import create_action
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
 
 @permission_required(('admin'), '/admin/login')
-def password_change(request):
+def admin_password_change(request):
     if request.method == 'POST':
         form = PasswordChangeCustomForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Important!
+            update_session_auth_hash(request, user)
             messages.success(request, 'Your password was successfully updated!')
             return redirect('change_password')
         else:
@@ -35,7 +36,7 @@ def ckeditor_upload(request):
 
 
 @permission_required(('admin'), '/admin/login')
-def editor_html(request):
+def admin_editor_html(request):
     return render(request, 'admin/grapesjs.html')
 
 
@@ -83,3 +84,19 @@ def front_signup(request):
     return render(request, 'front/users/signup.html', {'user_form': user_form})
 
 
+@login_required(login_url='/login')
+def front_edit_profile(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, _('Profile updated successfully'))
+        else:
+            messages.error(request, _('Error updating your profile'))
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'front/users/edit.html', {'user_form': user_form, 'profile_form': profile_form})

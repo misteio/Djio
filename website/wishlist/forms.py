@@ -12,7 +12,7 @@ from mptt.forms import TreeNodeChoiceField
 class ItemAdminForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ('body', 'title', 'author', 'category', 'slug', 'status', 'url', 'image', 'price')
+        fields = ('body', 'title', 'author', 'category', 'slug', 'status', 'url', 'image', 'price', 'multi_participate')
         labels = {
             'body': _('Body of Wishlist item'),
             'title': _('Title'),
@@ -23,6 +23,7 @@ class ItemAdminForm(forms.ModelForm):
             'url': _('URL of article'),
             'image': _('Image url'),
             'price': _('Price'),
+            'multi_participate': _('Multi participate'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -52,6 +53,7 @@ class ItemAdminForm(forms.ModelForm):
         Field('slug'),
         Field('status'),
         Field('url'),
+        Field('multi_participate'),
         HTML("""
                    <div class="row">
                        <div class="col-md-6">
@@ -112,7 +114,6 @@ class CategoryAdminForm(forms.ModelForm):
                 </div> </div>
             """),
     )
-
 
 
 class CategoryAdminForm(forms.ModelForm):

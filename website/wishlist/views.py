@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Item, Category
-from django.contrib.auth.decorators import permission_required
+from .models import Item, Category, User
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
@@ -13,6 +13,9 @@ from django.template.context_processors import csrf
 from django.db.models import Count
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.decorators.http import require_http_methods
+from django.http import Http404
+from django.utils.html import escape
 
 
 ###################################################################################
@@ -159,8 +162,15 @@ def ajax_category_save(request):
 ###################################################################################
 def items_list(request):
     categories = Category.objects.annotate(num_items=Count('category_items')).filter(status='published')
-    items = Item.objects.filter(status='published')
+    items = Item.objects.prefetch_related('participate').select_related('category').filter(status='published')
+    return render(request, 'wishlist/front/items/list.html', {'categories': categories, 'items': items })
 
+
+def items_list_category(request, category_slug):
+    categories = Category.objects.annotate(num_items=Count('category_items')).filter(status='published')
+    items = Item.objects.prefetch_related('participate').select_related('category').filter(status='published', category__slug=category_slug)
+    if len(items) == 0:
+        raise Http404("Category not found")
     return render(request, 'wishlist/front/items/list.html', {'categories': categories, 'items': items })
 
 
@@ -186,3 +196,16 @@ def item_detail(request, category_slug, item_slug):
 
     return render(request, 'wishlist/front/items/detail.html', {'categories': categories, 'item': item, 'form': form })
 
+
+@require_http_methods(["POST"])
+@login_required
+@json_view
+def ajax_send_message(request):
+    user = User.objects.filter(username=escape(request.POST.get('username'))).first()
+    if user:
+        create_action(request.user, 'has send message to', user)
+        send_mail(_("Noah Wishlist, Message from " + user.username + ': ' + request.user.email), escape(request.POST.get('message')),
+                  settings.DEFAULT_FROM_EMAIL, {user.email})
+        return {'success': True}
+    else:
+        return {'success': False}

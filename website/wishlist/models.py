@@ -7,7 +7,6 @@ from django.db import models
 from .managers import PublishedManager, LazyLoadAuthorManager
 from ordered_model.models import OrderedModel
 from mptt.models import MPTTModel, TreeForeignKey
-from simple_history import register
 
 
 class Category(Timestamped, MPTTModel):
@@ -50,11 +49,12 @@ class Item(Timestamped, OrderedModel):
     resume = models.TextField()
     price = models.FloatField()
     image = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
-    image_field = models.ImageField(upload_to="item/")
+    image_field = models.ImageField(upload_to="item/", blank=True)
     url = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
     publish = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     participate = models.ManyToManyField(User, blank=True)
+    multi_participate = models.BooleanField(default=False)
 
     history = HistoricalRecords()
 

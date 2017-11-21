@@ -1,5 +1,6 @@
 {% extends "front/base.html" %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title %}Log-in{% endblock %}
 
@@ -28,7 +29,7 @@
                     <fieldset>
                         <h2>Please Sign In</h2>
                         <hr class="colorgraph">
-                        {% load crispy_forms_tags %}
+
                         {% crispy form %}
                     </fieldset>
                 </div>

@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from PIL import Image
 from resizeimage import resizeimage
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import permission_required, login_required
 
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'mp3'])
@@ -19,6 +20,7 @@ def check_allowed_file(file):
         return False
 
 
+@permission_required(('admin'), '/admin/login')
 def ckupload_service(request):
     """CKEditor file upload"""
     error = ''

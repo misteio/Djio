@@ -35,7 +35,6 @@
 
             <div class="col-sm-9">
                 <div class="row products grid">
-
                     {% for item in items %}
                         <div class="col-md-4 col-sm-6 grid-item">
                         <div class="product">
@@ -46,25 +45,23 @@
                             </div>
                             <!-- /.image -->
                             <div class="text">
-                                <h3><a href="shop-detail.html">{{ item.title }}</a></h3>
+                                <h3><a href="{% url 'wishlist:items_detail_front' category_slug=item.category.slug item_slug=item.slug %}">{{ item.title }}</a></h3>
                                 <p class="price">{{ item.price }} €</p>
                                 <p class="buttons">
-                                    <a href="shop-detail.html" class="btn btn-default">View detail</a>
-                                    <a href="shop-basket.html" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    <a href="{% url 'wishlist:items_detail_front' category_slug=item.category.slug item_slug=item.slug %}" class="btn btn-default">View detail</a>
+                                    <a href="{% url 'wishlist:items_detail_front' category_slug=item.category.slug item_slug=item.slug %}" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                 </p>
                             </div>
                             <!-- /.text -->
                         </div>
-                            <div class="ribbon sale">
-                                <div class="theribbon">SALE</div>
-                                <div class="ribbon-background"></div>
-                            </div>
-                            <!-- /.ribbon -->
+                            {% if item.participate.all|length > 0 and not item.multi_participate %}
+                                <div class="ribbon sale">
+                                    <div class="theribbon">BOOKED</div>
+                                    <div class="ribbon-background"></div>
+                                </div>
+                            {% endif %}
 
-                            <div class="ribbon new">
-                                <div class="theribbon">NEW</div>
-                                <div class="ribbon-background"></div>
-                            </div>
+                            <!-- /.ribbon -->
                         <!-- /.product -->
                     </div>
                     {% endfor %}

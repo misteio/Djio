@@ -1069,7 +1069,7 @@ fieldset[disabled] .btn-template-primary.active {
 }
 .ribbon .theribbon {
   position: relative;
-  width: 80px;
+  width: 100px;
   padding: 6px 20px 6px 20px;
   margin: 30px 10px 10px -71px;
   color: #fff;
