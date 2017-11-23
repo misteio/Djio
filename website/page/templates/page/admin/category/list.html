@@ -1,0 +1,104 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Category" %}{% endblock %}
+{% block title_block %}{% trans "Wishlist Category" %}<small>{% trans "List" %}</small>{% endblock %}
+{% block breadcrumb %}
+    <li><a href="#">{% trans "Category" %}</a></li>
+    <li class="active">{% trans "List" %}</li>
+{% endblock %}
+
+{% block deleted %}
+        <li class="dropdown messages-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-trash"></i>
+                <span class="label label-danger">{{ deleted_categories.count }}</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="header">{{ deleted_categories.count }} {% trans "deleted posts" %}</li>
+                {% for deleted_category in deleted_categories|slice:":10" %}
+                    <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                            <li><!-- start message -->
+                                <a href="{% url 'wishlist:category_revert_admin' category_id=deleted_category.id history_id=deleted_category.history_id %}">
+                                    <div class="pull-right text-danger">{{ deleted_category.title }}</div><br/>
+                                    <small class="text-muted"><i class="fa fa-clock-o"></i> {{ deleted_category.history_date }} </small>
+                                    <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ deleted_category.history_user.username }}</div>
+                                </a>
+                            </li>
+                            <!-- end message -->
+                        </ul>
+                    </li>
+                {% endfor %}
+                <li class="footer"><a href="#">{% trans "See All Deleted categories" %}</a></li>
+            </ul>
+        </li>
+{% endblock %}
+
+
+{% block content %}
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <a href="{% url 'wishlist:category_create_admin' %}"><button type="button" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> {% trans "Create a new Category" %}</button></a>
+                <a href="{% url 'wishlist:item_create_admin' %}"><button type="button" class="btn btn-sm btn-success"><i class="fa fa-pencil"></i> {% trans "Create a new Item" %}</button></a>
+            </h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="blog-list" class="table table-bordered table-striped display nowrap" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>{% trans "Title" %}</th>
+                        <th>{% trans "Slug" %}</th>
+                        <th>{% trans "Creation Date" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th>{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr>
+                        <td>{{ category.title }}</td>
+                        <td>{{ category.slug }}</td>
+                        <td>{{ category.created_at }}</td>
+                        <td>
+                            {% if category.status == 'draft' %}
+                                <span class="label label-warning">{% trans "Draft" %}</span>
+                            {% else %}
+                                <span class="label label-success">{% trans "Published" %}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'wishlist:category_update_admin' category_id=category.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
+                            <a href="#" onClick="return false"><button type="button" class="btn btn-danger" data-id="{{ post.id }}" data-title="{{ category.title }}"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+    <!-- /.box -->
+{% endblock %}
+
+{% block extrafoot %}
+    <script>
+        $('#blog-list').DataTable({
+            rowReorder: {
+                selector: 'td:nth-child(2)'
+            },
+            responsive: true
+        })
+
+        $("#blog-list").on('click', '.btn-danger', function(){
+            activeClickDelete(Urls['wishlist:category_delete_admin']({ post_id:  $( this ).data('id')}), $( this ).data('title'));
+        })
+    </script>
+{% endblock %}

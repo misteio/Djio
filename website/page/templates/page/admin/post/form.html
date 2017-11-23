@@ -1,0 +1,147 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block title %}Create{% endblock %}
+{% block title_block %}{{ action }} Page Post{% endblock %}
+{% block breadcrumb %}
+    <li><a href="#">{% trans "Page Post" %}</a></li>
+    <li class="active">{{ action }}</li>
+{% endblock %}
+{% block history %}
+    {% if '/update/' in request.path %}
+        <li class="dropdown messages-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-history"></i>
+            <span class="label label-success">{{ historical_items.count }}</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="header">You have {{ item_history.count }} versions available</li>
+                {% for historical_post in historical_posts|slice:":10" %}
+                <li>
+                    <!-- inner menu: contains the actual data -->
+                    <ul class="menu">
+                        <li>
+                            <!-- start message -->
+                            <a href="{% url 'page:post_revert_admin' post_id=historical_post.id history_id=historical_post.history_id %}">
+                                <small class="text-muted"><i class="fa fa-clock-o"></i> {{ historical_post.history_date }} </small>
+                                <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ historical_post.history_user.username }}</div>
+                            </a>
+                        </li>
+                        <!-- end message -->
+                    </ul>
+                </li>
+                {% endfor %}
+                <li class="footer"><a href="#">{% trans "See All Versions" %}</a></li>
+            </ul>
+        </li>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div id="modal-editor" class="modais" data-izimodal-title="Edit HTML Page" data-izimodal-iframeURL="/admin/editor"></div>
+        {% crispy form %}
+    </div>
+    <div id="modal-category">
+        {% crispy category_form %}
+    </div>
+
+
+{% endblock %}
+
+{% block extrafoot %}
+    <script>
+        $("#modal-editor").iziModal({
+            iframe : true,
+            fullscreen: true,
+            headerColor: '#000000',
+            width: '100%',
+            iframeHeight: '1000px',
+            zindex: 9999,
+          });
+
+        $('#open-editor-btn').click(function() {
+          $('#modal-editor').iziModal('open');
+        });
+        function renderHtml(){
+            var doc = document.getElementById('body-iframe').contentWindow.document;
+            doc.open();
+            doc.write($("#body").val());
+            doc.close();
+
+            var cssLink = document.createElement("link");
+            cssLink.href = 'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css';
+            cssLink.rel = "stylesheet";
+            cssLink.type = "text/css";
+            frames['body-iframe'].document.head.appendChild(cssLink);
+
+            var cssLink2 = document.createElement("link");
+            cssLink2.href = "{% static 'css/front/style.default.css' %}";
+            cssLink2.rel = "stylesheet";
+            cssLink2.type = "text/css";
+            frames['body-iframe'].document.head.appendChild(cssLink2);
+
+            $('#modal-editor').iziModal('open');
+        }
+
+        function selectFileAndClose(){
+           $('#modal-file').iziModal('close');
+           $("#image").attr("src", $("#image_input").val());
+        }
+
+        $( document ).ready(function() {
+            $("#image").attr("src", $("#image_input").val());
+            $("#image_input").on('keyup', function(){
+                $("#image").attr("src", $("#image_input").val());
+            });
+
+
+            $("#modal-file").iziModal({
+                iframe : true,
+                fullscreen: true,
+                width: '50%',
+                iframeHeight: '500px',
+                headerColor: '#000000',
+            });
+
+            $('#txtSelectedFile').click(function() {
+                $('#modal-file').iziModal('open');
+            });
+
+            $('#categoryFormSelect').click(function() {
+                $('#modal-category').iziModal('open');
+            });
+
+
+            $("#modal-category").iziModal();
+            var category_form = '#category-form';
+
+
+            $('body').on('submit', category_form, function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: "{% url 'page:category_create_admin_ajax' %}",
+                    type: "POST",
+                    data: $(category_form).serialize(),
+                    success: function(data) {
+                        if (!(data['success'])) {
+                            $(category_form).replaceWith(data['form_html']);
+                            category_form = '#category-form';
+                        } else {
+                            $(category_form).find('.success-message').show();
+                            iziToast.success({
+                                title: 'Success',
+                                message: 'Added category : ' + data.category_title
+                            });
+                            $('#modal-category').iziModal('close');
+                            $("#category_select").append($("<option></option>").attr('selected', 'selected').attr("value", data.category_id).text(data.category_title));
+                        }
+                    },
+                    error: function() {
+                        $(category_form).find('.error-message').show()
+                    }
+                });
+            });
+        });
+</script>
+{% endblock %}

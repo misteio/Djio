@@ -76,7 +76,7 @@ def front_signup(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
             # Create the user profile
-            profile = Profile.objects.create(user=new_user)
+            Profile.objects.create(user=new_user)
             create_action(new_user, 'has created an account')
             return redirect(settings.LOGIN_REDIRECT_URL)
     else:
@@ -98,5 +98,10 @@ def front_edit_profile(request):
             messages.error(request, _('Error updating your profile'))
     else:
         user_form = UserEditForm(instance=request.user)
+        if not hasattr(request.user, 'profile'):
+            Profile.objects.create(user=request.user)
+            create_action(request.user, 'has created a profile')
+
         profile_form = ProfileEditForm(instance=request.user.profile)
+
     return render(request, 'front/users/edit.html', {'user_form': user_form, 'profile_form': profile_form})

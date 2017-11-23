@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load i18n %}
 <!DOCTYPE html>
 <!-- saved from url=(0029)http://grapesjs.com/demo.html -->
 <html lang="en">
@@ -6,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Editor HTML</title>
         <link rel="stylesheet" href="{% static 'css/admin/toastr.min.css' %}">
-        <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
+        <link rel="stylesheet" href="{% static 'css/admin/grapesjs/grapes.css' %}">
         <link rel="stylesheet" href="{% static 'css/admin/grapesjs/grapesjs-preset-webpage.css' %}">
         <link rel="stylesheet" href="{% static 'css/admin/grapesjs/tooltip.css' %}">
         <link rel="stylesheet" href="{% static 'css/admin/grapesjs/perfect-scrollbar.css' %}">
@@ -25,7 +26,7 @@
         <script src="{% static 'js/admin/grapesjs/toastr.min.js' %}"></script>
         <script src="{% static 'js/admin/ckeditor/ckeditor.js' %}"></script>
 
-        <script src="https://unpkg.com/grapesjs"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/grapesjs/0.12.37/grapes.min.js"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-plugin-export.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-plugin-filestack.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-blocks-basic.min.js' %}"></script>
@@ -35,6 +36,8 @@
         <script src="{% static 'js/admin/grapesjs/grapesjs-navbar.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-component-countdown.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapejs-ckeditor.js' %}"></script>
+
+
         <style type="text/css">
             body, html{
             height: 100%;
@@ -171,17 +174,11 @@
         </style>
     </head>
     <body>
+        <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman?integration=custom&type=files&txtFieldId=image_input"></div>
 
         <div id="gjs" style="height:0px; overflow:hidden">
         </div>
         <script type="text/javascript">
-            var lp = './img/';
-            var plp = 'http://placehold.it/350x250/';
-            var images = [
-              lp+'team1.jpg', lp+'team2.jpg', lp+'team3.jpg', plp+'78c5d6/fff/image1.jpg', plp+'459ba8/fff/image2.jpg', plp+'79c267/fff/image3.jpg',
-              plp+'c5d647/fff/image4.jpg', plp+'f28c33/fff/image5.jpg', plp+'e868a2/fff/image6.jpg', plp+'cc4360/fff/image7.jpg',
-              lp+'work-desk.jpg', lp+'phone-app.png', lp+'bg-gr-v.png'
-            ];
 
             var editor  = grapesjs.init({
                 canvas: {
@@ -204,31 +201,19 @@
                     key: 'AYmqZc2e8RLGLE7TGkX3Hz',
                   },
                     'gjs-plugin-ckeditor': {
-                                options: {
-
+                        options: {
                             filebrowserImageUploadUrl: '/admin/ckupload/',
                             language: 'fr',
                             customConfig: '{% static "js/admin/ckeditor/ckeditor_config.js" %}',
                             extraPlugins: 'embed,autoembed,image2,justify,templates,pageinsertion,autogrow',
-                                }
+                        }
                     }
-                },
-
-                // Insert some default images
-                assetManager: {
-                  assets: images
                 },
 
                 storageManager:{
                   storeComponents: 1,
                   storeStyles: 1,
-                   //  type: 'remote',
                     autosave: false,
-                    //urlStore: 'dragdrop/edit/id',
-                    //urlLoad: '/admin/json-editor',
-                    //contentTypeJson: true,
-                    //storeHtml: true,
-                    //storeCss: true,
                 },
 
                 // Configure style
@@ -585,9 +570,36 @@
                     //$(window.parent.document).find('#id_title').attr('value',editor.runCommand('gjs-get-inlined-html'));
                     var s = window.parent.document.getElementById('body');
                     s.value = editor.getHtml();
-                    window.parent.selectFileAndClose();
+                    window.parent.renderHtml();
                 },
             });
+
+
+            cmdm.add('open-assets', {
+                run: function(em, sender, opts ){
+                    const modal = editor.Modal;
+                    const title = "{% trans 'select file' %}";
+                    //console.log(opts.target.set('src', 'http://static2.businessinsider.com/image/564cc42e2491f99d008b63b7/calvin-and-hobbes-just-turned-30--heres-the-history-of-the-strip-and-its-mysterious-creator-bill-watterson.jpg'))
+
+                    current_target = opts.target
+                    modal.setTitle(title);
+                    modal.setContent('<iframe width="100%" height="500px" src="/admin/roxyfileman?integration=custom&type=images&txtFieldId=image_input"> </iframe>');
+                    modal.open();
+
+                },
+            });
+            /*editor.Commands.add('open-assets', {
+                 run(editor) {
+
+                }
+            })*/
+            var current_target = {};
+            function selectFileAndClose(path){
+                console.log(path)
+                console.log('/media/' + path)
+                current_target.set('src', '/media/' + path)
+                editor.Modal.close()
+            }
         </script>
     </body>
 </html>

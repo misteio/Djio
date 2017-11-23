@@ -1,0 +1,134 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}My Page Posts{% endblock %}
+{% block title_block %}{% trans "Page Posts" %}<small>{% trans "List" %}</small>{% endblock %}
+{% block breadcrumb %}
+    <li><a href="#">{% trans "Page" %}</a></li>
+    <li><a href="#">{% trans "Post" %}</a></li>
+    <li class="active">{% trans "List" %}</li>
+{% endblock %}
+
+{% block deleted %}
+        <li class="dropdown messages-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-trash"></i>
+                <span class="label label-danger">{{ deleted_posts.count }}</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="header">{{ deleted_posts.count }} {% trans "deleted posts" %}</li>
+                {% for deleted_post in deleted_posts|slice:":10" %}
+                    <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                            <li><!-- start message -->
+                                <a href="{% url 'page:post_revert_admin' post_id=deleted_post.id history_id=deleted_post.history_id %}">
+                                    <div class="pull-right text-danger">{{ deleted_post.title }}</div><br/>
+                                    <small class="text-muted"><i class="fa fa-clock-o"></i> {{ deleted_post.history_date }} </small>
+                                    <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ deleted_post.history_user.username }}</div>
+                                </a>
+                            </li>
+                            <!-- end message -->
+                        </ul>
+                    </li>
+                {% endfor %}
+                <li class="footer"><a href="#">{% trans "See All Deleted Posts" %}</a></li>
+            </ul>
+        </li>
+{% endblock %}
+
+
+{% block content %}
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <a href="{% url 'page:post_create_admin' %}"><button type="button" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> {% trans "Create a new Post" %}</button></a>
+                <a href="{% url 'page:category_create_admin' %}"><button type="button" class="btn btn-sm btn-success"><i class="fa fa-pencil"></i> {% trans "Create a new Category" %}</button></a>
+            </h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="post-list" class="table table-bordered table-striped display nowrap" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>{% trans "Position" %}</th>
+                        <th>{% trans "Id" %}</th>
+                        <th>{% trans "Title" %}</th>
+                        <th>{% trans "Author" %}</th>
+                        <th>{% trans "Publication Date" %}</th>
+                        <th>{% trans "Category" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th>{% trans "Actions" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td>{{ post.order }}</td>
+                        <td>{{ post.id }}</td>
+                        <td><i class="fa fa-arrows"></i> {{ post.title }}</td>
+                        <td>{{ post.author }}</td>
+                        <td>{{ post.publish }}</td>
+                        <td>{{ post.category }}</td>
+                        <td>
+                            {% if post.status == 'draft' %}
+                                <span class="label label-warning">{% trans "Draft" %}</span>
+                            {% else %}
+                                <span class="label label-success">{% trans "Published" %}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'page:post_update_admin' post_id=post.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
+                            <a href="{% url 'page:post_clone_admin' post_id=post.id %}"><button type="button" class="btn btn-warning"><i class="fa fa-clone"></i> {% trans "Clone" %}</button></a>
+                            <a href="#" onClick="return false"><button type="button" class="btn btn-danger" data-id="{{ post.id }}" data-title="{{ post.title }}"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+    <!-- /.box -->
+{% endblock %}
+
+{% block extrafoot %}
+    <script>
+        var table = $('#post-list').DataTable({
+            rowReorder: {
+                selector: 'td:nth-child(2)'
+            },
+            responsive: true,
+            "columnDefs": [
+            {
+                "targets": [ 1 ],
+                "visible": false,
+                "searchable": false
+            },
+        ]
+        })
+
+         table.on( 'row-reorder', function ( e, diff, edit ) {
+            var rowData = table.row( diff[0].node ).data();
+            $.ajax({
+              url: Urls['page:post_swap_position_admin']({ post_id: rowData[1], position: diff[0].newData}),
+              context: document.body
+            }).done(function(data) {
+                console.log(data)
+              iziToast.success({
+                    title: 'Success',
+                    message: data.post_title + ' {% trans "has be moved to position " %}' + data.position
+                });
+            });
+
+        } );
+
+        $("#post-list").on('click', '.btn-danger', function(){
+            activeClickDelete(Urls['page:post_delete_admin']({ post_id:  $( this ).data('id')}), $( this ).data('title'));
+        })
+    </script>
+{% endblock %}

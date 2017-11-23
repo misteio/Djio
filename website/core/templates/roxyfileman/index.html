@@ -164,7 +164,7 @@ function FileSelected(file){
   var fieldId = RoxyUtils.GetUrlParam('txtFieldId');
 
   $(window.parent.document).find('#' + fieldId).attr('value', '/media/' + file.fullPath);
-  window.parent.selectFileAndClose();
+  window.parent.selectFileAndClose(file.fullPath);
 }
 
 

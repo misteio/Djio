@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load thumbnail %}
 <!-- Left side column. contains the sidebar -->
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -6,7 +7,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{% static 'img/admin/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
+                <img src="/{% thumbnail user.profile.photo 160x160 crop %}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>{{ user.username }}</p>
