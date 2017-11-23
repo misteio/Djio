@@ -182,7 +182,7 @@
 
             var editor  = grapesjs.init({
                 canvas: {
-                    styles: ['http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css','http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', 'http://localhost:8000/static/css/front/style.default.css'],
+                    styles: ['{{ config.WEBSITE_MEDIA_URL }}{{ config.CSS_FRONT_COMPRESSED }}'],
                     scripts: ['https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', 'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js']
                 },
 

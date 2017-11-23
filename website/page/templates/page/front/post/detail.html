@@ -1,0 +1,16 @@
+{% extends "front/base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans "Error 404" %}{% endblock %}
+
+
+{% block content %}
+    {{ post.body | safe}}
+
+{% endblock %}
+
+{% block extrafoot %}
+
+{% endblock %}

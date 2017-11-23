@@ -21,5 +21,5 @@ urlpatterns = [
 
     # pages front
     #url(r'^(?P<category_slug>[-\w]+)/(?P<page_slug>[-\w]+)$', views.page_post_list_category, name='post_list_category_front'),
-    url(r'^(?P<page_slug>[-\w]+)$', views.post_detail, name='page_post_detail_front'),
+    url(r'^(?P<post_slug>[-\w]+)$', views.post_detail, name='page_post_detail_front'),
 ]

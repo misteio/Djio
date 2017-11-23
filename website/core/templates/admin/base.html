@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load thumbnail %}
+{% load compress %}
 
 <!DOCTYPE html>
 <html>
@@ -11,16 +12,17 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>{% block title %}{% endblock %}</title>
     <script src="{% static 'js/admin/pace.js' %}"></script>
-    <link href="{% static 'css/admin/pace.css' %}" rel="stylesheet">
-    <link href="{% static 'css/admin/bootstrap.css' %}" rel="stylesheet">
-    <link href="{% static 'css/admin/font-awesome.css' %}" rel="stylesheet">
-    <link href="{% static 'css/admin/ionicons.css' %}" rel="stylesheet">
-    <link href="{% static 'css/admin/dataTables.bootstrap.css' %}" rel="stylesheet">
-    <link href="{% static 'css/admin/AdminLTE.css' %}" rel="stylesheet">
-    <link href="{% static 'css/admin/iziModal.css' %}" rel="stylesheet">
-    <link href="{% static 'css/admin/izitoast.css' %}" rel="stylesheet">
-    <link href="{% static 'css/admin/skins/_all-skins.min.css' %}" rel="stylesheet">
-
+    {% compress css file admin_css %}
+        <link href="{% static 'css/admin/pace.css' %}" rel="stylesheet">
+        <link href="{% static 'css/admin/bootstrap.css' %}" rel="stylesheet">
+        <link href="{% static 'css/admin/font-awesome.css' %}" rel="stylesheet">
+        <link href="{% static 'css/admin/ionicons.css' %}" rel="stylesheet">
+        <link href="{% static 'css/admin/dataTables.bootstrap.css' %}" rel="stylesheet">
+        <link href="{% static 'css/admin/AdminLTE.css' %}" rel="stylesheet">
+        <link href="{% static 'css/admin/iziModal.css' %}" rel="stylesheet">
+        <link href="{% static 'css/admin/izitoast.css' %}" rel="stylesheet">
+        <link href="{% static 'css/admin/skins/_all-skins.min.css' %}" rel="stylesheet">
+    {% endcompress %}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

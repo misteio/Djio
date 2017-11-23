@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "623579407a1cdbc1c0b35483e4d40d998e195683b1f40aa41757357e1fa89fc7"
+            "sha256": "34c21a8c565ae4a771140eee0f3a79bf61247c4f9304fa159a57bb69a2ea6bff"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -61,6 +61,27 @@
             ],
             "version": "==1.2"
         },
+        "django-appconf": {
+            "hashes": [
+                "sha256:ddab987d14b26731352c01ee69c090a4ebfc9141ed223bef039d79587f22acd9",
+                "sha256:6a4d9aea683b4c224d97ab8ee11ad2d29a37072c0c6c509896dd9857466fb261"
+            ],
+            "version": "==1.0.2"
+        },
+        "django-compressor": {
+            "hashes": [
+                "sha256:7732676cfb9d58498dfb522b036f75f3f253f72ea1345ac036434fdc418c2e57",
+                "sha256:9616570e5b08e92fa9eadc7a1b1b49639cce07ef392fc27c74230ab08075b30f"
+            ],
+            "version": "==2.2"
+        },
+        "django-constance": {
+            "hashes": [
+                "sha256:8e906b084dbfd2ecc9aaa682865314221849718e126d5bc3bff0264ffed4c880",
+                "sha256:6eec9f3ac4e5657b93e64f3379181d1e727088df10dd34f0398cd12119b9f0b0"
+            ],
+            "version": "==2.0.0"
+        },
         "django-crispy-forms": {
             "hashes": [
                 "sha256:d37fe72eb550b41ba651c06293fb861d5a9e6e3ada23304718858cd6250d258d",
@@ -107,6 +128,13 @@
                 "sha256:740b89a3a6ecbee4ee3e227a00b4300f167c7290781b323c8be6dc0985c60e48"
             ],
             "version": "==1.4.3"
+        },
+        "django-picklefield": {
+            "hashes": [
+                "sha256:57e4349c7f75eab08fe7ceb11e7135644fdf771e2777a754db4f07e5c63c191f",
+                "sha256:61e3ba7f6df82d8df9e6be3a8c55ef589eb3bf926c3d25d2b7949b07eae78354"
+            ],
+            "version": "==1.0.0"
         },
         "django-polymorphic": {
             "hashes": [
@@ -253,6 +281,12 @@
             ],
             "version": "==2017.2"
         },
+        "rcssmin": {
+            "hashes": [
+                "sha256:ca87b695d3d7864157773a61263e5abb96006e9ff0e021eff90cbe0e1ba18270"
+            ],
+            "version": "==1.0.6"
+        },
         "requests": {
             "hashes": [
                 "sha256:6a1b267aa90cac58ac3a765d067950e7dbbf75b1da07e895d1f594193a40a38b",
@@ -266,6 +300,12 @@
                 "sha256:883ac416757eada6d3d07054ec7092ac21c7f35cb1d2cf82faf205637081f468"
             ],
             "version": "==0.8.0"
+        },
+        "rjsmin": {
+            "hashes": [
+                "sha256:dd9591aa73500b08b7db24367f8d32c6470021f39d5ab4e50c7c02e4401386f1"
+            ],
+            "version": "==1.0.12"
         },
         "six": {
             "hashes": [

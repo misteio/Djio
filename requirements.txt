@@ -8,7 +8,7 @@ django-polymorphic==1.0.2
 django-roxyfileman==1.142.3
 django-simple-history==1.9.0
 django-widget-tweaks==1.4.1
-easy-thumbnails==2.3
+easy-thumbnails==2.4.1
 Pillow==4.3.0
 pprint==0.1
 pytz==2017.2
@@ -19,4 +19,6 @@ django-jsonview==1.1.0
 django-ordered-model==1.4.3
 django-anymail==1.2
 python-resize-image
-
+django_compressor==2.2
+django-constance==2.0.0
+django-constance[database]

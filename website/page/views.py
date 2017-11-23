@@ -15,7 +15,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.http import Http404
 
-
 ###################################################################################
 ################################### BACKOFFICE ####################################
 ###################################################################################
@@ -166,25 +165,8 @@ def page_post_list_category(request, category_slug):
     return render(request, 'wishlist/front/items/list.html', {'categories': categories, 'items': items })
 
 
-def post_detail(request, category_slug, item_slug):
-    categories = Category.objects.annotate(num_items=Count('category_items')).filter(status='published')
+def post_detail(request, post_slug):
+    post = get_object_or_404(Post.objects.filter(slug=post_slug))
 
-    item = get_object_or_404(Post.objects.filter(
-        category__slug=category_slug, slug=item_slug
-    ).prefetch_related('participate'))
-
-    form = BookItemForm(request.POST or None)
-
-    if request.method == 'POST':
-        if form.is_valid():
-            item = Item.objects.filter(slug=item_slug).first()
-            item.participate.add(request.user)
-            messages.success(request, _("You have successfully reserved : " + item.title))
-            create_action(request.user, 'has book a gift', item)
-
-            send_mail(_("Message from " + request.user.username + ': ' + request.user.email), form.cleaned_data['message'],
-                      settings.DEFAULT_FROM_EMAIL, settings.EMAIL_RECIPIENTS)
-            return redirect('wishlist:items_list_front')
-
-    return render(request, 'wishlist/front/items/detail.html', {'categories': categories, 'item': item, 'form': form })
+    return render(request, 'page/front/post/detail.html', {'post': post })
 
