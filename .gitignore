@@ -49,3 +49,5 @@ coverage.xml
 docs/_build/
 /static/
 /media/
+
+\.env

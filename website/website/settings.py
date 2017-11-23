@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 from django.utils.translation import ugettext_lazy as _
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,14 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2^_lhmew@+%x5_%@=^r)bh-m!mzr#ztk^p+$j=b#2ah7%##fca'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
 
 # Application definition
 
@@ -44,9 +43,16 @@ INSTALLED_APPS = [
     'django_js_reverse',
     'roxyfileman',
     'social_django',
+    'ordered_model',
+    'anymail',
+    'easy_thumbnails',
+    'compressor',
+    'constance',
+    'constance.backends.database',
     'core',
     'blog',
     'wishlist',
+    'page',
 ]
 
 MIDDLEWARE = [
@@ -73,12 +79,14 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-
 INTERNAL_IPS = ["127.0.0.1"]
 
-STATIC_ROOT = '/media/miste/Lastorm/Gits/Djio/static/'
-MEDIA_ROOT = '/media/miste/Lastorm/Gits/Djio/media/'
+ENV_PATH = os.path.abspath(os.path.dirname(__file__ + '/../../../'))
+
+STATIC_ROOT = os.path.join(ENV_PATH, 'static/')
+MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
 MEDIA_URL = 'media/'
+MEDIA_HOST = 'http://localhost:8000/'
 
 ROOT_URLCONF = 'website.urls'
 
@@ -89,6 +97,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'constance.context_processors.config',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -173,14 +182,52 @@ ROXY_INTEGRATION = 'ckeditor'
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = '/wishlist'
+LOGIN_REDIRECT_URL = '/wishlist/'
 
-SOCIAL_AUTH_FACEBOOK_KEY = ''  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = ''  # App Secret
+SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, name, email, age_range',
 }
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+ANYMAIL = {
+    "MAILGUN_API_KEY": config('MAILGUN_API_KEY'),
+    "MAILGUN_SENDER_DOMAIN": config('MAILGUN_SENDER_DOMAIN'),
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+
+EMAIL_RECIPIENTS = [(config('EMAIL_RECIPIENTS1')), (config('EMAIL_RECIPIENTS2'))]
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'wishlist_thumbnail': {'size': (250, 250), 'crop': True},
+    },
+}
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+COMPRESS_ENABLED = True
+COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.rCSSMinFilter']
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+    }
+}
+
+CONSTANCE_CONFIG = {
+    'CSS_FRONT_COMPRESSED': ('/static/CACHE/css/yourfile.css', 'Url of file css compressed', str),
+    'WEBSITE_MEDIA_URL': ('http://localhost:8000', 'Url of file css compressed', str),
+}
+CONSTANCE_DATABASE_CACHE_BACKEND = 'default'

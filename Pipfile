@@ -34,3 +34,4 @@ django-anymail = "==1.2"
 python-resize-image = "*"
 django_compressor = "==2.2"
 django-constance = {extras = ["database"]}
+python-decouple = "==3.1"
