@@ -35,6 +35,18 @@ class Category(Timestamped, MPTTModel):
     class MPTTMeta:
         order_insertion_by = ['title']
 
+    def get_slug_list(self):
+        try:
+            ancestors = self.get_ancestors(include_self=True)
+        except:
+            ancestors = []
+        else:
+            ancestors = [i.slug for i in ancestors]
+        slugs = []
+        for i in range(len(ancestors)):
+            slugs.append('/'.join(ancestors[:i + 1]))
+        return slugs
+
 
 class Item(Timestamped, OrderedModel):
     STATUS_CHOICES = (
