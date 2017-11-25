@@ -2,7 +2,12 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 
-{% block title %}Edit your account{% endblock %}
+{% block header %}
+    <title>{% trans 'Edit profile' %} | {{ config.PROJECT_NAME }}</title>
+
+    <meta name="description" content="{% trans 'Edition of your profil' %}">
+
+{% endblock %}
 
 {% block content %}
 <div id="heading-breadcrumbs">

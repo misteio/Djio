@@ -11,9 +11,8 @@
     <meta name="googlebot" content="index,follow,snippet,archive">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Universal - All In 1 Template</title>
+    {% block header %}{% endblock %}
 
-    <meta name="keywords" content="">
     <script src="{% static 'js/front/pace.js' %}"></script>
     {% compress css file front_css%}
         <link href="{% static 'css/front/pace.css' %}" rel="stylesheet">
@@ -25,6 +24,8 @@
         <link href="{% static 'css/front/izitoast.css' %}" rel="stylesheet">
         <!-- Css animations  -->
         <link href="{% static 'css/front/animate.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/owl.theme.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/owl.carousel.css' %}" rel="stylesheet">
 
         <!-- Theme stylesheet, if possible do not edit this stylesheet -->
         <link href="{% static 'css/front/style.default.css' %}" rel="stylesheet" id="theme-stylesheet">
@@ -60,7 +61,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-5 contact">
-                            <p class="hidden-sm hidden-xs">Contact us on +420 777 555 333 or hello@universal.com.</p>
+                            <p class="hidden-sm hidden-xs"><h5 style="color: #FFF;">Noah WishList</h5></p>
                             <p class="hidden-md hidden-lg"><a href="#" data-animate-hover="pulse"><i class="fa fa-phone"></i></a>  <a href="#" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
                             </p>
                         </div>
@@ -100,7 +101,7 @@
                         <div class="navbar-header">
 
                             <a class="navbar-brand home" href="index.html">
-                                <img src="{% static 'img/front/logo.png' %}" alt="Universal logo" class="hidden-xs hidden-sm">
+                                <img src="{{ config.LOGO_URL }}" alt="logo" class="hidden-xs hidden-sm" width="100px">
                                 <img src="img/front/logo-small.png" alt="Universal logo" class="visible-xs visible-sm"><span class="sr-only">Universal - go to homepage</span>
                             </a>
                             <div class="navbar-buttons">
@@ -175,7 +176,7 @@ _________________________________________________________ -->
         <div id="get-it">
             <div class="container">
                 <div class="col-md-8 col-sm-12">
-                    <h3>Do you want cool website like this one?</h3>
+                    <h3>Merci à tous pour Noah !!</h3>
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <a href="#" class="btn btn-template-transparent-primary">Buy this template now</a>
@@ -236,7 +237,7 @@ _________________________________________________________ -->
     <script src="{% static 'js/front/jquery.parallax-1.1.3.js' %}"></script>
     <script src="{% static 'js/front/js.cookie.js' %}"></script>
     <script src="{% static 'js/front/front.js' %}"></script>
-
+    <script src="{% static 'js/front/owl.carousel.js' %}"></script>
 
     <script>
     $(document).ready(function () {

@@ -167,6 +167,9 @@ def page_post_list_category(request, category_slug):
 
 def post_detail(request, post_slug):
     post = get_object_or_404(Post.objects.filter(slug=post_slug))
-
     return render(request, 'page/front/post/detail.html', {'post': post })
 
+
+def home_page(request):
+    post = Post.objects.filter(slug='home').first()
+    return render(request, 'page/front/post/detail.html', {'post': post })

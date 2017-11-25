@@ -1,18 +1,18 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9e59ef6a4e978497bea8320870322b5d9017650bab6824ed4810c4d2aa2ec20b"
+            "sha256": "879c16d5ff3437f72b0cebae2d529de18e06d75be65cc894b8cc457ab8549b58"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
-            "implementation_version": "3.5.3",
+            "implementation_version": "3.5.2",
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "4.9.0-deepin4-amd64",
+            "platform_release": "4.10.0-32-generic",
             "platform_system": "Linux",
-            "platform_version": "#1 SMP PREEMPT Deepin 4.9.8-4 (2017-04-17)",
-            "python_full_version": "3.5.3",
+            "platform_version": "#36~16.04.1-Ubuntu SMP Wed Aug 9 09:19:02 UTC 2017",
+            "python_full_version": "3.5.2",
             "python_version": "3.5",
             "sys_platform": "linux"
         },
@@ -170,6 +170,13 @@
             ],
             "version": "==2.4.1"
         },
+        "gunicorn": {
+            "hashes": [
+                "sha256:75af03c99389535f218cc596c7de74df4763803f7b63eb09d77e92b3956b36c6",
+                "sha256:eee1169f0ca667be05db3351a0960765620dad53f53434262ff8901b68a1b622"
+            ],
+            "version": "==19.7.1"
+        },
         "idna": {
             "hashes": [
                 "sha256:8c7309c718f94b3a625cb648ace320157ad16ff131ae0af362c9f21b80ef6ec4",
@@ -259,6 +266,13 @@
                 "sha256:1317df14b43efee4337a4aa02914bf004f010cd56d6c4bd894e6474ec8c4fe2d"
             ],
             "version": "==3.1"
+        },
+        "python-openid": {
+            "hashes": [
+                "sha256:92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef",
+                "sha256:c2d133e47e0a7705c9272eef00d7a09c174f5bf17a127fed8e2c6499556cc782"
+            ],
+            "version": "==2.2.5"
         },
         "python-resize-image": {
             "hashes": [

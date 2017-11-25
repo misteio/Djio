@@ -214,7 +214,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.rCSSMinFilter']
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
@@ -229,5 +229,7 @@ CACHES = {
 CONSTANCE_CONFIG = {
     'CSS_FRONT_COMPRESSED': ('/static/CACHE/css/yourfile.css', 'Url of file css compressed', str),
     'WEBSITE_MEDIA_URL': ('http://localhost:8000', 'Url of file css compressed', str),
+    'PROJECT_NAME': ('Project Name', 'name of your project', str),
+    'LOGO_URL': ('http://www.app2serve.com/assets/showcases/images/case-study1/baby1.png', 'Image Logo Type', str),
 }
 CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
