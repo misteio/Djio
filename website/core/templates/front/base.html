@@ -16,28 +16,25 @@
     <script src="{% static 'js/front/pace.js' %}"></script>
     {% compress css file front_css%}
         <link href="{% static 'css/front/pace.css' %}" rel="stylesheet">
-        <link href="{% static 'css/front/roboto.css' %}" rel="stylesheet">
-        <link href="{% static 'css/front/font-awesome.css' %}" rel="stylesheet">
-        <link href="{% static 'css/front/bootstrap.3.3.2.min.css' %}" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/front/custom.css' %}">
-        <link href="{% static 'css/front/iziModal.css' %}" rel="stylesheet">
-        <link href="{% static 'css/front/izitoast.css' %}" rel="stylesheet">
-        <!-- Css animations  -->
-        <link href="{% static 'css/front/animate.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/bootstrap.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/font-awesome.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/icofont.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/owl.carousel.css' %}">
         <link href="{% static 'css/front/owl.theme.css' %}" rel="stylesheet">
-        <link href="{% static 'css/front/owl.carousel.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/owl.transitions.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/jquery.fancybox.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/datepicker.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/odometer-theme-minimal.css' %}" rel="stylesheet">
+        <link href="{% static 'css/front/style.css' %}" rel="stylesheet" id="theme-stylesheet">
 
-        <!-- Theme stylesheet, if possible do not edit this stylesheet -->
-        <link href="{% static 'css/front/style.default.css' %}" rel="stylesheet" id="theme-stylesheet">
-
-        <!-- Custom stylesheet - for your changes -->
-        <link href="{% static 'css/front/custom.css' %}" rel="stylesheet">
     {% endcompress %}
     <!-- Responsivity for older IE -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
     <!-- Favicon and apple touch icons-->
     <link rel="shortcut icon" href="img/front/favicon.ico" type="image/x-icon" />
@@ -53,186 +50,23 @@
 
 <body>
 
-
-    <div id="all">
-        <header>
-            <!-- *** TOP *** -->
-            <div id="top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-5 contact">
-                            <p class="hidden-sm hidden-xs"><h5 style="color: #FFF;">Noah WishList</h5></p>
-                            <p class="hidden-md hidden-lg"><a href="#" data-animate-hover="pulse"><i class="fa fa-phone"></i></a>  <a href="#" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
-                            </p>
-                        </div>
-                        <div class="col-xs-7">
-                            <!-- <div class="social">
-                                <a href="#" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
-                                <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
-                                <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
-                            </div> -->
-                            {% if not request.user.is_authenticated  %}
-                                <div class="login">
-                                    <a href="{% url 'core:front_user_login' %}"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">{% trans 'Sign in' %}</span></a>
-                                    <a href="{% url 'core:front_user_signup' %}"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">{% trans 'Sign up' %}</span></a>
-                                </div>
-                            {% else %}
-                                <div class="login">
-                                    <a href="{% url 'core:front_user_profile_edit' %}"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">{% trans 'Profile' %}</span></a>
-                                    <a href="{% url 'core:front_user_logout' %}"><i class="fa fa-sign-out"></i> <span class="hidden-xs text-uppercase">{% trans 'Logout' %}</span></a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- *** TOP END *** -->
-
-            <!-- *** NAVBAR ***
-    _________________________________________________________ -->
-
-            <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
-
-                <div class="navbar navbar-default yamm" role="navigation" id="navbar">
-
-                    <div class="container">
-                        <div class="navbar-header">
-
-                            <a class="navbar-brand home" href="index.html">
-                                <img src="{{ config.LOGO_URL }}" alt="logo" class="hidden-xs hidden-sm" width="100px">
-                                <img src="{{ config.LOGO_URL }}" alt="logo" class="visible-xs visible-sm" style="width: 100px"><span class="sr-only"></span>
-                            </a>
-                            <div class="navbar-buttons">
-                                <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <i class="fa fa-align-justify"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <!--/.navbar-header -->
-
-                        <div class="navbar-collapse collapse" id="navigation">
-
-                            <ul class="nav navbar-nav navbar-right">
-                                <li>
-                                    <a href="/" class="dropdown-toggle">Home</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'wishlist:items_list_front' %}" class="dropdown-toggle">Wishlist</a>
-                                </li>
-                                <li>
-                                    <a href="/pronostic" class="dropdown-toggle">Pronostic</a>
-                                </li>
-                                <li>
-                                    <a href="/galerie" class="dropdown-toggle">Galerie</a>
-                                </li>
-                                {% if request.user.is_authenticated  %}
-                                <li>
-                                    <a href="{% url 'core:front_user_profile_edit' %}" class="dropdown-toggle">Mon profil</a>
-                                </li>
-                                {% endif %}
-
-                            </ul>
-
-                        </div>
-                        <!--/.nav-collapse -->
-                        <div class="collapse clearfix" id="search">
-
-                            <form class="navbar-form" role="search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                    <span class="input-group-btn">
-                                        <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                        <!--/.nav-collapse -->
-                    </div>
-                </div>
-                <!-- /#navbar -->
-            </div>
-
-            <!-- *** NAVBAR END *** -->
-
-        </header>
-
-        <div id="content">
-            {% block content %}{% endblock %}
-        </div>
-        <!-- /#content -->
-
-
-        <!-- *** GET IT ***
-_________________________________________________________ -->
-
-        <div id="get-it">
-            <div class="container">
-                <div class="col-md-8 col-sm-12">
-                    <h3>Pour recevoir votre faire-part!</h3>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <a href="{% url 'core:front_user_profile_edit' %}" class="btn btn-template-transparent-primary">Remplir mon profil</a>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- *** GET IT END *** -->
-
-
-        <!-- *** FOOTER ***
-_________________________________________________________ -->
-
-
-        <!-- /#footer -->
-
-        <!-- *** FOOTER END *** -->
-
-        <!-- *** COPYRIGHT ***
-_________________________________________________________ -->
-
-        <div id="copyright">
-            <div class="container">
-                <div class="col-md-12">
-                    <p class="pull-left">&copy; 2017. Noah Wishlist</p>
-                    <p class="pull-right">Template by <a href="https://bootstrapious.com">Bootstrapious</a> & <a href="https://fity.cz">Fity.cz</a>
-                         <!-- Not removing these links is part of the license conditions of the template. Thanks for understanding :) If you want to use the template without the attribution links, you can do so after supporting further themes development at https://bootstrapious.com/donate  -->
-                    </p>
-
-                </div>
-            </div>
-        </div>
-        <!-- /#copyright -->
-
-        <!-- *** COPYRIGHT END *** -->
-
-
-
+    <div id="content">
+        {% block content %}{% endblock %}
     </div>
-    <!-- /#all -->
 
-    <!-- #### JAVASCRIPT FILES ### -->
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script>
-        window.jQuery || document.write('<script src="js/jquery-1.11.0.min.js"><\/script>')
-    </script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+    <script src="{% static 'js/front/jquery.min.js' %}"></script>
     <script src="{% static 'js/front/jquery.cookie.js' %}"></script>
-    <script src="{% static 'js/front/waypoints.min.js' %}"></script>
-    <script src="{% static 'js/front/jquery.counterup.min.js' %}"></script>
-    <script src="{% static 'js/front/izitoast.js' %}"></script>
-    <script src="{% static 'js/front/iziModal.js' %}"></script>
-    <script src="{% static 'js/front/masonry.js' %}"></script>
-    <script src="{% static 'js/front/jquery.zoom.js' %}"></script>
-    <script src="{% static 'js/front/jquery.parallax-1.1.3.js' %}"></script>
-    <script src="{% static 'js/front/js.cookie.js' %}"></script>
-    <script src="{% static 'js/front/front.js' %}"></script>
+    <script src="{% static 'js/front/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/front/moment.js' %}"></script>
+    <script src="{% static 'js/front/bootstrap-datepicker.js' %}"></script>
     <script src="{% static 'js/front/owl.carousel.js' %}"></script>
+    <script src="{% static 'js/front/appear.js' %}"></script>
+    <script src="{% static 'js/front/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/front/odometer.min.js' %}"></script>
+    <script src="{% static 'js/front/steller.js' %}"></script>
+    <script src="{% static 'js/front/jquery.bootstrap-touchspin.js' %}"></script>
+    <script src="{% static 'js/front/jquery.elevateZoom-3.0.8.min.js' %}"></script>
+    <script src="{% static 'js/front/custom.js' %}"></script>
 
     <script>
     $(document).ready(function () {
