@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'compressor',
     'constance',
     'constance.backends.database',
+    'mptt',
     'core',
     'blog',
     'wishlist',

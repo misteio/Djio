@@ -1,8 +1,9 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
+{% load mptt_tags %}
 
 {% block title %}{% trans "Category" %}{% endblock %}
-{% block title_block %}{% trans "Wishlist Category" %}<small>{% trans "List" %}</small>{% endblock %}
+{% block title_block %}{% trans "Page Category" %}<small>{% trans "List" %}</small>{% endblock %}
 {% block breadcrumb %}
     <li><a href="#">{% trans "Category" %}</a></li>
     <li class="active">{% trans "List" %}</li>
@@ -21,7 +22,7 @@
                         <!-- inner menu: contains the actual data -->
                         <ul class="menu">
                             <li><!-- start message -->
-                                <a href="{% url 'wishlist:category_revert_admin' category_id=deleted_category.id history_id=deleted_category.history_id %}">
+                                <a href="{% url 'page:category_revert_admin' category_id=deleted_category.id history_id=deleted_category.history_id %}">
                                     <div class="pull-right text-danger">{{ deleted_category.title }}</div><br/>
                                     <small class="text-muted"><i class="fa fa-clock-o"></i> {{ deleted_category.history_date }} </small>
                                     <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ deleted_category.history_user.username }}</div>
@@ -42,8 +43,8 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">
-                <a href="{% url 'wishlist:category_create_admin' %}"><button type="button" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> {% trans "Create a new Category" %}</button></a>
-                <a href="{% url 'wishlist:item_create_admin' %}"><button type="button" class="btn btn-sm btn-success"><i class="fa fa-pencil"></i> {% trans "Create a new Item" %}</button></a>
+                <a href="{% url 'page:category_create_admin' %}"><button type="button" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> {% trans "Create a new Category" %}</button></a>
+                <a href="{% url 'page:post_create_admin' %}"><button type="button" class="btn btn-sm btn-success"><i class="fa fa-pencil"></i> {% trans "Create a new Item" %}</button></a>
             </h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
@@ -75,7 +76,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{% url 'wishlist:category_update_admin' category_id=category.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
+                            <a href="{% url 'page:category_update_admin' category_id=category.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
                             <a href="#" onClick="return false"><button type="button" class="btn btn-danger" data-id="{{ post.id }}" data-title="{{ category.title }}"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
                         </td>
                     </tr>
@@ -86,10 +87,119 @@
         <!-- /.box-footer-->
     </div>
     <!-- /.box -->
+<div id="tree"></div>
+
 {% endblock %}
 
 {% block extrafoot %}
     <script>
+
+     $("#tree").fancytree({
+    extensions: ["dnd", "glyph"],
+    glyph: {
+        preset: "awesome4",
+        map: {}
+      },
+    source: [
+        {% recursetree nodes %}
+            {"key": {{ node.id }}, "title": "{{node.title}}", "tooltip": "Look, a tool tip!",
+            {% if not node.is_leaf_node %}
+                "folder": true, "children": [
+                    {{ children }}
+                ]
+            {% endif %}
+            },
+    {% endrecursetree %}
+],
+
+  dnd: {
+    autoExpandMS: 400,
+    draggable: { // modify default jQuery draggable options
+      zIndex: 1000,
+      scroll: false,
+      containment: "parent",
+      revert: "invalid"
+    },
+    preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+    preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+
+    dragStart: function(node, data) {
+        current_parent = node.parent.key
+        return true;
+    },
+    dragEnter: function(node, data) {
+      /* data.otherNode may be null for non-fancytree droppables.
+       * Return false to disallow dropping on node. In this case
+       * dragOver and dragLeave are not called.
+       * Return 'over', 'before, or 'after' to force a hitMode.
+       * Return ['before', 'after'] to restrict available hitModes.
+       * Any other return value will calc the hitMode from the cursor position.
+       */
+      // Prevent dropping a parent below another parent (only sort
+      // nodes under the same parent):
+//    if(node.parent !== data.otherNode.parent){
+//      return false;
+//    }
+      // Don't allow dropping *over* a node (would create a child). Just
+      // allow changing the order:
+//    return ["before", "after"];
+      // Accept everything:
+      return true;
+    },
+    dragExpand: function(node, data) {
+      // return false to prevent auto-expanding data.node on hover
+    },
+    dragOver: function(node, data) {
+    },
+    dragLeave: function(node, data) {
+    },
+    dragStop: function(node, data) {
+    },
+    dragDrop: function(node, data) {
+      // This function MUST be defined to enable dropping of items on the tree.
+      // data.hitMode is 'before', 'after', or 'over'.
+      // We could for example move the source to the new target:
+
+      data.otherNode.moveTo(node, data.hitMode);
+
+        console.log('current:' + data.otherNode.key)
+        console.log('next or previous:', data.hitMode)
+        console.log('move to:' + node.key)
+        console.log('parent node:' + data.otherNode.parent.key)
+        /*if(current_parent == data.otherNode.parent.key)
+        {
+            console.log('same parent so...')
+        }*/
+
+        if(data.otherNode.parent.key.indexOf('root') !== -1){
+            data.hitMode = 'root';
+        }
+
+        var jqxhr = $.get( "/admin/page/category/move/" + data.otherNode.key + "/" + node.key + "/" + data.hitMode , function() {
+          console.log( "success" );
+        })
+          .done(function() {
+            //console.log( "second success" );
+          })
+          .fail(function() {
+            console.log( "error" );
+          })
+
+
+
+        $("#tree").fancytree("getTree").visit(function(node){
+            node.setExpanded();
+        });
+    }
+  }
+});
+
+        current_parent = '';
+        $("#tree").fancytree("getTree").visit(function(node){
+            node.setExpanded();
+        });
+
+
         $('#blog-list').DataTable({
             rowReorder: {
                 selector: 'td:nth-child(2)'
@@ -98,7 +208,11 @@
         })
 
         $("#blog-list").on('click', '.btn-danger', function(){
-            activeClickDelete(Urls['wishlist:category_delete_admin']({ post_id:  $( this ).data('id')}), $( this ).data('title'));
+            activeClickDelete(Urls['page:category_delete_admin']({ post_id:  $( this ).data('id')}), $( this ).data('title'));
         })
+
+
+
+
     </script>
 {% endblock %}

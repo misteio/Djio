@@ -123,7 +123,7 @@ def config_footer_admin(request):
 def category_list_admin(request):
     categories = Category.objects.all()
     deleted_categories = Category.history.filter(history_type='-').order_by('-history_id')
-    return render(request, 'page/admin/category/list.html', {'categories': categories, 'deleted_categories': deleted_categories})
+    return render(request, 'page/admin/category/list.html', {'categories': categories, 'nodes': categories, 'deleted_categories': deleted_categories})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -180,6 +180,22 @@ def ajax_category_save(request):
     form_html = render_crispy_form(form, context=ctx)
     return {'success': False, 'form_html': form_html}
 
+
+@permission_required(('admin'), '/admin/login')
+@json_view
+def ajax_category_move(request, node_from_id, node_to_id, action):
+    if action == 'after':
+        action = 'right'
+    elif action == 'before':
+        action = 'left'
+    else:
+        action = 'first-child'
+
+    print('node_from:' + node_from_id + ',node_to:' + node_to_id + ',action:' + action)
+    node_from = get_object_or_404(Category, id=node_from_id)
+    node_to = get_object_or_404(Category, id=node_to_id)
+    node_from.move_to(node_to, action)
+    return {'success': True}
 
 ###################################################################################
 ################################### FRONT #########################################

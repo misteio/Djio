@@ -25,13 +25,13 @@ class Category(Timestamped, MPTTModel):
     objects = models.Manager()  # The default manager.
 
     class Meta:
-        ordering = ('-title',)
+        ordering = ('lft',)
 
     def __str__(self):
         return self.title
 
     class MPTTMeta:
-        order_insertion_by = ['title']
+        order_insertion_by = ['lft']
 
 
 class Post(Timestamped, OrderedModel):
