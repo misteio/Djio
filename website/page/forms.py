@@ -143,7 +143,7 @@ class HeaderPageAdminForm(forms.Form):
                 </div><br/><br/>
                 <div class="embed-responsive" style="padding-bottom:20%">
                     <iframe id="body-iframe" name="body-iframe"></iframe>
-                </div>
+                </div> <br><br>
                """),
         Field('body', rows="10", css_class='input-xlarge', id='body', type="hidden"),
         FormActions(
@@ -172,7 +172,7 @@ class FooterPageAdminForm(forms.Form):
                 </div><br/><br/>
                 <div class="embed-responsive" style="padding-bottom:20%">
                     <iframe id="body-iframe" name="body-iframe"></iframe>
-                </div>
+                </div> <br><br>
                """),
         Field('body', rows="10", css_class='input-xlarge', id='body', type="hidden"),
         FormActions(

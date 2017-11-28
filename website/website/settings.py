@@ -232,6 +232,6 @@ CONSTANCE_CONFIG = {
     'PROJECT_NAME': ('Project Name', 'name of your project', str),
     'LOGO_URL': ('http://url/logo_url.png', 'Image Logo Type', str),
     'PAGE_HEADER': ('', 'Header of page', str),
-    'FOOTER_HEADER': ('', 'Header of page', str),
+    'PAGE_FOOTER': ('', 'Footer of page', str),
 }
 CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
