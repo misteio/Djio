@@ -63,7 +63,7 @@
         $('#open-editor-btn').click(function() {
           $('#modal-editor').iziModal('open');
         });
-        function renderHtml(){
+        function renderHtml(init){
             var doc = document.getElementById('body-iframe').contentWindow.document;
             doc.open();
             doc.write($("#body").val());
@@ -75,7 +75,9 @@
             cssLink.type = "text/css";
             frames['body-iframe'].document.head.appendChild(cssLink);
 
-            $('#modal-editor').iziModal('open');
+            if(!init){
+                $('#modal-editor').iziModal('open');
+            }
         }
 
         function selectFileAndClose(){
@@ -84,6 +86,7 @@
         }
 
         $( document ).ready(function() {
+            renderHtml(true);
             $("#image").attr("src", $("#image_input").val());
             $("#image_input").on('keyup', function(){
                 $("#image").attr("src", $("#image_input").val());

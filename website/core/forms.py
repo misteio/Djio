@@ -31,10 +31,10 @@ class LoginForm(forms.Form):
     helper = FormHelper()
     helper.form_show_labels = False
     helper.layout = Layout(
-        Field('username', css_class="form-control input-lg", placeholder="Username"),
-        Field('password', css_class="form-control input-lg", placeholder="Password"),
+        Field('username', css_class="form-control input-lg", placeholder=_("Username")),
+        Field('password', css_class="form-control input-lg", placeholder=_("Password")),
         FormActions(
-            Submit('save_changes', 'Sign In', css_class="btn btn-lg btn-success btn-block"),
+            Submit('save_changes', _('Sign in'), css_class="btn btn-lg btn-success btn-block"),
         ),
         )
 
@@ -62,7 +62,7 @@ class UserRegistrationForm(forms.ModelForm):
                     </div><br/><hr class="colorgraph">
 				'''),
         FormActions(
-            Submit('save_changes', 'Sign up', css_class="btn btn-lg btn-success btn-block"),
+            Submit('save_changes', _('Signup'), css_class="btn btn-lg btn-success btn-block"),
         ),
     )
 

@@ -78,7 +78,9 @@ def front_signup(request):
             # Create the user profile
             Profile.objects.create(user=new_user)
             create_action(new_user, 'has created an account')
+            login(request, new_user,backend='django.contrib.auth.backends.ModelBackend')
             return redirect(settings.LOGIN_REDIRECT_URL)
+
     else:
         user_form = UserRegistrationForm()
     return render(request, 'front/users/signup.html', {'user_form': user_form})

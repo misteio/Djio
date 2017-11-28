@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-25 10:17+0000\n"
+"POT-Creation-Date: 2017-11-25 20:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,108 +18,459 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: blog/forms.py:21
-msgid "Option 1"
+#: website/blog/forms.py:16
+msgid "Body of blog post"
 msgstr ""
 
-#: blog/forms.py:44
+#: website/blog/forms.py:17 website/blog/templates/blog/admin/post/list.html:54
+#: website/page/forms.py:18 website/page/forms.py:100 website/page/forms.py:135
+#: website/page/templates/page/admin/category/list.html:57
+#: website/page/templates/page/admin/post/list.html:60
+#: website/wishlist/forms.py:18 website/wishlist/forms.py:89
+#: website/wishlist/forms.py:124
+#: website/wishlist/templates/wishlist/admin/category/list.html:57
+#: website/wishlist/templates/wishlist/admin/item/list.html:60
+msgid "Title"
+msgstr "Titre"
+
+#: website/blog/forms.py:18 website/blog/templates/blog/admin/post/list.html:55
+#: website/page/forms.py:20 website/page/templates/page/admin/post/list.html:61
+#: website/wishlist/forms.py:20
+#: website/wishlist/templates/wishlist/admin/item/list.html:61
+msgid "Author"
+msgstr "Auteur"
+
+#: website/blog/forms.py:19 website/page/forms.py:21 website/page/forms.py:102
+#: website/page/forms.py:137
+#: website/page/templates/page/admin/category/list.html:58
+#: website/wishlist/forms.py:21 website/wishlist/forms.py:91
+#: website/wishlist/forms.py:126
+#: website/wishlist/templates/wishlist/admin/category/list.html:58
+msgid "Slug"
+msgstr "Slug"
+
+#: website/blog/forms.py:20 website/blog/templates/blog/admin/post/list.html:57
+#: website/page/forms.py:22 website/page/forms.py:103 website/page/forms.py:138
+#: website/page/templates/page/admin/category/list.html:60
+#: website/page/templates/page/admin/post/list.html:64
+#: website/wishlist/forms.py:22 website/wishlist/forms.py:92
+#: website/wishlist/forms.py:127
+#: website/wishlist/templates/wishlist/admin/category/list.html:60
+#: website/wishlist/templates/wishlist/admin/item/list.html:64
+msgid "Status"
+msgstr "Status"
+
+#: website/blog/forms.py:28 website/page/forms.py:34
+#: website/wishlist/forms.py:35
 msgid "Text of body"
-msgstr ""
+msgstr "Corps du texte"
 
-#: blog/forms.py:46
+#: website/blog/forms.py:30 website/page/forms.py:49
+#: website/wishlist/forms.py:37
 msgid "Metadatas"
 msgstr "Métadonnées"
 
-#: blog/templates/blog/admin/post/form.html:3
-msgid "my string"
-msgstr ""
-
-#: blog/templates/blog/admin/post/form.html:8
-#: blog/templates/blog/admin/post/list.html:7
+#: website/blog/templates/blog/admin/post/form.html:8
+#: website/blog/templates/blog/admin/post/list.html:7
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
-#: blog/templates/blog/admin/post/list.html:5
+#: website/blog/templates/blog/admin/post/form.html:35
+#: website/page/templates/page/admin/category/form.html:37
+#: website/page/templates/page/admin/post/form.html:35
+#: website/wishlist/templates/wishlist/admin/category/form.html:37
+#: website/wishlist/templates/wishlist/admin/item/form.html:35
+msgid "See All Versions"
+msgstr "Voir toutes les versions"
+
+#: website/blog/templates/blog/admin/post/list.html:5
 msgid "Blog Post"
-msgstr ""
+msgstr "Entrée de Blog"
 
-#: blog/templates/blog/admin/post/list.html:5
-#: blog/templates/blog/admin/post/list.html:8
+#: website/blog/templates/blog/admin/post/list.html:5
+#: website/blog/templates/blog/admin/post/list.html:8
+#: website/page/templates/page/admin/category/list.html:5
+#: website/page/templates/page/admin/category/list.html:8
+#: website/page/templates/page/admin/post/list.html:5
+#: website/page/templates/page/admin/post/list.html:9
+#: website/wishlist/templates/wishlist/admin/category/list.html:5
+#: website/wishlist/templates/wishlist/admin/category/list.html:8
+#: website/wishlist/templates/wishlist/admin/item/list.html:5
+#: website/wishlist/templates/wishlist/admin/item/list.html:9
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
-#: blog/templates/blog/admin/post/list.html:15
+#: website/blog/templates/blog/admin/post/list.html:18
+#: website/page/templates/page/admin/category/list.html:18
+#: website/page/templates/page/admin/post/list.html:19
+#: website/wishlist/templates/wishlist/admin/category/list.html:18
+msgid "deleted posts"
+msgstr "Posts supprimés"
+
+#: website/blog/templates/blog/admin/post/list.html:34
+msgid "See All Deleted posts"
+msgstr "Voir tous les posts supprimés"
+
+#: website/blog/templates/blog/admin/post/list.html:44
+#: website/page/templates/page/admin/post/list.html:46
 #, fuzzy
 #| msgid "Create a Post"
 msgid "Create a new Post"
 msgstr "Création d'un post"
 
-#: blog/templates/blog/admin/post/list.html:25
-msgid "Title"
-msgstr ""
-
-#: blog/templates/blog/admin/post/list.html:26
-msgid "Author"
-msgstr ""
-
-#: blog/templates/blog/admin/post/list.html:27
+#: website/blog/templates/blog/admin/post/list.html:56
+#: website/page/templates/page/admin/post/list.html:62
+#: website/wishlist/templates/wishlist/admin/item/list.html:62
 msgid "Publication Date"
-msgstr ""
+msgstr "Date de publication"
 
-#: blog/templates/blog/admin/post/list.html:28
-msgid "Status"
-msgstr ""
-
-#: blog/templates/blog/admin/post/list.html:29
+#: website/blog/templates/blog/admin/post/list.html:58
+#: website/page/templates/page/admin/category/list.html:61
+#: website/page/templates/page/admin/post/list.html:65
+#: website/wishlist/templates/wishlist/admin/category/list.html:61
+#: website/wishlist/templates/wishlist/admin/item/list.html:65
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
-#: blog/templates/blog/admin/post/list.html:46
+#: website/blog/templates/blog/admin/post/list.html:69
+#: website/page/templates/page/admin/category/list.html:72
+#: website/page/templates/page/admin/post/list.html:79
+#: website/wishlist/templates/wishlist/admin/category/list.html:72
+#: website/wishlist/templates/wishlist/admin/item/list.html:79
+msgid "Draft"
+msgstr "En attente"
+
+#: website/blog/templates/blog/admin/post/list.html:71
+#: website/page/templates/page/admin/category/list.html:74
+#: website/page/templates/page/admin/post/list.html:81
+#: website/wishlist/templates/wishlist/admin/category/list.html:74
+#: website/wishlist/templates/wishlist/admin/item/list.html:81
+msgid "Published"
+msgstr "Publié"
+
+#: website/blog/templates/blog/admin/post/list.html:75
+#: website/page/templates/page/admin/category/list.html:78
+#: website/page/templates/page/admin/post/list.html:85
+#: website/wishlist/templates/wishlist/admin/category/list.html:78
+#: website/wishlist/templates/wishlist/admin/item/list.html:85
 msgid "Edit"
-msgstr ""
+msgstr "Editer"
 
-#: blog/templates/blog/admin/post/list.html:47 blog/views.py:48
+#: website/blog/templates/blog/admin/post/list.html:76 website/blog/views.py:49
+#: website/page/templates/page/admin/post/list.html:86 website/page/views.py:62
+#: website/wishlist/templates/wishlist/admin/item/list.html:86
+#: website/wishlist/views.py:65
 msgid "Clone"
-msgstr ""
+msgstr "Cloner"
 
-#: blog/templates/blog/admin/post/list.html:48
+#: website/blog/templates/blog/admin/post/list.html:77
+#: website/page/templates/page/admin/category/list.html:79
+#: website/page/templates/page/admin/post/list.html:87
+#: website/wishlist/templates/wishlist/admin/category/list.html:79
+#: website/wishlist/templates/wishlist/admin/item/list.html:87
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
-#: blog/views.py:23
+#: website/blog/views.py:24 website/page/views.py:35
 msgid "You have create a new post"
-msgstr ""
+msgstr "Vous avez créé un nouveau post"
 
-#: blog/views.py:25
+#: website/blog/views.py:26 website/page/views.py:37 website/page/views.py:108
+#: website/wishlist/views.py:40 website/wishlist/views.py:111
 #, fuzzy
 #| msgid "Create a Post"
 msgid "Create"
 msgstr "Création d'un post"
 
-#: blog/views.py:33
+#: website/blog/views.py:34 website/page/views.py:46
 msgid "You have update post : "
-msgstr ""
+msgstr "Vous avez mis à jour ce post: "
 
-#: blog/views.py:37
+#: website/blog/views.py:38 website/page/views.py:50 website/page/views.py:120
+#: website/wishlist/views.py:53 website/wishlist/views.py:123
 msgid "Update"
-msgstr ""
+msgstr "Mise à jour"
 
-#: blog/views.py:45 blog/views.py:57
+#: website/blog/views.py:46 website/blog/views.py:58 website/page/views.py:59
+#: website/page/views.py:72
 msgid "You have clone post : "
-msgstr ""
+msgstr "Vous avez dupliqué ce post : "
 
-#: blog/views.py:60
+#: website/blog/views.py:61 website/page/views.py:75 website/page/views.py:140
+#: website/wishlist/views.py:78 website/wishlist/views.py:143
 msgid "Revert"
-msgstr ""
+msgstr "Revenir"
 
-#: blog/views.py:67
+#: website/blog/views.py:68
 msgid "You have deleted post : "
+msgstr "Vous avez supprimé le post: "
+
+#: website/page/forms.py:17 website/wishlist/forms.py:17
+msgid "Body of Wishlist item"
+msgstr "Corps de la liste de souhait"
+
+#: website/page/forms.py:19 website/page/forms.py:113 website/page/forms.py:148
+#: website/page/templates/page/admin/category/form.html:10
+#: website/page/templates/page/admin/category/list.html:4
+#: website/page/templates/page/admin/category/list.html:7
+#: website/page/templates/page/admin/post/list.html:63
+#: website/wishlist/forms.py:19 website/wishlist/forms.py:102
+#: website/wishlist/forms.py:137
+#: website/wishlist/templates/wishlist/admin/category/form.html:10
+#: website/wishlist/templates/wishlist/admin/category/list.html:4
+#: website/wishlist/templates/wishlist/admin/category/list.html:7
+#: website/wishlist/templates/wishlist/admin/item/list.html:63
+msgid "Category"
+msgstr "Catégorie"
+
+#: website/page/forms.py:23
+msgid "Resume"
+msgstr "Résumé"
+
+#: website/page/forms.py:24 website/wishlist/forms.py:24
+msgid "Image url"
+msgstr "Url de l'image"
+
+#: website/page/forms.py:25
+msgid "Keywords"
+msgstr "Mots clés"
+
+#: website/page/forms.py:101 website/page/forms.py:136
+#: website/wishlist/forms.py:90 website/wishlist/forms.py:125
+msgid "Description"
+msgstr "Description"
+
+#: website/page/forms.py:104 website/page/forms.py:139
+#: website/wishlist/forms.py:93 website/wishlist/forms.py:128
+msgid "Parent"
+msgstr "Parent"
+
+#: website/page/forms.py:170 website/wishlist/forms.py:159
+#: website/wishlist/templates/wishlist/front/items/detail.html:110
+msgid "Write a message"
+msgstr "Ecrire un message"
+
+#: website/page/forms.py:173 website/wishlist/forms.py:162
+#: website/wishlist/templates/wishlist/front/items/detail.html:78
+msgid "Make a gift"
+msgstr "Faire un cadeau"
+
+#: website/page/templates/page/admin/category/form.html:7
+#, fuzzy
+#| msgid "Create a Post"
+msgid "Category Post"
+msgstr "Création d'un post"
+
+#: website/page/templates/page/admin/category/form.html:9
+#: website/page/templates/page/admin/post/list.html:8
+msgid "Post"
+msgstr "Post"
+
+#: website/page/templates/page/admin/category/list.html:5
+#: website/wishlist/templates/wishlist/admin/category/list.html:5
+msgid "Wishlist Category"
+msgstr "Catégorie de la liste de souhait"
+
+#: website/page/templates/page/admin/category/list.html:34
+#: website/wishlist/templates/wishlist/admin/category/list.html:34
+msgid "See All Deleted categories"
+msgstr "Voir toutes les catégories supprimées"
+
+#: website/page/templates/page/admin/category/list.html:45
+#: website/page/templates/page/admin/post/list.html:47
+#: website/wishlist/templates/wishlist/admin/category/list.html:45
+#: website/wishlist/templates/wishlist/admin/item/list.html:47
+#, fuzzy
+#| msgid "Create a Post"
+msgid "Create a new Category"
+msgstr "Création d'un post"
+
+#: website/page/templates/page/admin/category/list.html:46
+#: website/wishlist/templates/wishlist/admin/category/list.html:46
+#: website/wishlist/templates/wishlist/admin/item/list.html:46
+#, fuzzy
+#| msgid "Create a Post"
+msgid "Create a new Item"
+msgstr "Création d'un nouvel Article"
+
+#: website/page/templates/page/admin/category/list.html:59
+#: website/wishlist/templates/wishlist/admin/category/list.html:59
+#, fuzzy
+#| msgid "Create a Post"
+msgid "Creation Date"
+msgstr "Date de création"
+
+#: website/page/templates/page/admin/post/form.html:8
+msgid "Page Post"
 msgstr ""
 
-#: website/settings.py:122
+#: website/page/templates/page/admin/post/list.html:5
+msgid "Page Posts"
+msgstr ""
+
+#: website/page/templates/page/admin/post/list.html:7
+msgid "Page"
+msgstr ""
+
+#: website/page/templates/page/admin/post/list.html:35
+msgid "See All Deleted Posts"
+msgstr "Voir tous les posts supprimés"
+
+#: website/page/templates/page/admin/post/list.html:58
+#: website/wishlist/templates/wishlist/admin/item/list.html:58
+msgid "Position"
+msgstr ""
+
+#: website/page/templates/page/admin/post/list.html:59
+#: website/wishlist/templates/wishlist/admin/item/list.html:59
+msgid "Id"
+msgstr ""
+
+#: website/page/templates/page/admin/post/list.html:124
+#: website/wishlist/templates/wishlist/admin/item/list.html:124
+msgid "has be moved to position "
+msgstr "a été mis à la position"
+
+#: website/page/views.py:82 website/wishlist/views.py:85
+msgid "You have deleted item : "
+msgstr "Vous avez supprimé l'article : "
+
+#: website/page/views.py:106 website/wishlist/views.py:109
+msgid "You have create a new category"
+msgstr "Vous avez créé une nouvelle catégorie"
+
+#: website/page/views.py:116 website/wishlist/views.py:119
+msgid "You have update category : "
+msgstr "Vous avez mis à jour la catégorie : "
+
+#: website/page/views.py:127 website/wishlist/views.py:130
+msgid "You have deleted category : "
+msgstr "Vous avez supprimé la catégorie"
+
+#: website/page/views.py:137 website/wishlist/views.py:140
+msgid "You have revert category : "
+msgstr "Vous avez fais un retour en arrière sur la category : "
+
+#: website/website/settings.py:151
 msgid "English"
 msgstr "Anglais"
 
-#: website/settings.py:123
+#: website/website/settings.py:152
 msgid "French"
 msgstr "Français"
+
+#: website/wishlist/forms.py:23
+msgid "URL of article"
+msgstr "URL de l'article"
+
+#: website/wishlist/forms.py:25
+msgid "Price"
+msgstr "Prix"
+
+#: website/wishlist/forms.py:26
+msgid "Multi participate"
+msgstr "Participation Multiple"
+
+#: website/wishlist/templates/wishlist/admin/category/form.html:7
+msgid "Category Wishlist"
+msgstr "Catégorie de la liste de souhait"
+
+#: website/wishlist/templates/wishlist/admin/category/form.html:9
+#: website/wishlist/templates/wishlist/admin/item/list.html:7
+msgid "Wishlist"
+msgstr "Liste de souhait"
+
+#: website/wishlist/templates/wishlist/admin/item/form.html:8
+msgid "Wishlist Item"
+msgstr ""
+
+#: website/wishlist/templates/wishlist/admin/item/list.html:5
+msgid "Wishlist Items"
+msgstr "Article de la liste de souhait"
+
+#: website/wishlist/templates/wishlist/admin/item/list.html:8
+msgid "Item"
+msgstr "Article"
+
+#: website/wishlist/templates/wishlist/admin/item/list.html:19
+msgid "deleted items"
+msgstr "Articles supprimés"
+
+#: website/wishlist/templates/wishlist/admin/item/list.html:35
+msgid "See All Deleted Items"
+msgstr "Voir tous les articles supprimés"
+
+#: website/wishlist/templates/wishlist/front/items/detail.html:66
+msgid "Participate people, click on Icône for send a message"
+msgstr ""
+"Personnes qui participent au cadeau, cliquez sur l'image pour leur envoyer "
+"un message"
+
+#: website/wishlist/templates/wishlist/front/items/detail.html:77
+msgid "See Product"
+msgstr "Voir le produit"
+
+#: website/wishlist/templates/wishlist/front/items/detail.html:95
+#: website/wishlist/templates/wishlist/front/items/detail.html:118
+msgid "For perform this action you have to"
+msgstr "Pour faire cette action vous devez être "
+
+#: website/wishlist/templates/wishlist/front/items/detail.html:97
+#: website/wishlist/templates/wishlist/front/items/detail.html:120
+msgid "Register now !"
+msgstr "Créer mon compte"
+
+#: website/wishlist/templates/wishlist/front/items/detail.html:98
+#: website/wishlist/templates/wishlist/front/items/detail.html:121
+msgid "It is easy and done in 1&nbsp;minute!"
+msgstr "C'est facile et fait en 1 minute"
+
+#: website/wishlist/templates/wishlist/front/items/detail.html:157
+msgid "Send message to "
+msgstr "Envoyer le message à "
+
+#: website/wishlist/templates/wishlist/front/items/detail.html:179
+msgid "OK"
+msgstr ""
+
+#: website/wishlist/templates/wishlist/front/items/detail.html:180
+msgid "Message send to "
+msgstr "Message envoyé à "
+
+#: website/wishlist/templates/wishlist/front/items/detail.html:185
+msgid "Error"
+msgstr "Erreur"
+
+#: website/wishlist/templates/wishlist/front/items/detail.html:186
+msgid "Message not send, contact the webmaster"
+msgstr "Le message n'a pas été envoyer, contactez le webmaster"
+
+#: website/wishlist/templates/wishlist/front/items/list.html:6
+msgid "Error 404"
+msgstr "Erreur 404"
+
+#: website/wishlist/views.py:38
+#, fuzzy
+#| msgid "Create a Post"
+msgid "You have create a new item"
+msgstr "Vous avez créé un nouvel article"
+
+#: website/wishlist/views.py:49
+msgid "You have update item : "
+msgstr "Vous avez mis à jour l'article"
+
+#: website/wishlist/views.py:62 website/wishlist/views.py:75
+msgid "You have clone item : "
+msgstr "Vous avez cloné l'article"
+
+#: website/wishlist/views.py:190
+msgid "You have successfully reserved : "
+msgstr "Vous avez avec succès réservé : "
+
+#: website/wishlist/views.py:193
+msgid "Message from "
+msgstr "Message de "
+
+#: website/wishlist/views.py:207
+msgid "Noah Wishlist, Message from "
+msgstr "Liste de naissance de Noah, message de "

@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#: website/core/static/js/admin/grapesjs/feathercontrols_en.js:9
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-25 10:17+0000\n"
+"POT-Creation-Date: 2017-11-25 20:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +18,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: core/static/js/admin/core.js:13
-msgid "Metadatas"
-msgstr "Métadonnées"
+
+#: website/core/static/js/admin/core.js:10
+msgid "Are you sure to delete <b>"
+msgstr "Etes vous sûr de vouloir le supprimer ?"
+
+#: website/core/static/js/admin/core.js:13
+msgid "Yes"
+msgstr "Oui"
+
+#: website/core/static/js/admin/core.js:17
+msgid "No"
+msgstr "Non"
+
+#~ msgid "Metadatas"
+#~ msgstr "Métadonnées"

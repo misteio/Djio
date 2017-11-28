@@ -3,173 +3,30 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
 
-{% block title %}{% trans "Error 404" %}{% endblock %}
+{% block header %}
+    <title>{{ item.title }} | {{ config.PROJECT_NAME }}</title>
+
+    <meta name="description" content="{{ item.description }}">
+    <meta name="news_keywords" content="{{ item.keywords }}">
+
+    <meta property="og:image" content="{{ item.og_image }}">
+    <meta name="author" content="{{ item.author }}">
+    <link rel="author" href="{{ item.author }}">
+
+
+    <meta property="og:title" content="{{ item.title }}">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="{{config.WEBSITE_MEDIA_URL}}{{request.get_full_path}}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ config.PROJECT_NAME }}">
+    <meta property="og:description" content="{{ item.description }}">
+
+{% endblock %}
 
 
 {% block content %}
 
-     <div id="content">
-            <div class="container">
-
-                <section class="no-mb">
-                    <div class="row">
-                        <div class="col-md-12">
-
-                            <p class="lead">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean
-                                ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <div class="project owl-carousel">
-                        <div class="item">
-                            <img src="http://universal.ondrejsvestka.cz/1-0/img/main-slider1.jpg" alt="" class="img-responsive">
-                        </div>
-                        <div class="item">
-                            <img class="img-responsive" src="http://universal.ondrejsvestka.cz/1-0/img/main-slider2.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-responsive" src="http://universal.ondrejsvestka.cz/1-0/img/main-slider3.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img class="img-responsive" src="http://universal.ondrejsvestka.cz/1-0/img/main-slider4.jpg" alt="">
-                        </div>
-                    </div>
-                    <!-- /.project owl-slider -->
-                </section>
-
-                <section>
-                    <div class="row portfolio-project">
-                        <div class="col-md-8">
-                            <div class="heading">
-                                <h3>Project description</h3>
-                            </div>
-
-                            <p>Bringing unlocked me an striking ye perceive. Mr by wound hours oh happy. Me in resolution pianoforte continuing we. Most my no spot felt by no. He he in forfeited furniture sweetness he arranging. Me tedious so to behaved
-                                written account ferrars moments. Too objection for elsewhere her preferred allowance her. Marianne shutters mr steepest to me. Up mr ignorant produced distance although is sociable blessing. Ham whom call all lain like.</p>
-
-                            <p>To sorry world an at do spoil along. Incommode he depending do frankness remainder to. Edward day almost active him friend thirty piqued. People as period twenty my extent as. Set was better abroad ham plenty secure had horses.
-                                Admiration has sir decisively excellence say everything inhabiting acceptance. Sooner settle add put you sudden him.</p>
-
-                        </div>
-                        <div class="col-md-4 project-more">
-                            <div class="heading">
-                                <h3>More</h3>
-                            </div>
-                            <h4>Client</h4>
-                            <p>Pietro Filippi</p>
-                            <h4>Services</h4>
-                            <p>Consulting, Webdesign, Print</p>
-                            <h4>Technologies</h4>
-                            <p>PHP, HipHop, Break-dance</p>
-                            <h4>Dates</h4>
-                            <p>10/2013 - 06/2014</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <div class="row portfolio">
-
-                        <div class="col-md-12">
-                            <div class="heading">
-                                <h3>Related projects</h3>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="box-image">
-                                <div class="image">
-                                    <img src="http://universal.ondrejsvestka.cz/1-0/img/portfolio-1.jpg" alt="" class="img-responsive">
-                                </div>
-                                <div class="bg"></div>
-                                <div class="name">
-                                    <h3><a href="portfolio-detail.html">Portfolio box-image</a></h3>
-                                </div>
-                                <div class="text">
-                                    <p class="buttons">
-                                        <a href="portfolio-detail.html" class="btn btn-template-transparent-primary">View</a>
-                                        <a href="#" class="btn btn-template-transparent-primary">Website</a>
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- /.box-image -->
-
-                        </div>
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="box-image">
-                                <div class="image">
-                                    <img src="http://universal.ondrejsvestka.cz/1-0/img/portfolio-2.jpg" alt="" class="img-responsive">
-                                </div>
-                                <div class="bg"></div>
-                                <div class="name">
-                                    <h3><a href="portfolio-detail.html">Portfolio box-image</a></h3>
-                                </div>
-                                <div class="text">
-                                    <p class="buttons">
-                                        <a href="portfolio-detail.html" class="btn btn-template-transparent-primary">View</a>
-                                        <a href="#" class="btn btn-template-transparent-primary">Website</a>
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- /.box-image -->
-
-                        </div>
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="box-image">
-                                <div class="image">
-                                    <img src="http://universal.ondrejsvestka.cz/1-0/img/portfolio-3.jpg" alt="" class="img-responsive">
-                                </div>
-                                <div class="bg"></div>
-                                <div class="name">
-                                    <h3><a href="portfolio-detail.html">Portfolio box-image</a></h3>
-                                </div>
-                                <div class="text">
-                                    <p class="buttons">
-                                        <a href="portfolio-detail.html" class="btn btn-template-transparent-primary">View</a>
-                                        <a href="#" class="btn btn-template-transparent-primary">Website</a>
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- /.box-image -->
-
-                        </div>
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="box-image">
-                                <div class="image">
-                                    <img src="http://universal.ondrejsvestka.cz/1-0/img/portfolio-4.jpg" alt="" class="img-responsive">
-                                </div>
-                                <div class="bg"></div>
-                                <div class="name">
-                                    <h3><a href="portfolio-detail.html">Portfolio box-image</a></h3>
-                                </div>
-                                <div class="text">
-                                    <p class="buttons">
-                                        <a href="portfolio-detail.html" class="btn btn-template-transparent-primary">View</a>
-                                        <a href="#" class="btn btn-template-transparent-primary">Website</a>
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- /.box-image -->
-                        </div>
-
-                    </div>
-                </section>
-
-            </div>
-            <!-- /.container -->
-
-
-
-
-
-
-
-
+<div id="content">
 
     <div id="heading-breadcrumbs">
             <div class="container">
@@ -231,13 +88,23 @@
 
 
     <div id="modal-gift" class="modal-body">
-        {% crispy form %}
+        {% if request.user.is_authenticated  %}
+            {% crispy form %}
+        {% else %}
+            <p class="text-center text-muted">
+                {% trans 'For perform this action you have to' %}
+                <a href="{% url 'core:front_user_signup' %}">
+                    <strong>{% trans 'Register now !' %}</strong><br>
+                </a> {% trans 'It is easy and done in 1&nbsp;minute!' %}
+            </p>
+        {% endif %}
         <br/>
     </div>
 
     {% if item.participate.all|length > 0 %}
         <div id="modal-message" class="modal-body">
-            <form method="post" id="send_message_user">
+             {% if request.user.is_authenticated  %}
+                <form method="post" id="send_message_user">
                 <div id="div_id_message" class="form-group">
                     <div class="controls ">
                         <textarea name="message" id="id_message_mail" cols="15" class="form-control input-lg textarea form-control" rows="4" placeholder="{% trans 'Write a message' %}" required=""></textarea>
@@ -246,6 +113,14 @@
                 <p class="text-center" id="send_message">
                 </p>
             </form>
+            {% else %}
+                 <p class="text-center text-muted">
+                    {% trans 'For perform this action you have to' %}
+                    <a href="{% url 'core:front_user_signup' %}">
+                        <strong>{% trans 'Register now !' %}</strong><br>
+                    </a> {% trans 'It is easy and done in 1&nbsp;minute!' %}
+                 </p>
+            {% endif %}
             <br/>
         </div>
     {% endif %}
@@ -263,7 +138,7 @@
                 url: $(this).find('img').attr('data-zoom')
               });
 
-                $('.btn-gift').click(function() {
+                $('.btn-gift').click(function(event) {
                     event.preventDefault()
                     $('#modal-gift').iziModal('open');
                 });
@@ -277,7 +152,7 @@
                             $('#id_message_mail').val('');
                         },
                     });
-                    $('.send_message').click(function() {
+                    $('.send_message').click(function(event) {
                         event.preventDefault()
                         var div = '<button type="submit" class="btn btn-template-main" id="message-recipient" data-recipient="' + $(this).attr('data-id') + '"><i class="fa fa-mail-forward"></i> {% trans "Send message to " %} ' + $(this).attr('data-id') + '</button>'
                         $('#send_message').append(div)
@@ -301,14 +176,14 @@
                          success: function(data){
                              if (data.success){
                                 iziToast.success({
-                                    title: '{% trans "OK" %}',
-                                    message: '{% trans "Message send to " %}' + $("#message-recipient").data('recipient'),
+                                    title: "{% trans 'OK' %}",
+                                    message: "{% trans 'Message send to ' %}" + $('#message-recipient').data('recipient'),
                                 });
                                 $("#box_message").find("[data-id='" + $("#message-recipient").data('recipient') + "']").hide();
                              }else{
                                  iziToast.error({
-                                    title: '{% trans "Error" %}',
-                                    message: '{% trans "Message not send, contact the webmaster" %}'
+                                    title: "{% trans 'Error' %}",
+                                    message: "{% trans 'Message not send, contact the webmaster' %}"
                                 });
                              }
                              $('#modal-message').iziModal('close');

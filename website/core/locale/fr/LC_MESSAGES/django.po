@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-25 10:17+0000\n"
+"POT-Creation-Date: 2017-11-25 20:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,50 +18,225 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: core/templates/admin/auth/user/change_password.html:6
-#: core/templates/admin/auth/user/change_password.html:7
-#: core/templates/admin/auth/user/change_password.html:11
+#: website/core/forms.py:34 website/core/forms.py:54
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: website/core/forms.py:35 website/core/forms.py:57
+msgid "Password"
+msgstr "Mot de passe"
+
+#: website/core/forms.py:37 website/core/templates/front/base.html:77
+msgid "Sign in"
+msgstr "Se connecter"
+
+#: website/core/forms.py:55 website/core/forms.py:88
+msgid "Email"
+msgstr "Email"
+
+#: website/core/forms.py:59
+msgid "Repeat Password"
+msgstr "Réécrire le mot de passe"
+
+#: website/core/forms.py:61
+msgid "By clicking"
+msgstr "En cliquant"
+
+#: website/core/forms.py:61 website/core/forms.py:65
+msgid "Signup"
+msgstr "S'enregistrer"
+
+#: website/core/forms.py:61
+msgid ""
+"you agree to the Terms and Conditions set out by this site, including our "
+"Cookie Use."
+msgstr ""
+"Accepter les conditions d'utilisation de ce site, notamment l'utilisation de "
+"cookie"
+
+#: website/core/forms.py:86
+msgid "Firstname"
+msgstr "Prénom"
+
+#: website/core/forms.py:87
+msgid "Lastname"
+msgstr "Nom de famille"
+
+#: website/core/forms.py:103
+msgid "City"
+msgstr "Ville"
+
+#: website/core/forms.py:104
+msgid "ZipCode"
+msgstr "Code Postal"
+
+#: website/core/forms.py:105
+msgid "Address"
+msgstr "Addresse"
+
+#: website/core/forms.py:106
+msgid "Photo"
+msgstr ""
+
+#: website/core/templates/admin/auth/user/change_password.html:6
+#: website/core/templates/admin/auth/user/change_password.html:7
+#: website/core/templates/admin/auth/user/change_password.html:11
 msgid "Password Change"
-msgstr ""
+msgstr "Changement de mot de passe"
 
-#: core/templates/admin/auth/user/change_password.html:6
-#: core/templates/admin/auth/user/change_password.html:7
-#: core/templates/admin/auth/user/change_password.html:10
+#: website/core/templates/admin/auth/user/change_password.html:6
+#: website/core/templates/admin/auth/user/change_password.html:7
+#: website/core/templates/admin/auth/user/change_password.html:10
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
-#: core/templates/admin/login.html:45
+#: website/core/templates/admin/grapesjs.html:573
+msgid "select file"
+msgstr "Choisir un fichier"
+
+#: website/core/templates/admin/login.html:47
 #, python-format
 msgid ""
 "You are authenticated as %(username)s, but are not authorized to access this "
 "page. Would you like to login to a different account?"
 msgstr ""
+"Tu es authentifié avec %(username)s, mais tu n'es pas autorisé à accéder à "
+"cette page page. Veux-tu utiliser un compte différent?"
 
-#: core/templates/admin/login.html:54
+#: website/core/templates/admin/login.html:56
 msgid "Sign in to start your session"
-msgstr ""
+msgstr "Se connecter pour démarrer la session"
 
-#: core/templates/admin/main_sidebar/menu.html:4
-#: core/templates/admin/main_sidebar/menu.html:14
+#: website/core/templates/admin/main_sidebar/menu.html:4
+#: website/core/templates/admin/main_sidebar/menu.html:14
 msgid "Main Navigation"
-msgstr ""
+msgstr "Navigation principale"
 
-#: core/templates/admin/main_sidebar/menu.html:13
+#: website/core/templates/admin/main_sidebar/menu.html:13
 msgid "Summary"
-msgstr ""
+msgstr "Résumé"
 
-#: core/templates/admin/main_sidebar/menu.html:49
+#: website/core/templates/admin/main_sidebar/menu.html:49
+#: website/core/templates/admin/main_sidebar/menu.html:131
+#: website/core/templates/admin/main_sidebar/menu.html:142
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
-#: core/templates/admin/main_sidebar/menu.html:50
+#: website/core/templates/admin/main_sidebar/menu.html:50
 msgid "Creation"
 msgstr ""
 
-#: core/utils.py:16
-msgid "Cancel"
+#: website/core/templates/admin/main_sidebar/menu.html:117
+msgid "Wishlist"
+msgstr "Liste de naissance"
+
+#: website/core/templates/admin/main_sidebar/menu.html:123
+msgid "Configuration"
 msgstr ""
 
-#: core/utils.py:16
-msgid "Submit"
+#: website/core/templates/admin/main_sidebar/menu.html:125
+msgid "Category"
+msgstr "Catégorie"
+
+#: website/core/templates/admin/main_sidebar/menu.html:132
+#: website/core/templates/admin/main_sidebar/menu.html:143
+msgid "Create"
+msgstr "Créé"
+
+#: website/core/templates/admin/main_sidebar/menu.html:136
+msgid "Item"
+msgstr "Article"
+
+#: website/core/templates/front/404.html:5
+msgid "Error 404"
+msgstr "Erreur 404"
+
+#: website/core/templates/front/base.html:78
+msgid "Sign up"
+msgstr "S'enregistrer"
+
+#: website/core/templates/front/base.html:82
+msgid "Profile"
+msgstr "Profil"
+
+#: website/core/templates/front/base.html:83
+msgid "Logout"
+msgstr "Déconnecter"
+
+#: website/core/templates/front/users/edit.html:6
+msgid "Edit profile"
+msgstr "Editer son profil"
+
+#: website/core/templates/front/users/edit.html:8
+msgid "Edition of your profil"
+msgstr "Edition du profil"
+
+#: website/core/templates/front/users/edit.html:17
+#: website/core/templates/front/users/edit.html:23
+#: website/core/templates/front/users/edit.html:34
+msgid "Edit account"
+msgstr "Editer son compte"
+
+#: website/core/templates/front/users/edit.html:21
+msgid "Home"
 msgstr ""
+
+#: website/core/templates/front/users/edit.html:35
+msgid "You can edit your account using the following form:"
+msgstr "Vous pouvez éditer votre compte en utilisant le formulaire suivant:  "
+
+#: website/core/templates/front/users/edit.html:44
+msgid "Save changes"
+msgstr ""
+
+#: website/core/templates/front/users/login.html:13
+#: website/core/templates/front/users/login.html:19
+#, fuzzy
+#| msgid "New account"
+msgid "New account / Sign in"
+msgstr "Nouveau compte"
+
+#: website/core/templates/front/users/login.html:31
+msgid "Please sign in"
+msgstr "Veuillez vous connecter"
+
+#: website/core/templates/front/users/login.html:41
+msgid "Signin with Facebook"
+msgstr "Se connecter avec Facebook"
+
+#: website/core/templates/front/users/login.html:44
+msgid "Signin with Google"
+msgstr "Se connecter avec Google"
+
+#: website/core/templates/front/users/login.html:51
+#, fuzzy
+#| msgid "New account"
+msgid "Create a New Account"
+msgstr "Créer un Nouveau compte"
+
+#: website/core/templates/front/users/signup.html:5
+#: website/core/templates/front/users/signup.html:12
+#: website/core/templates/front/users/signup.html:18
+msgid "New account"
+msgstr "Nouveau compte"
+
+#: website/core/utils.py:20
+msgid "Cancel"
+msgstr "Annuler"
+
+#: website/core/utils.py:20
+msgid "Submit"
+msgstr "Envoyer"
+
+#: website/core/views.py:96
+msgid "Profile updated successfully"
+msgstr "Profil mis à jour avec succès"
+
+#: website/core/views.py:98
+msgid "Error updating your profile"
+msgstr "Erreur lors de la mise à jour du profil"
+
+#, fuzzy
+#~| msgid "Sign in"
+#~ msgid "Sign In"
+#~ msgstr "Se connecter"

@@ -1,6 +1,7 @@
 {% extends "front/base.html" %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block title %}Log-in{% endblock %}
 
@@ -9,13 +10,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
-                    <h1>New account / Sign in</h1>
+                    <h1>{% trans 'New account / Sign in' %}</h1>
                 </div>
                 <div class="col-md-5">
                     <ul class="breadcrumb">
                         <li><a href="index.html">Home</a>
                         </li>
-                        <li>New account / Sign in</li>
+                        <li>{% trans 'New account / Sign in' %}</li>
                     </ul>
 
                 </div>
@@ -27,7 +28,7 @@
             <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <div class="account-box">
                     <fieldset>
-                        <h2>Please Sign In</h2>
+                        <h2>{% trans 'Please sign in' %}</h2>
                         <hr class="colorgraph">
 
                         {% crispy form %}
@@ -37,17 +38,17 @@
                     <span class="or">OR</span>
                     <div class="row">
                         <div class="col-md-6 row-block">
-                            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-facebook btn-block"><i class="fa fa-facebook"></i> Signin with Facebook</a>
+                            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-facebook btn-block"><i class="fa fa-facebook"></i>{% trans 'Signin with Facebook' %}</a>
                         </div>
                         <div class="col-md-6 row-block">
-                            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google btn-block"><i class="fa fa-google-plus"></i> Signin with Google</a>
+                            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google btn-block"><i class="fa fa-google-plus"></i>{% trans 'Signin with Google' %}</a>
                         </div>
                     </div>
                 </div>
                 <div class="or-box row-block">
                     <div class="row">
                         <div class="col-md-12 row-block">
-                            <a href="http://www.jquery2dotnet.com" class="btn btn-primary btn-block">Create New Account</a>
+                            <a href="{% url 'core:front_user_signup' %}" class="btn btn-primary btn-block">{% trans 'Create a New Account' %}</a>
                         </div>
                     </div>
                 </div>
