@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
 from core.factory import AbstractFactory
 from core.utils import create_action
-from .forms import PostAdminForm, CategoryAdminForm
+from .forms import PostAdminForm, CategoryAdminForm, HeaderPageAdminForm, FooterPageAdminForm
 from crispy_forms.utils import render_crispy_form
 from jsonview.decorators import json_view
 from django.template.context_processors import csrf
@@ -14,6 +14,7 @@ from django.db.models import Count
 from django.core.mail import send_mail
 from django.conf import settings
 from django.http import Http404
+from constance import config
 
 ###################################################################################
 ################################### BACKOFFICE ####################################
@@ -89,6 +90,32 @@ def post_swap_position_admin(request, post_id, position):
     post = get_object_or_404(Post, id=post_id)
     post.to(int(position))
     return {'success': True, 'item_title': post.title, 'position': position}
+
+
+@permission_required(('admin'), '/admin/login')
+def config_header_admin(request):
+    if request.method == 'POST':
+        form = HeaderPageAdminForm(request.POST)
+        if form.is_valid():
+            config.PAGE_HEADER = form.cleaned_data['body']
+            messages.success(request, _("You have modified your header on each page"))
+            return redirect('page:post_list_admin')
+    else:
+        form = HeaderPageAdminForm(initial={'body': config.PAGE_HEADER})
+    return render(request, 'page/admin/config/header_form.html', {'form': form })
+
+
+@permission_required(('admin'), '/admin/login')
+def config_footer_admin(request):
+    if request.method == 'POST':
+        form = FooterPageAdminForm(request.POST)
+        if form.is_valid():
+            config.PAGE_FOOTER = form.cleaned_data['body']
+            messages.success(request, _("You have modified your footer on each page"))
+            return redirect('page:post_list_admin')
+    else:
+        form = FooterPageAdminForm(initial={'body': config.PAGE_FOOTER})
+    return render(request, 'page/admin/config/footer_form.html', {'form': form })
 
 
 ############## CATEGORIES ##############

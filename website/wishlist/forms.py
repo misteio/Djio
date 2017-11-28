@@ -116,41 +116,6 @@ class CategoryAdminForm(forms.ModelForm):
     )
 
 
-class CategoryAdminForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = ('title', 'description', 'slug', 'status', 'parent')
-        labels = {
-            'title': _('Title'),
-            'description': _('Description'),
-            'slug': _('Slug'),
-            'status': _('Status'),
-            'parent': _('Parent'),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(CategoryAdminForm, self).__init__(*args, **kwargs)
-
-    helper = FormHelper()
-    helper.form_id = 'category-form'
-    helper.layout = Layout(
-        HTML(open_box_form('col-lg-12 col-md-12', _('Category'))),
-        Field('title'),
-        Field('slug'),
-        Field('status'),
-        Field('description'),
-        Field('parent'),
-
-        FormActions(
-            Submit('save_changes', 'Save changes', css_class="btn-primary"),
-            Submit('cancel', 'Cancel'),
-        ),
-        HTML("""
-                </div> </div>
-            """),
-    )
-
-
 class BookItemForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea(attrs={'rows':4, 'cols':15}) )
     helper = FormHelper()
