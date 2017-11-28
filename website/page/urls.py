@@ -19,6 +19,10 @@ urlpatterns = [
     url(r'^admin/page/post/delete/(?P<post_id>[0-9]+)/$', views.post_delete_admin, name='post_delete_admin'),
     url(r'^admin/page/post/swap/(?P<post_id>[0-9]+)/(?P<position>[0-9]+)/$', views.post_swap_position_admin, name='post_swap_position_admin'),
 
+    # config back
+    url(r'^admin/page/config/header$', views.config_header_admin, name='config_page_header_admin'),
+    url(r'^admin/page/config/footer$', views.config_footer_admin, name='config_page_footer_admin'),
+
     # pages front
     #url(r'^(?P<category_slug>[-\w]+)/(?P<page_slug>[-\w]+)$', views.page_post_list_category, name='post_list_category_front'),
     url(r'^(?P<post_slug>[-\w]+)$', views.post_detail, name='page_post_detail_front'),

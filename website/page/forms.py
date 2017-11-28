@@ -127,50 +127,59 @@ class CategoryAdminForm(forms.ModelForm):
     )
 
 
-class CategoryAdminForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = ('title', 'description', 'slug', 'status', 'parent')
-        labels = {
-            'title': _('Title'),
-            'description': _('Description'),
-            'slug': _('Slug'),
-            'status': _('Status'),
-            'parent': _('Parent'),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(CategoryAdminForm, self).__init__(*args, **kwargs)
-
+class HeaderPageAdminForm(forms.Form):
+    body = forms.CharField(widget=forms.Textarea(attrs={'rows':4, 'cols':10}) )
     helper = FormHelper()
-    helper.form_id = 'category-form'
+    helper.form_show_labels = False
     helper.layout = Layout(
-        HTML(open_box_form('col-lg-12 col-md-12', _('Category'))),
-        Field('title'),
-        Field('slug'),
-        Field('status'),
-        Field('description'),
-        Field('parent'),
-
+        HTML(open_box_form('col-lg-12 col-md-12', _('Header of each page of your site'))),
+        HTML("""
+                <div>
+                    <p class="pull-right">
+                        <a href="#" class="btn btn-success btn-sm" id="open-editor-btn">
+                            Open Editor
+                        </a>
+                    </p>
+                </div><br/><br/>
+                <div class="embed-responsive" style="padding-bottom:20%">
+                    <iframe id="body-iframe" name="body-iframe"></iframe>
+                </div>
+               """),
+        Field('body', rows="10", css_class='input-xlarge', id='body', type="hidden"),
         FormActions(
             Submit('save_changes', 'Save changes', css_class="btn-primary"),
             Submit('cancel', 'Cancel'),
         ),
         HTML("""
-                </div> </div>
-            """),
+                    </div> </div>
+                """),
     )
 
 
-class BookItemForm(forms.Form):
-    message = forms.CharField(widget=forms.Textarea(attrs={'rows':4, 'cols':15}) )
+class FooterPageAdminForm(forms.Form):
+    body = forms.CharField(widget=forms.Textarea(attrs={'rows':4, 'cols':10}) )
     helper = FormHelper()
     helper.form_show_labels = False
     helper.layout = Layout(
-        Field('message', css_class="form-control input-lg", placeholder=_('Write a message')),
-        HTML('''
-                   <p class="text-center">
-                    <button type='submit' class="btn btn-template-main"><i class="fa fa-gift"></i> ''' + _('Make a gift') + '''</button>
-                </p>
-               '''),
+        HTML(open_box_form('col-lg-12 col-md-12', _('Footer of each page of your site'))),
+        HTML("""
+                <div>
+                    <p class="pull-right">
+                        <a href="#" class="btn btn-success btn-sm" id="open-editor-btn">
+                            Open Editor
+                        </a>
+                    </p>
+                </div><br/><br/>
+                <div class="embed-responsive" style="padding-bottom:20%">
+                    <iframe id="body-iframe" name="body-iframe"></iframe>
+                </div>
+               """),
+        Field('body', rows="10", css_class='input-xlarge', id='body', type="hidden"),
+        FormActions(
+            Submit('save_changes', 'Save changes', css_class="btn-primary"),
+            Submit('cancel', 'Cancel'),
+        ),
+        HTML("""
+                    </div> </div>
+                """),
     )

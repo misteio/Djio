@@ -26,7 +26,17 @@
         </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-cog"></i> {% trans 'Configuration' %}</a></li>
+            <li class="treeview {% if '/page/config' in request.path %}active{% endif %}">
+                <a href="#"><i class="fa fa-cog"></i> {% trans 'Configuration' %}
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li {% if '/page/config/header' in request.path %}class="active"{% endif %}><a href="{% url 'page:config_page_header_admin' %}"><i class="fa fa-arrow-up"></i> {% trans 'Header' %}</a></li>
+                    <li {% if '/page/config/footer' in request.path %}class="active"{% endif %}><a href="{% url 'page:config_page_footer_admin' %}"><i class="fa fa-arrow-down"></i> {% trans 'Footer' %}</a></li>
+                </ul>
+            </li>
             <li class="treeview {% if '/page/category' in request.path %}active{% endif %}">
                 <a href="#"><i class="fa fa-list-alt"></i> {% trans 'Category' %}
                     <span class="pull-right-container">

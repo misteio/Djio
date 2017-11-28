@@ -1,0 +1,54 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block title %}Create{% endblock %}
+{% block title_block %}{{ action }} {% trans "Footer Page config" %}{% endblock %}
+{% block breadcrumb %}
+    <li><a href="#">{% trans "Footer Page config" %}</a></li>
+    <li class="active">{{ action }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div id="modal-editor" class="modais" data-izimodal-title="Edit HTML Page" data-izimodal-iframeURL="/admin/editor"></div>
+        {% crispy form %}
+    </div>
+{% endblock %}
+
+{% block extrafoot %}
+    <script>
+        $("#modal-editor").iziModal({
+            iframe : true,
+            fullscreen: true,
+            headerColor: '#000000',
+            width: '100%',
+            iframeHeight: '1000px',
+            zindex: 9999,
+          });
+
+        $('#open-editor-btn').click(function() {
+          $('#modal-editor').iziModal('open');
+        });
+        function renderHtml(init){
+            var doc = document.getElementById('body-iframe').contentWindow.document;
+            doc.open();
+            doc.write($("#body").val());
+            doc.close();
+
+            var cssLink = document.createElement("link");
+            cssLink.href = '{{ config.WEBSITE_MEDIA_URL }}{{ config.CSS_FRONT_COMPRESSED }}';
+            cssLink.rel = "stylesheet";
+            cssLink.type = "text/css";
+            frames['body-iframe'].document.head.appendChild(cssLink);
+
+            if(!init){
+                $('#modal-editor').iziModal('open');
+            }
+        }
+
+        $( document ).ready(function() {
+            renderHtml(true);
+        });
+</script>
+{% endblock %}
