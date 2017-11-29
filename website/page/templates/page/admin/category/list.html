@@ -1,9 +1,12 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 {% load mptt_tags %}
+{% load static %}
 
 {% block title %}{% trans "Category" %}{% endblock %}
 {% block title_block %}{% trans "Page Category" %}<small>{% trans "List" %}</small>{% endblock %}
+{% block extrahead %}<link href="{% static 'css/admin/fancytree.css' %}" rel="stylesheet">{% endblock %}
+
 {% block breadcrumb %}
     <li><a href="#">{% trans "Category" %}</a></li>
     <li class="active">{% trans "List" %}</li>
@@ -101,17 +104,15 @@
     <thead>
     <tr>
       <!-- NOTE: the first column will be inserted by MDL if mdl-data-table--selectable is set. -->
-      <th class="mdl-data-table__cell--non-numeric">Item</th>
-      <th class="mdl-data-table__cell--non-numeric">Author</th>
-      <th>Year</th>
-      <th>Unit price</th>
+      <th class="mdl-data-table__cell--non-numeric">{% trans 'Title' %}</th>
+      <th class="mdl-data-table__cell--non-numeric">Slug</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>
       <tr>
         <td class="mdl-data-table__cell--non-numeric"></td>
         <td class="mdl-data-table__cell--non-numeric"></td>
-        <td></td>
         <td></td>
       </tr>
     </tbody>
@@ -134,7 +135,7 @@
       },
       source: [
         {% recursetree nodes %}
-            {"key": {{ node.id }}, "title": "{{node.title}}", "tooltip": "Look, a tool tip!",
+            {"key": {{ node.id }}, "title": "{{node.title}}", "id": {{ node.id }}, "slug": "{{ node.slug }}", "tooltip": "Look, a tool tip!",
             {% if not node.is_leaf_node %}
                 "folder": true, "children": [
                     {{ children }}
@@ -143,6 +144,14 @@
             },
     {% endrecursetree %}
 ],
+    renderColumns: function(event, data) {
+        var node = data.node,
+          data = node.data,
+          $tdList = $(node.tr).find(">td");
+
+        $tdList.eq(1).text(data.slug);
+        $tdList.eq(2).html('<button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button> <button type="button" class="btn btn-danger" data-id="" data-title="test5"><i class="fa fa-trash"></i> Delete</button>');
+      },
 
 dnd: {
     autoExpandMS: 400,
@@ -214,34 +223,10 @@ dnd: {
         $("#treegrid").fancytree("getTree").visit(function(node){
             node.setExpanded();
         });
-    }
-  },
-
-        lazyLoad: function(event, data) {
-			data.result = {url: "../demo/ajax-sub2.json"};
-		},
-
-      renderColumns: function(event, data) {
-        var node = data.node,
-          data = node.data,
-          $tdList = $(node.tr).find(">td");
-
-        console.log(data)
-        $tdList.eq(2).html('<button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button> <button type="button" class="btn btn-danger" data-id="" data-title="test5"><i class="fa fa-trash"></i> Delete</button>');
-        $tdList.eq(3).text(data.year);
-        $tdList.eq(4).text(data.price ? data.price.toFixed(2) : "");
+        }
       },
-         createNode: function(event, data) {
-          console.log(event)
-        var node = data.node,
-          data = node.data,
-          $tdList = $(node.tr).find(">td");
 
-        console.log(data)
-        $tdList.eq(2).html('<button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button> <button type="button" class="btn btn-danger" data-id="" data-title="test5"><i class="fa fa-trash"></i> Delete</button>');
-        $tdList.eq(3).text(data.year);
-        $tdList.eq(4).text(data.price ? data.price.toFixed(2) : "");
-      }
+
     });
 
 
