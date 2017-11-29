@@ -89,18 +89,50 @@
     <!-- /.box -->
 <div id="tree"></div>
 
+
+<table id="treegrid" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
+  <!-- <table id="treegrid" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp"> -->
+    <colgroup>
+    <col style="width: 400px;">
+    <col style="width: 200px;">
+    <col style="width: 50px;">
+    <col style="width: 80px;">
+    </colgroup>
+    <thead>
+    <tr>
+      <!-- NOTE: the first column will be inserted by MDL if mdl-data-table--selectable is set. -->
+      <th class="mdl-data-table__cell--non-numeric">Item</th>
+      <th class="mdl-data-table__cell--non-numeric">Author</th>
+      <th>Year</th>
+      <th>Unit price</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mdl-data-table__cell--non-numeric"></td>
+        <td class="mdl-data-table__cell--non-numeric"></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+
 {% endblock %}
 
 {% block extrafoot %}
     <script>
-
-     $("#tree").fancytree({
-    extensions: ["dnd", "glyph"],
-    glyph: {
+    $("#treegrid").fancytree({
+      extensions: ["glyph", "table", "wide", "dnd"],
+      selectMode: 3,
+      glyph: {
         preset: "awesome4",
         map: {}
       },
-    source: [
+      table: {
+        nodeColumnIdx: 0
+      },
+      source: [
         {% recursetree nodes %}
             {"key": {{ node.id }}, "title": "{{node.title}}", "tooltip": "Look, a tool tip!",
             {% if not node.is_leaf_node %}
@@ -112,7 +144,7 @@
     {% endrecursetree %}
 ],
 
-  dnd: {
+dnd: {
     autoExpandMS: 400,
     draggable: { // modify default jQuery draggable options
       zIndex: 1000,
@@ -137,9 +169,6 @@
        */
       // Prevent dropping a parent below another parent (only sort
       // nodes under the same parent):
-//    if(node.parent !== data.otherNode.parent){
-//      return false;
-//    }
       // Don't allow dropping *over* a node (would create a child). Just
       // allow changing the order:
 //    return ["before", "after"];
@@ -161,21 +190,16 @@
       // We could for example move the source to the new target:
 
       data.otherNode.moveTo(node, data.hitMode);
-
         console.log('current:' + data.otherNode.key)
         console.log('next or previous:', data.hitMode)
         console.log('move to:' + node.key)
         console.log('parent node:' + data.otherNode.parent.key)
-        /*if(current_parent == data.otherNode.parent.key)
-        {
-            console.log('same parent so...')
-        }*/
 
         if(data.otherNode.parent.key.indexOf('root') !== -1){
             data.hitMode = 'root';
         }
 
-        var jqxhr = $.get( "/admin/page/category/move/" + data.otherNode.key + "/" + node.key + "/" + data.hitMode , function() {
+        $.get( "/admin/page/category/move/" + data.otherNode.key + "/" + node.key + "/" + data.hitMode , function() {
           console.log( "success" );
         })
           .done(function() {
@@ -187,29 +211,57 @@
 
 
 
-        $("#tree").fancytree("getTree").visit(function(node){
+        $("#treegrid").fancytree("getTree").visit(function(node){
             node.setExpanded();
         });
     }
-  }
-});
+  },
 
-        current_parent = '';
-        $("#tree").fancytree("getTree").visit(function(node){
-            node.setExpanded();
-        });
+        lazyLoad: function(event, data) {
+			data.result = {url: "../demo/ajax-sub2.json"};
+		},
+
+      renderColumns: function(event, data) {
+        var node = data.node,
+          data = node.data,
+          $tdList = $(node.tr).find(">td");
+
+        console.log(data)
+        $tdList.eq(2).html('<button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button> <button type="button" class="btn btn-danger" data-id="" data-title="test5"><i class="fa fa-trash"></i> Delete</button>');
+        $tdList.eq(3).text(data.year);
+        $tdList.eq(4).text(data.price ? data.price.toFixed(2) : "");
+      },
+         createNode: function(event, data) {
+          console.log(event)
+        var node = data.node,
+          data = node.data,
+          $tdList = $(node.tr).find(">td");
+
+        console.log(data)
+        $tdList.eq(2).html('<button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button> <button type="button" class="btn btn-danger" data-id="" data-title="test5"><i class="fa fa-trash"></i> Delete</button>');
+        $tdList.eq(3).text(data.year);
+        $tdList.eq(4).text(data.price ? data.price.toFixed(2) : "");
+      }
+    });
 
 
-        $('#blog-list').DataTable({
-            rowReorder: {
-                selector: 'td:nth-child(2)'
-            },
-            responsive: true
-        })
 
-        $("#blog-list").on('click', '.btn-danger', function(){
-            activeClickDelete(Urls['page:category_delete_admin']({ post_id:  $( this ).data('id')}), $( this ).data('title'));
-        })
+    current_parent = '';
+    $("#treegrid").fancytree("getTree").visit(function(node){
+        node.setExpanded();
+    });
+
+
+    $('#blog-list').DataTable({
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true
+    })
+
+    $("#blog-list").on('click', '.btn-danger', function(){
+        activeClickDelete(Urls['page:category_delete_admin']({ post_id:  $( this ).data('id')}), $( this ).data('title'));
+    })
 
 
 
