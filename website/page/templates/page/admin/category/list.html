@@ -55,68 +55,40 @@
             </div>
         </div>
         <div class="box-body">
-            <table id="blog-list" class="table table-bordered table-striped display nowrap" cellspacing="0" width="100%">
+           <table id="treegrid" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
+                <colgroup>
+                    <col style="width: 20%;">
+                    <col style="width: 20%;">
+                    <col style="width: 20%;">
+                    <col style="width: 20%;">
+                </colgroup>
                 <thead>
-                    <tr>
-                        <th>{% trans "Title" %}</th>
-                        <th>{% trans "Slug" %}</th>
-                        <th>{% trans "Creation Date" %}</th>
-                        <th>{% trans "Status" %}</th>
-                        <th>{% trans "Actions" %}</th>
-                    </tr>
+                <tr>
+                  <th class="mdl-data-table__cell--non-numeric">{% trans 'Title' %}</th>
+                  <th class="mdl-data-table__cell--non-numeric">Slug</th>
+                  <th class="mdl-data-table__cell--non-numeric">{% trans "Creation Date" %}</th>
+                  <th class="mdl-data-table__cell--non-numeric">{% trans "Status" %}</th>
+                  <th>Action</th>
+                </tr>
                 </thead>
                 <tbody>
-                {% for category in categories %}
-                    <tr>
-                        <td>{{ category.title }}</td>
-                        <td>{{ category.slug }}</td>
-                        <td>{{ category.created_at }}</td>
-                        <td>
-                            {% if category.status == 'draft' %}
-                                <span class="label label-warning">{% trans "Draft" %}</span>
-                            {% else %}
-                                <span class="label label-success">{% trans "Published" %}</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{% url 'page:category_update_admin' category_id=category.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
-                            <a href="#" onClick="return false"><button type="button" class="btn btn-danger" data-id="{{ post.id }}" data-title="{{ category.title }}"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
-                        </td>
-                    </tr>
-                {% endfor %}
+                  <tr>
+                    <td class="mdl-data-table__cell--non-numeric"></td>
+                    <td class="mdl-data-table__cell--non-numeric"></td>
+                    <td class="mdl-data-table__cell--non-numeric"></td>
+                    <td class="mdl-data-table__cell--non-numeric"></td>
+                    <td></td>
+                  </tr>
                 </tbody>
-            </table>
+              </table>
         </div>
         <!-- /.box-footer-->
     </div>
     <!-- /.box -->
-<div id="tree"></div>
 
 
-<table id="treegrid" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
-  <!-- <table id="treegrid" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp"> -->
-    <colgroup>
-    <col style="width: 400px;">
-    <col style="width: 200px;">
-    <col style="width: 50px;">
-    <col style="width: 80px;">
-    </colgroup>
-    <thead>
-    <tr>
-      <!-- NOTE: the first column will be inserted by MDL if mdl-data-table--selectable is set. -->
-      <th class="mdl-data-table__cell--non-numeric">{% trans 'Title' %}</th>
-      <th class="mdl-data-table__cell--non-numeric">Slug</th>
-      <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="mdl-data-table__cell--non-numeric"></td>
-        <td class="mdl-data-table__cell--non-numeric"></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
+
+
 
 
 {% endblock %}
@@ -135,7 +107,7 @@
       },
       source: [
         {% recursetree nodes %}
-            {"key": {{ node.id }}, "title": "{{node.title}}", "id": {{ node.id }}, "slug": "{{ node.slug }}", "tooltip": "Look, a tool tip!",
+            {"key": {{ node.id }}, "title": "{{node.title}}", "id": {{ node.id }}, "slug": "{{ node.slug }}", "created_at": "{{ node.created_at }}", "status": "{% if node.status == 'draft' %}<span class='label label-warning'>{% trans 'Draft' %}</span>{% else %}<span class='label label-success'>{% trans 'Published' %}</span>{% endif %}",
             {% if not node.is_leaf_node %}
                 "folder": true, "children": [
                     {{ children }}
@@ -146,16 +118,18 @@
 ],
     renderColumns: function(event, data) {
         var node = data.node,
-          data = node.data,
-          $tdList = $(node.tr).find(">td");
+        data = node.data,
+        $tdList = $(node.tr).find(">td");
 
         $tdList.eq(1).text(data.slug);
-        $tdList.eq(2).html('<button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button> <button type="button" class="btn btn-danger" data-id="" data-title="test5"><i class="fa fa-trash"></i> Delete</button>');
+        $tdList.eq(2).text(data.created_at);
+        $tdList.eq(3).html(data.status);
+        $tdList.eq(4).html('<a href="'+ Urls['page:category_update_admin']({ category_id:  data.id})+'"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button></a> <button type="button" class="btn btn-danger" data-id="" data-title="test5"><i class="fa fa-trash"></i> Delete</button>');
       },
 
 dnd: {
     autoExpandMS: 400,
-    draggable: { // modify default jQuery draggable options
+    draggable: {
       zIndex: 1000,
       scroll: false,
       containment: "parent",
@@ -169,19 +143,6 @@ dnd: {
         return true;
     },
     dragEnter: function(node, data) {
-      /* data.otherNode may be null for non-fancytree droppables.
-       * Return false to disallow dropping on node. In this case
-       * dragOver and dragLeave are not called.
-       * Return 'over', 'before, or 'after' to force a hitMode.
-       * Return ['before', 'after'] to restrict available hitModes.
-       * Any other return value will calc the hitMode from the cursor position.
-       */
-      // Prevent dropping a parent below another parent (only sort
-      // nodes under the same parent):
-      // Don't allow dropping *over* a node (would create a child). Just
-      // allow changing the order:
-//    return ["before", "after"];
-      // Accept everything:
       return true;
     },
     dragExpand: function(node, data) {
@@ -194,10 +155,6 @@ dnd: {
     dragStop: function(node, data) {
     },
     dragDrop: function(node, data) {
-      // This function MUST be defined to enable dropping of items on the tree.
-      // data.hitMode is 'before', 'after', or 'over'.
-      // We could for example move the source to the new target:
-
       data.otherNode.moveTo(node, data.hitMode);
         console.log('current:' + data.otherNode.key)
         console.log('next or previous:', data.hitMode)
@@ -212,44 +169,22 @@ dnd: {
           console.log( "success" );
         })
           .done(function() {
-            //console.log( "second success" );
           })
           .fail(function() {
             console.log( "error" );
           })
-
-
 
         $("#treegrid").fancytree("getTree").visit(function(node){
             node.setExpanded();
         });
         }
       },
-
-
     });
-
-
 
     current_parent = '';
     $("#treegrid").fancytree("getTree").visit(function(node){
         node.setExpanded();
     });
-
-
-    $('#blog-list').DataTable({
-        rowReorder: {
-            selector: 'td:nth-child(2)'
-        },
-        responsive: true
-    })
-
-    $("#blog-list").on('click', '.btn-danger', function(){
-        activeClickDelete(Urls['page:category_delete_admin']({ post_id:  $( this ).data('id')}), $( this ).data('title'));
-    })
-
-
-
 
     </script>
 {% endblock %}
