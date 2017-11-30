@@ -8,36 +8,41 @@
 {% block extrahead %}<link href="{% static 'css/admin/fancytree.css' %}" rel="stylesheet">{% endblock %}
 
 {% block breadcrumb %}
+    <li><a href="#">{% trans "Page" %}</a></li>
     <li><a href="#">{% trans "Category" %}</a></li>
     <li class="active">{% trans "List" %}</li>
 {% endblock %}
 
 {% block deleted %}
-        <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-trash"></i>
-                <span class="label label-danger">{{ deleted_categories.count }}</span>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="header">{{ deleted_categories.count }} {% trans "deleted posts" %}</li>
-                {% for deleted_category in deleted_categories|slice:":10" %}
-                    <li>
-                        <!-- inner menu: contains the actual data -->
-                        <ul class="menu">
-                            <li><!-- start message -->
-                                <a href="{% url 'page:category_revert_admin' category_id=deleted_category.id history_id=deleted_category.history_id %}">
-                                    <div class="pull-right text-danger">{{ deleted_category.title }}</div><br/>
-                                    <small class="text-muted"><i class="fa fa-clock-o"></i> {{ deleted_category.history_date }} </small>
-                                    <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ deleted_category.history_user.username }}</div>
-                                </a>
-                            </li>
-                            <!-- end message -->
-                        </ul>
-                    </li>
-                {% endfor %}
-                <li class="footer"><a href="#">{% trans "See All Deleted categories" %}</a></li>
-            </ul>
-        </li>
+    <li class="dropdown messages-menu">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-trash"></i>
+            <span class="label label-danger">{{ deleted_categories.count }}</span>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header">{{ deleted_categories.count }} {% trans "deleted posts" %}</li>
+            {% for deleted_category in deleted_categories|slice:":10" %}
+                <li>
+                    <!-- inner menu: contains the actual data -->
+                    <ul class="menu">
+                        <li><!-- start message -->
+                            <a href="{% url 'page:category_revert_admin' category_id=deleted_category.id history_id=deleted_category.history_id %}">
+                                <div class="pull-right text-danger">{{ deleted_category.title }}</div>
+                                <br/>
+                                <small class="text-muted"><i
+                                        class="fa fa-clock-o"></i> {{ deleted_category.history_date }} </small>
+                                <div class="pull-right text-muted"><i class="fa fa-user-circle"
+                                                                      aria-hidden="true"></i> {{ deleted_category.history_user.username }}
+                                </div>
+                            </a>
+                        </li>
+                        <!-- end message -->
+                    </ul>
+                </li>
+            {% endfor %}
+            <li class="footer"><a href="#">{% trans "See All Deleted categories" %}</a></li>
+        </ul>
+    </li>
 {% endblock %}
 
 
@@ -46,16 +51,24 @@
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">
-                <a href="{% url 'page:category_create_admin' %}"><button type="button" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> {% trans "Create a new Category" %}</button></a>
-                <a href="{% url 'page:post_create_admin' %}"><button type="button" class="btn btn-sm btn-success"><i class="fa fa-pencil"></i> {% trans "Create a new Item" %}</button></a>
+                <a href="{% url 'page:category_create_admin' %}">
+                    <button type="button" class="btn btn-sm btn-info"><i
+                            class="fa fa-pencil"></i> {% trans "Create a new Category" %}</button>
+                </a>
+                <a href="{% url 'page:post_create_admin' %}">
+                    <button type="button" class="btn btn-sm btn-success"><i
+                            class="fa fa-pencil"></i> {% trans "Create a new Item" %}</button>
+                </a>
             </h3>
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                        title="Collapse"><i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip"
+                        title="Remove"><i class="fa fa-times"></i></button>
             </div>
         </div>
         <div class="box-body">
-           <table id="treegrid" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
+            <table id="treegrid" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
                 <colgroup>
                     <col style="width: 20%;">
                     <col style="width: 20%;">
@@ -64,127 +77,62 @@
                 </colgroup>
                 <thead>
                 <tr>
-                  <th class="mdl-data-table__cell--non-numeric">{% trans 'Title' %}</th>
-                  <th class="mdl-data-table__cell--non-numeric">Slug</th>
-                  <th class="mdl-data-table__cell--non-numeric">{% trans "Creation Date" %}</th>
-                  <th class="mdl-data-table__cell--non-numeric">{% trans "Status" %}</th>
-                  <th>Action</th>
+                    <th class="mdl-data-table__cell--non-numeric">{% trans 'Title' %}</th>
+                    <th class="mdl-data-table__cell--non-numeric">Slug</th>
+                    <th class="mdl-data-table__cell--non-numeric">{% trans "Creation Date" %}</th>
+                    <th class="mdl-data-table__cell--non-numeric">{% trans "Status" %}</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                <tr>
                     <td class="mdl-data-table__cell--non-numeric"></td>
                     <td class="mdl-data-table__cell--non-numeric"></td>
                     <td class="mdl-data-table__cell--non-numeric"></td>
                     <td class="mdl-data-table__cell--non-numeric"></td>
                     <td></td>
-                  </tr>
+                </tr>
                 </tbody>
-              </table>
+            </table>
         </div>
         <!-- /.box-footer-->
     </div>
     <!-- /.box -->
-
-
-
-
-
-
 {% endblock %}
 
 {% block extrafoot %}
     <script>
-    $("#treegrid").fancytree({
-      extensions: ["glyph", "table", "wide", "dnd"],
-      selectMode: 3,
-      glyph: {
-        preset: "awesome4",
-        map: {}
-      },
-      table: {
-        nodeColumnIdx: 0
-      },
-      source: [
-        {% recursetree nodes %}
-            {"key": {{ node.id }}, "title": "{{node.title}}", "id": {{ node.id }}, "slug": "{{ node.slug }}", "created_at": "{{ node.created_at }}", "status": "{% if node.status == 'draft' %}<span class='label label-warning'>{% trans 'Draft' %}</span>{% else %}<span class='label label-success'>{% trans 'Published' %}</span>{% endif %}",
-            {% if not node.is_leaf_node %}
-                "folder": true, "children": [
-                    {{ children }}
-                ]
-            {% endif %}
-            },
-    {% endrecursetree %}
-],
-    renderColumns: function(event, data) {
-        var node = data.node,
-        data = node.data,
-        $tdList = $(node.tr).find(">td");
+        var nodes = [
+            {% recursetree nodes %}
+                {
+                    "key": {{ node.id }},
+                    "title": "{{node.title}}",
+                    "id": {{ node.id }},
+                    "slug": "{{ node.slug }}",
+                    "created_at": "{{ node.created_at }}",
+                    "status": "{% if node.status == 'draft' %}<span class='label label-warning'>{% trans 'Draft' %}
+                         </span>{% else %}<span class='label label-success'>{% trans 'Published' %}</span>{% endif %}",
+                    {% if not node.is_leaf_node %}
+                        "folder": true,
+                        "children": [
+                            {{ children }}
+                        ]
+                    {% endif %}
+                },
+            {% endrecursetree %}
+        ]
+        var renderColumns = function (event, data) {
+            var node = data.node,
+                data = node.data,
+                $tdList = $(node.tr).find(">td");
 
-        $tdList.eq(1).text(data.slug);
-        $tdList.eq(2).text(data.created_at);
-        $tdList.eq(3).html(data.status);
-        $tdList.eq(4).html('<a href="'+ Urls['page:category_update_admin']({ category_id:  data.id})+'"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button></a> <button type="button" class="btn btn-danger" data-id="" data-title="test5"><i class="fa fa-trash"></i> Delete</button>');
-      },
-
-dnd: {
-    autoExpandMS: 400,
-    draggable: {
-      zIndex: 1000,
-      scroll: false,
-      containment: "parent",
-      revert: "invalid"
-    },
-    preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-    preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
-
-    dragStart: function(node, data) {
-        current_parent = node.parent.key
-        return true;
-    },
-    dragEnter: function(node, data) {
-      return true;
-    },
-    dragExpand: function(node, data) {
-      // return false to prevent auto-expanding data.node on hover
-    },
-    dragOver: function(node, data) {
-    },
-    dragLeave: function(node, data) {
-    },
-    dragStop: function(node, data) {
-    },
-    dragDrop: function(node, data) {
-      data.otherNode.moveTo(node, data.hitMode);
-        console.log('current:' + data.otherNode.key)
-        console.log('next or previous:', data.hitMode)
-        console.log('move to:' + node.key)
-        console.log('parent node:' + data.otherNode.parent.key)
-
-        if(data.otherNode.parent.key.indexOf('root') !== -1){
-            data.hitMode = 'root';
+            $tdList.eq(1).text(data.slug);
+            $tdList.eq(2).text(data.created_at);
+            $tdList.eq(3).html(data.status);
+            $tdList.eq(4).html('<a href="' + Urls['page:category_update_admin']({category_id: data.id}) + '"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button></a> <button type="button" class="btn btn-danger" data-id="" data-title="test5"><i class="fa fa-trash"></i> Delete</button>');
         }
 
-        $.get( "/admin/page/category/move/" + data.otherNode.key + "/" + node.key + "/" + data.hitMode , function() {
-          console.log( "success" );
-        })
-          .done(function() {
-          })
-          .fail(function() {
-            console.log( "error" );
-          })
-
-        $("#treegrid").fancytree("getTree").visit(function(node){
-            node.setExpanded();
-        });
-        }
-      },
-    });
-
-    current_parent = '';
-    $("#treegrid").fancytree("getTree").visit(function(node){
-        node.setExpanded();
-    });
+        fancyTreeInit($("#treegrid"), nodes, renderColumns, 'page:category_move_ajax_admin')
 
     </script>
 {% endblock %}
