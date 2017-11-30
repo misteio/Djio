@@ -234,5 +234,6 @@ CONSTANCE_CONFIG = {
     'LOGO_URL': ('http://url/logo_url.png', 'Image Logo Type', str),
     'PAGE_HEADER': ('', 'Header of page', str),
     'PAGE_FOOTER': ('', 'Footer of page', str),
+    'MODULE_WISHLIST': (True, 'Wishlist module activation?', bool),
 }
 CONSTANCE_DATABASE_CACHE_BACKEND = 'default'

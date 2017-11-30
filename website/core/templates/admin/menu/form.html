@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block title %}Create{% endblock %}
+{% block title_block %}{{ action }} Menu Post{% endblock %}
+{% block breadcrumb %}
+    <li><a href="#">{% trans "Blog" %}</a></li>
+    <li class="active">{{ action }}</li>
+{% endblock %}
+
+
+{% block content %}
+
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <div class="fieldWrapper">
+        {{ form.slug.errors }}
+        <label for="{{ form.slug.id_for_label }}">slug</label>
+        {{ form.slug }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.url.errors }}
+        <label for="{{ form.url.id_for_label }}">url</label>
+        {{ form.url }}
+    </div>
+    <select name="title">
+        {{ links | safe }}
+    </select>
+
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
+
+
+{% block extrafoot %}
+
+{% endblock %}

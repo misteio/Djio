@@ -95,4 +95,18 @@
             </li>
         </ul>
     </li>
+
+    <li class="treeview">
+        <a href="#">
+        <i class="fa fa-bars"></i>
+        <span>Menus</span>
+        <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+        </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{% url 'core:menu_list_admin' %}"><i class="fa fa-list"></i> {% trans "List" %}</a></li>
+            <li><a href="{% url 'core:menu_create_admin' %}"><i class="fa fa-pencil"></i> {% trans "Creation" %}</a></li>
+        </ul>
+    </li>
 </ul>

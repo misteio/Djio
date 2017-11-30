@@ -152,7 +152,7 @@ def category_delete_admin(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     category.delete()
     messages.warning(request, _("You have deleted category : " + category.title))
-    return redirect('wishlist:category_list_admin')
+    return redirect('page:category_list_admin')
 
 
 @permission_required(('admin'), '/admin/login')
@@ -162,9 +162,9 @@ def category_revert_admin(request, post_id, history_id):
     category_form = AbstractFactory.upsert(request, CategoryAdminForm, category, historical_category)
     if category_form.is_valid():
         messages.success(request, _("You have revert category : " + category.title))
-        return redirect('wishlist:category_list_admin')
+        return redirect('page:category_list_admin')
 
-    return render(request, 'wishlist/admin/item/form.html', {'form': category_form, 'action': _("Revert")})
+    return render(request, 'page/admin/item/form.html', {'form': category_form, 'action': _("Revert")})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -191,7 +191,6 @@ def ajax_category_move(request, node_from_id, node_to_id, action):
     else:
         action = 'first-child'
 
-    print('node_from:' + node_from_id + ',node_to:' + node_to_id + ',action:' + action)
     node_from = get_object_or_404(Category, id=node_from_id)
     node_to = get_object_or_404(Category, id=node_to_id)
     node_from.move_to(node_to, action)

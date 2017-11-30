@@ -19,19 +19,19 @@ class Category(Timestamped, MPTTModel):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
 
-    history = HistoricalRecords(excluded_fields=['rght', 'level', 'lft', 'tree_id'])
+    history = HistoricalRecords(excluded_fields=['rght', 'level', 'lft', 'tree_id', 'parent_id'])
 
     # Managers
     objects = models.Manager()  # The default manager.
 
     class Meta:
-        ordering = ('lft',)
+        ordering = ('lft', 'tree_id')
 
     def __str__(self):
         return self.title
 
     class MPTTMeta:
-        order_insertion_by = ['lft']
+        order_insertion_by = ['slug']
 
 
 class Post(Timestamped, OrderedModel):

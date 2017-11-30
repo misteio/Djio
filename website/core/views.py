@@ -1,15 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth import authenticate, login, logout
 from .forms import PasswordChangeCustomForm
 from .services import ckupload_service
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
-from .models import Profile
-from .utils import create_action
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm, MenuAdminForm
+from .models import Profile, Menu
+from .utils import create_action,links_for_menu_items
+from .factory import MenuFactory
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.conf import settings
 from django.utils.translation import ugettext as _
+from django.shortcuts import render, get_object_or_404
+from jsonview.decorators import json_view
 
 
 @permission_required(('admin'), '/admin/login')
@@ -107,3 +110,59 @@ def front_edit_profile(request):
         profile_form = ProfileEditForm(instance=request.user.profile)
 
     return render(request, 'front/users/edit.html', {'user_form': user_form, 'profile_form': profile_form})
+
+
+############## MENUS ##############
+@permission_required(('admin'), '/admin/login')
+def menu_list_admin(request):
+    menus = Menu.objects.all()
+    return render(request, 'admin/menu/form.html', {'menus': menus, 'nodes': menus})
+
+
+@permission_required(('admin'), '/admin/login')
+def menu_create_admin(request):
+    if request.method == 'POST':
+        form = MenuAdminForm(request.POST, auto_id=True)
+        if form.is_valid():
+            print(form.cleaned_data['title'])  # retourne par exemple [u'blue', u'green']
+
+    menu_form = MenuFactory.upsert(request, MenuAdminForm)
+    if menu_form.is_valid():
+        messages.success(request, _("You have create a new category"))
+        return redirect('page:category_list_admin')
+    return render(request, 'admin/menu/form.html', {'form': menu_form, 'action': _("Create"), 'links' : links_for_menu_items})
+
+
+@permission_required(('admin'), '/admin/login')
+def menu_update_admin(request, menu_id):
+    menu = get_object_or_404(Menu, id=menu_id)
+    menu_form = MenuFactory.upsert(request, MenuAdminForm, menu)
+    if menu_form.is_valid():
+        messages.success(request, _("You have update menu : " + menu.title))
+        return redirect('core:menu_list_admin')
+
+    return render(request, 'core/admin/menu/form.html', {'form': menu_form, 'action': _("Update")})
+
+
+@permission_required(('admin'), '/admin/login')
+def menu_delete_admin(request, menu_id):
+    menu = get_object_or_404(Menu, id=menu_id)
+    menu.delete()
+    messages.warning(request, _("You have deleted menu : " + menu.title))
+    return redirect('core:menu_list_admin')
+
+
+@permission_required(('admin'), '/admin/login')
+@json_view
+def ajax_menu_move(request, node_from_id, node_to_id, action):
+    if action == 'after':
+        action = 'right'
+    elif action == 'before':
+        action = 'left'
+    else:
+        action = 'first-child'
+
+    node_from = get_object_or_404(Menu, id=node_from_id)
+    node_to = get_object_or_404(Menu, id=node_to_id)
+    node_from.move_to(node_to, action)
+    return {'success': True}

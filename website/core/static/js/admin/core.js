@@ -1,4 +1,4 @@
-function activeClickDelete(url, title)
+function activeClickDelete(url, title, message)
 {
     iziToast.question({
         timeout: 20000,
@@ -7,7 +7,7 @@ function activeClickDelete(url, title)
         toastOnce: true,
         zindex: 999,
         title: 'Hey',
-        message: gettext('Are you sure to delete <b>') + title + '</>?',
+        message: message ? message : gettext('Are you sure to delete <b>') + title + '</>?',
         position: 'center',
         buttons: [
             ['<button><b>' + gettext('Yes') + '</b></button>', function (instance, toast) {
@@ -22,8 +22,7 @@ function activeClickDelete(url, title)
 }
 
 
-function fancyTreeInit(fancytree,nodes, renderColumns, url){
-
+function fancyTreeInit(fancytree, nodes, renderColumns, url){
     fancytree.fancytree({
             extensions: ["glyph", "table", "wide", "dnd"],
             selectMode: 3,

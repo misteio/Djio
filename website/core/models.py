@@ -4,6 +4,7 @@ from django.core.validators import MinLengthValidator
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from .mixins import Timestamped
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Profile(Timestamped):
@@ -28,3 +29,20 @@ class Action(models.Model):
 
     class Meta:
         ordering = ('-created_at', )
+
+
+class Menu(Timestamped, MPTTModel):
+    title = models.CharField(max_length=100, validators=[MinLengthValidator(4)], blank=True,null=True)
+    slug = models.SlugField(max_length=255)
+    url = models.CharField(max_length=255)
+    content_type = models.ForeignKey(ContentType, null=True, blank=True)
+    object_id = models.PositiveIntegerField(null=True, blank=True)
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
+
+    class Meta:
+        ordering = ('lft', 'tree_id')
+
+    class MPTTMeta:
+        order_insertion_by = ['slug']

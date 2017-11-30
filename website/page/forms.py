@@ -95,13 +95,12 @@ class PostAdminForm(forms.ModelForm):
 class CategoryAdminForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ('title', 'description', 'slug', 'status', 'parent')
+        fields = ('title', 'description', 'slug', 'status')
         labels = {
             'title': _('Title'),
             'description': _('Description'),
             'slug': _('Slug'),
             'status': _('Status'),
-            'parent': _('Parent'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -115,7 +114,6 @@ class CategoryAdminForm(forms.ModelForm):
         Field('slug'),
         Field('status'),
         Field('description'),
-        Field('parent'),
 
         FormActions(
             Submit('save_changes', 'Save changes', css_class="btn-primary"),

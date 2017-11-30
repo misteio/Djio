@@ -129,10 +129,15 @@
             $tdList.eq(1).text(data.slug);
             $tdList.eq(2).text(data.created_at);
             $tdList.eq(3).html(data.status);
-            $tdList.eq(4).html('<a href="' + Urls['page:category_update_admin']({category_id: data.id}) + '"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button></a> <button type="button" class="btn btn-danger" data-id="" data-title="test5"><i class="fa fa-trash"></i> Delete</button>');
+            $tdList.eq(4).html('<a href="' + Urls['page:category_update_admin']({category_id: data.id}) + '"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> Edit</button></a> <button type="button" class="btn btn-danger"  data-id="' + data.id + '" data-title="' + data.slug + '"><i class="fa fa-trash"></i> Delete</button>');
         }
 
         fancyTreeInit($("#treegrid"), nodes, renderColumns, 'page:category_move_ajax_admin')
 
+        $("#treegrid").on('click', '.btn-danger', function(){
+            activeClickDelete(Urls['page:category_delete_admin']({ category_id:  $( this ).data('id')}),
+                              $( this ).data('title'),
+                              "{% trans 'Are you sure to delete this category and ALL CHILDREN underneath ?' %}");
+        })
     </script>
 {% endblock %}
