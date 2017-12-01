@@ -5,7 +5,7 @@
 {% block title %}Create{% endblock %}
 {% block title_block %}{{ action }} Menu Post{% endblock %}
 {% block breadcrumb %}
-    <li><a href="#">{% trans "Blog" %}</a></li>
+    <li><a href="#">{% trans "Menu" %}</a></li>
     <li class="active">{{ action }}</li>
 {% endblock %}
 
@@ -17,16 +17,16 @@
     {% csrf_token %}
 
     <div class="fieldWrapper">
-        {{ form.slug.errors }}
-        <label for="{{ form.slug.id_for_label }}">slug</label>
-        {{ form.slug }}
-    </div>
-    <div class="fieldWrapper">
         {{ form.url.errors }}
         <label for="{{ form.url.id_for_label }}">url</label>
         {{ form.url }}
     </div>
-    <select name="title">
+    <div class="fieldWrapper">
+        {{ form.title.errors }}
+        <label for="{{ form.url.id_for_label }}">title</label>
+        {{ form.title }}
+    </div>
+    <select name="mapping">
         {{ links | safe }}
     </select>
 

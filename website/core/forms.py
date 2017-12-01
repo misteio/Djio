@@ -111,4 +111,4 @@ class ProfileEditForm(forms.ModelForm):
 class MenuAdminForm(forms.ModelForm):
     class Meta:
         model = Menu
-        fields = ('title', 'slug', 'url')
+        fields = ('title', 'url', 'mapping')

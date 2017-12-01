@@ -116,7 +116,7 @@ def front_edit_profile(request):
 @permission_required(('admin'), '/admin/login')
 def menu_list_admin(request):
     menus = Menu.objects.all()
-    return render(request, 'admin/menu/form.html', {'menus': menus, 'nodes': menus})
+    return render(request, 'admin/menu/list.html', {'menus': menus, 'nodes': menus})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -124,13 +124,13 @@ def menu_create_admin(request):
     if request.method == 'POST':
         form = MenuAdminForm(request.POST, auto_id=True)
         if form.is_valid():
-            print(form.cleaned_data['title'])  # retourne par exemple [u'blue', u'green']
+            print(form.cleaned_data['title'])
 
     menu_form = MenuFactory.upsert(request, MenuAdminForm)
     if menu_form.is_valid():
         messages.success(request, _("You have create a new category"))
-        return redirect('page:category_list_admin')
-    return render(request, 'admin/menu/form.html', {'form': menu_form, 'action': _("Create"), 'links' : links_for_menu_items})
+        return redirect('core:menu_list_admin')
+    return render(request, 'admin/menu/form.html', {'form': menu_form, 'action': _("Create"), 'links': links_for_menu_items})
 
 
 @permission_required(('admin'), '/admin/login')
@@ -141,7 +141,7 @@ def menu_update_admin(request, menu_id):
         messages.success(request, _("You have update menu : " + menu.title))
         return redirect('core:menu_list_admin')
 
-    return render(request, 'core/admin/menu/form.html', {'form': menu_form, 'action': _("Update")})
+    return render(request, 'admin/menu/form.html', {'form': menu_form, 'action': _("Update"), 'links': links_for_menu_items(menu.mapping)})
 
 
 @permission_required(('admin'), '/admin/login')

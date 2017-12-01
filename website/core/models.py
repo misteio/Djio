@@ -32,9 +32,9 @@ class Action(models.Model):
 
 
 class Menu(Timestamped, MPTTModel):
-    title = models.CharField(max_length=100, validators=[MinLengthValidator(4)], blank=True,null=True)
-    slug = models.SlugField(max_length=255)
-    url = models.CharField(max_length=255)
+    title = models.CharField(max_length=100, validators=[MinLengthValidator(4)])
+    url = models.CharField(max_length=255, blank=True, null=True)
+    mapping = models.CharField(max_length=255, blank=True, null=True)
     content_type = models.ForeignKey(ContentType, null=True, blank=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = GenericForeignKey('content_type', 'object_id')
@@ -45,4 +45,4 @@ class Menu(Timestamped, MPTTModel):
         ordering = ('lft', 'tree_id')
 
     class MPTTMeta:
-        order_insertion_by = ['slug']
+        order_insertion_by = ['title']
