@@ -50,7 +50,8 @@ Use for links menu on frontend
 
 
 def links_for_menu_items(selected=None):
-    html = '<optgroup label="' + _('Pages') + '">'
+    html = '<option disabled selected value> -- ' + _("select an option") + '-- </option>'
+    html += '<optgroup label="' + _('Pages') + '">'
     page_posts = PagePost.objects.select_related('author').all()
     for page_post in page_posts:
         is_selected = 'selected' if "class:PagePost:" + str(page_post.id) == selected else ''

@@ -41,13 +41,18 @@ class MenuFactory():
 
             if menu_form.is_valid():
                 _menu = menu_form.save(commit=False)
-                if 'class' in _menu.mapping:
-                    _object_mapping=_menu.mapping.split(':')
-                    _object = get_object_or_404(globals()[_object_mapping[1]], id=_object_mapping[2])
-                    _menu.content_type = ContentType.objects.get_for_model(_object)
-                    _menu.object_id = _object.id
+                if _menu.mapping:
+                    if 'class' in _menu.mapping:
+                        _object_mapping=_menu.mapping.split(':')
+                        _object = get_object_or_404(globals()[_object_mapping[1]], id=_object_mapping[2])
+                        _menu.content_type = ContentType.objects.get_for_model(_object)
+                        _menu.object_id = _object.id
+                        _menu.save()
+                #If no menu mapping, we delete previous content type
+                else:
+                    _menu.content_type = None
+                    _menu.object_id = None
                     _menu.save()
-
             else:
                 return menu_form
         else:

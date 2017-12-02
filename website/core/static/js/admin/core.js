@@ -1,3 +1,5 @@
+$('.select2').select2()
+
 function activeClickDelete(url, title, message)
 {
     iziToast.question({

@@ -141,7 +141,7 @@ def menu_update_admin(request, menu_id):
         messages.success(request, _("You have update menu : " + menu.title))
         return redirect('core:menu_list_admin')
 
-    return render(request, 'admin/menu/form.html', {'form': menu_form, 'action': _("Update"), 'links': links_for_menu_items(menu.mapping)})
+    return render(request, 'admin/menu/form.html', {'form': menu_form, 'action': _("Update"), 'links': links_for_menu_items(menu.mapping), 'menu':menu})
 
 
 @permission_required(('admin'), '/admin/login')
