@@ -21,3 +21,12 @@ def item_save_image_field(sender, instance, *args, **kwargs):
     file = File(img_temp)
     extension = os.path.splitext(instance.image)[1]
     instance.image_field.save(instance.slug + extension, file, False)
+
+
+@receiver(pre_save, sender=Item)
+def tree_complete_slug(sender, instance, **kwargs):
+    slug = ''
+    for category in instance.category.get_ancestors():
+       slug += '/' + category.slug
+    slug += '/' + instance.category.slug + '/' + instance.slug
+    instance.complete_slug = slug

@@ -1,0 +1,88 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}{{ action }} {% trans 'Global Menu' %}{% endblock %}
+{% block title_block %} {% trans 'Global Menu' %} {% endblock %}
+{% block breadcrumb %}
+    <li><a href="#">{% trans "Menu" %}</a></li>
+    <li class="active">{{ action }}</li>
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+      <div class="row">
+          <form action="" method="post">
+              {% csrf_token %}
+              <div class="col-lg-12 col-md-12">
+                  <div class="box box-primary">
+                      <div class="box-header with-border"><h3 class="box-title">{% trans 'Menu' %}</h3></div>
+                      <div class="box-body">
+                          <div class="form-group">
+                              {{ form.title.errors }}
+                              <label for="{{ form.title.id_for_label }}">{% trans 'Title' %}</label>
+                              <div class="controls ">{{ form.title|add_class:"form-control"}}</div>
+                          </div>
+                          <div class="form-group">
+                              <label>{% trans 'Link to page, or external URL' %}</label>
+                              <select id="select-type" class="form-control">
+                                  <option disabled selected value>-- {% trans 'Select an option' %} --</option>
+                                  <option value="url" {% if menu.url %} selected {% endif %}>{% trans 'URL' %}</option>
+                                  <option value="page" {% if menu.content_type %} selected {% endif %}>{% trans 'Page' %}</option>
+                              </select>
+                          </div>
+                          <div class="form-group" id="url-selection">
+                              {{ form.url.errors }}
+                              <label for="{{ form.url.id_for_label }}">{% trans 'URL' %}</label>
+                              <div class="controls ">{{ form.url|add_class:"form-control"}}</div>
+                          </div>
+                          <div class="form-group" id="page-selection">
+                              <label>{% trans 'Page selection' %}</label>
+                              <select name="mapping" class="form-control select2" id="select-page">
+                                {{ links | safe }}
+                            </select>
+                          </div>
+                          <div class="form-group">
+                              <div class="controls">
+                                  <input type="submit" value="{% trans 'Save' %}" class="btn btn-primary btn-primary"/>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>
+    </section>
+
+{% endblock %}
+
+
+{% block extrafoot %}
+<script>
+    $(document).ready(function() {
+        $("#url-selection").hide()
+        $("#page-selection").hide()
+        {% if menu.url %}
+            $("#url-selection").show()
+        {% elif menu.content_type %}
+            $("#page-selection").show()
+        {% endif %}
+        $("#select-type").trigger("change");
+
+        $("#select-type").change(function () {
+            if($("option:selected", this).val() == 'url'){
+                $("#select-page").val("").change();
+                $("#page-selection").hide()
+                $("#url-selection").show()
+            }
+            if($("option:selected", this).val() == 'page'){
+                $("#id_url").val("")
+                $("#page-selection").show()
+                $("#url-selection").hide()
+            }
+        });
+    });
+</script>
+{% endblock %}

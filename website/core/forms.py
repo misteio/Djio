@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, Fieldset
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
-from .models import Profile
+from .models import Profile, Menu
 
 
 class PasswordChangeCustomForm(PasswordChangeForm):
@@ -106,3 +106,9 @@ class ProfileEditForm(forms.ModelForm):
         Field('photo', css_class="form-control input-lg", placeholder=_('Photo'), wrapper_class="col-md-12"),
         HTML('''</div> '''),
     )
+
+
+class MenuAdminForm(forms.ModelForm):
+    class Meta:
+        model = Menu
+        fields = ('title', 'url', 'mapping')

@@ -95,13 +95,12 @@ class PostAdminForm(forms.ModelForm):
 class CategoryAdminForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ('title', 'description', 'slug', 'status', 'parent')
+        fields = ('title', 'description', 'slug', 'status')
         labels = {
             'title': _('Title'),
             'description': _('Description'),
             'slug': _('Slug'),
             'status': _('Status'),
-            'parent': _('Parent'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -115,7 +114,6 @@ class CategoryAdminForm(forms.ModelForm):
         Field('slug'),
         Field('status'),
         Field('description'),
-        Field('parent'),
 
         FormActions(
             Submit('save_changes', 'Save changes', css_class="btn-primary"),
@@ -143,7 +141,7 @@ class HeaderPageAdminForm(forms.Form):
                 </div><br/><br/>
                 <div class="embed-responsive" style="padding-bottom:20%">
                     <iframe id="body-iframe" name="body-iframe"></iframe>
-                </div>
+                </div> <br><br>
                """),
         Field('body', rows="10", css_class='input-xlarge', id='body', type="hidden"),
         FormActions(
@@ -172,7 +170,7 @@ class FooterPageAdminForm(forms.Form):
                 </div><br/><br/>
                 <div class="embed-responsive" style="padding-bottom:20%">
                     <iframe id="body-iframe" name="body-iframe"></iframe>
-                </div>
+                </div> <br><br>
                """),
         Field('body', rows="10", css_class='input-xlarge', id='body', type="hidden"),
         FormActions(

@@ -3,6 +3,9 @@ from .models import Action
 import datetime
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
+from wishlist.models import Item as WishlistItem, Category as WishlistCategory
+from page.models import Post as PagePost, Category as PageCategory
+from constance import config
 
 
 def open_box_form(div_class, title=None, box_class='box-primary'):
@@ -39,3 +42,41 @@ def create_action(user, verb, target=None):
         action.save()
         return True
     return False
+
+
+"""
+Use for links menu on frontend
+"""
+
+
+def links_for_menu_items(selected=None):
+    html = '<option disabled selected value> -- ' + _("select an option") + '-- </option>'
+    html += '<optgroup label="' + _('Pages') + '">'
+    page_posts = PagePost.objects.select_related('author').all()
+    for page_post in page_posts:
+        is_selected = 'selected' if "class:PagePost:" + str(page_post.id) == selected else ''
+        html += "<option " + is_selected + " value='class:PagePost:" + str(page_post.id) + "'>" + page_post.title + "</option>"
+    html += '</optgroup>'
+    html += '<optgroup label="' + _('Page Categories') + '">'
+    page_categories = PageCategory.objects.all()
+    for page_category in page_categories:
+        is_selected = 'selected' if "class:PageCategory:" + str(page_category.id) == selected else ''
+        html += "<option " + is_selected + " value='class:PageCategory:" + str(page_category.id) + "'>" + page_category.title + "</option>"
+    html += '</optgroup>'
+
+    if(config.MODULE_WISHLIST):
+        html += '<optgroup label="' + _('Wishlist') + '">'
+        wishlists = WishlistItem.admin_load.all()
+        for wishlist in wishlists:
+            is_selected = 'selected' if "class:WishlistItem:" + str(wishlist.id) == selected else ''
+            html += "<option " + is_selected + " value='class:WishlistItem:" + str(wishlist.id) + "'>" + wishlist.title + "</option>"
+        html += '</optgroup>'
+
+        html += '<optgroup label="' + _('Wishlist Categories') + '">'
+        wishlist_categories = WishlistCategory.objects.all()
+        for wishlist_category in wishlist_categories:
+            is_selected = 'selected' if "class:WishlistCategory:" + str(wishlist_category.id) == selected else ''
+            html += "<option " + is_selected + " value='class:WishlistCategory:" + str(wishlist_category.id) + "'>" + wishlist_category.title + "</option>"
+        html += '</optgroup>'
+
+    return html

@@ -14,4 +14,12 @@ urlpatterns = [
     url(r'^logout', views.front_logout, name='front_user_logout'),
     url(r'^signup', views.front_signup, name='front_user_signup'),
     url(r'^account/profile-edit$', views.front_edit_profile, name='front_user_profile_edit'),
+
+    #Menu
+    url(r'^admin/menu/list$', views.menu_list_admin, name='menu_list_admin'),
+    url(r'^admin/menu/create$', views.menu_create_admin, name='menu_create_admin'),
+    url(r'^admin/menu/update/(?P<menu_id>[0-9]+)/$', views.menu_update_admin, name='menu_update_admin'),
+    url(r'^admin/menu/delete/(?P<menu_id>[0-9]+)/$', views.menu_delete_admin, name='menu_delete_admin'),
+    url(r'^admin/menu/move/(?P<node_from_id>[0-9]+)/(?P<node_to_id>[0-9]+)/(?P<action>[-\w]+)/$', views.ajax_menu_move, name='menu_move_ajax_admin'),
+
 ]

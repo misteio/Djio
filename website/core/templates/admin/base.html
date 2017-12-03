@@ -7,10 +7,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Blank Page</title>
+    <title>{{ config.PROJECT_NAME}} | {% block title %}{% endblock %}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>{% block title %}{% endblock %}</title>
     <script src="{% static 'js/admin/pace.js' %}"></script>
     {% compress css file admin_css %}
         <link href="{% static 'css/admin/pace.css' %}" rel="stylesheet">
@@ -18,6 +17,7 @@
         <link href="{% static 'css/admin/font-awesome.css' %}" rel="stylesheet">
         <link href="{% static 'css/admin/ionicons.css' %}" rel="stylesheet">
         <link href="{% static 'css/admin/dataTables.bootstrap.css' %}" rel="stylesheet">
+        <link href="{% static 'css/admin/select2.css' %}" rel="stylesheet">
         <link href="{% static 'css/admin/AdminLTE.css' %}" rel="stylesheet">
         <link href="{% static 'css/admin/iziModal.css' %}" rel="stylesheet">
         <link href="{% static 'css/admin/izitoast.css' %}" rel="stylesheet">
@@ -425,6 +425,7 @@
 
 <!-- jQuery 3 -->
 <script src="{% static 'js/admin/jquery.js' %}"></script>
+ <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{% static 'js/admin/bootstrap.js' %}"></script>
 <script src="{% static 'js/admin/ckeditor/ckeditor.js' %}"></script>
@@ -434,6 +435,8 @@
 <script src="{% static 'js/admin/dataTables.bootstrap.js' %}"></script>
 <script src="{% static 'js/admin/dataTables.rowReorder.js' %}"></script>
 <script src="{% static 'js/admin/dataTables.responsive.js' %}"></script>
+<script src="{% static 'js/admin/jquery.fancytree-all.js' %}"></script>
+<script src="{% static 'js/admin/select2.js' %}"></script>
 <!-- SlimScroll -->
 <script src="{% static 'js/admin/jquery.slimscroll.js' %}"></script>
 <!-- FastClick -->

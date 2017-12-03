@@ -8,7 +8,10 @@ urlpatterns = [
     url(r'^admin/page/category/create$', views.category_create_admin, name='category_create_admin'),
     url(r'^admin/page/category/create/ajax$', views.ajax_category_save, name='category_create_admin_ajax'),
     url(r'^admin/page/category/update/(?P<category_id>[0-9]+)/$', views.category_update_admin, name='category_update_admin'),
-    url(r'^admin/page/category/delete/(?P<category_id>[0-9]+)/$', views.category_delete_admin, name='page_post_category_delete_admin'),
+    url(r'^admin/page/category/delete/(?P<category_id>[0-9]+)/$', views.category_delete_admin, name='category_delete_admin'),
+    url(r'^admin/page/category/move/(?P<node_from_id>[0-9]+)/(?P<node_to_id>[0-9]+)/(?P<action>[-\w]+)/$', views.ajax_category_move, name='category_move_ajax_admin'),
+    url(r'^admin/page/post/revert/(?P<category_id>[0-9]+)/(?P<history_id>[0-9]+)/$', views.category_revert_admin,name='category_revert_admin'),
+
 
     # posts back
     url(r'^admin/page/post/list$', views.post_list_admin, name='post_list_admin'),
