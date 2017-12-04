@@ -401,7 +401,7 @@ Accordion
 
 .sm-icon li::before {
     color: #34c99d;
-    content: "";
+    content: "ï";
     font-family: fontawesome;
     margin-right: 10px;
     top: 0;
@@ -410,7 +410,7 @@ Accordion
 .lg-icon li::before {
     border-radius: 50%;
     color: #fff;
-    content: "";
+    content: "ï€Œ";
     display: inline-block;
     font-family: fontawesome;
     font-size: 11px;
@@ -1216,7 +1216,7 @@ select option {
 }
 
 .bootstrap-select.btn-group .dropdown-toggle .caret::after {
-    content: "";
+    content: "ï„‡";
     font-family: fontawesome;
     font-size: 19px;
     position: absolute;
@@ -2700,7 +2700,7 @@ Work time
 
 #working-time.v1::before {
     color: #ecf4f1;
-    content: "“";
+    content: "â€œ";
     font-family: helvetica;
     font-size: 900px;
     left: 140px;
@@ -5585,7 +5585,7 @@ Responsive
     #menu_nav .more::before {
         bottom: 0;
         color: #fff;
-        content: "";
+        content: "ï‚¥";
         font-family: icofont;
         left: 0;
         position: absolute;
@@ -5593,7 +5593,7 @@ Responsive
         top: 0;
     }
     #menu_nav ul>li.current>.more::before {
-        content: "";
+        content: "ï´";
     }
     .search .dropdown-menu {
         width: 100%;

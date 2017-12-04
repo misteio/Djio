@@ -136,6 +136,7 @@ grapesjs.plugins.add('gjs-preset-webpage', function(editor, opts) {
   bm.add('quote', {
     label: 'Quote',
     category: 'Basic',
+
     content: '<blockquote class="quote">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ipsum dolor sit</blockquote>',
     attributes: {class:'fa fa-quote-right'}
   });
@@ -161,6 +162,13 @@ grapesjs.plugins.add('gjs-preset-webpage', function(editor, opts) {
       <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
       </section>`,
     attributes: {class:'gjs-fonts gjs-f-h1p'}
+  });
+
+  bm.add('Image Galery', {
+    label: 'Image',
+    category: 'Sections',
+    content: '<div class="container"> <div class="col-sm-6 col-sm-offset-3 text-center main-heading animate-in move-up animated"> <h2>Voir mon cabinet</h2> <p>Proin viverra, purus at bibendum molestie, lorem mi dignissim mauris, sit amet elementum massa augue vel massa</p> </div> <div class="row"> <div class="col-sm-6 work-block no-padding"> <div class="col-sm-12 work-item animate-in move-up animated"> <a data-fancybox="gallery" href="https://static1.squarespace.com/static/57c5eca5c534a5b49056ae39/t/58c14dad2994caf4c4bef3ae/1489063381227/"> <img src="https://static1.squarespace.com/static/57c5eca5c534a5b49056ae39/t/58c14dad2994caf4c4bef3ae/1489063381227/" alt="Columba"> </a> </div> <div class="col-sm-6 work-item animate-in move-up animated"> <a data-fancybox="gallery" href="http://bournemouthclinic.co.uk/saxon/wp-content/uploads/2010/10/small_10519738.jpg"> <img src="http://bournemouthclinic.co.uk/saxon/wp-content/uploads/2010/10/small_10519738.jpg" alt="columba"> </a> </div> <div class="col-sm-6 work-item animate-in move-up animated"> <a data-fancybox="gallery" href="http://media.clinicalpainadvisor.com/images/2016/02/23/chronicpainspinal2232016_924410.jpg?format=jpg&amp;zoom=1&amp;quality=70&amp;anchor=middlecenter&amp;width=320&amp;mode=pad"> <img src="http://media.clinicalpainadvisor.com/images/2016/02/23/chronicpainspinal2232016_924410.jpg?format=jpg&amp;zoom=1&amp;quality=70&amp;anchor=middlecenter&amp;width=320&amp;mode=pad" alt="columba"> </a> </div> </div> <div class="col-sm-6 work-block no-padding"> <div class="col-sm-6 work-item animate-in move-up animated"> <a data-fancybox="gallery" href="http://www.movebeyond.com.au/wp-content/uploads/2013/10/osteopathy.png"> <img src="http://www.movebeyond.com.au/wp-content/uploads/2013/10/osteopathy.png" alt="columba"> </a> </div> <div class="col-sm-6 work-item animate-in move-up animated"> <a data-fancybox="gallery" href="http://www.avz-clinic.com/wp-content/uploads/2013/07/2-1.jpg"> <img src="http://www.avz-clinic.com/wp-content/uploads/2013/07/2-1.jpg" alt="columba"> </a> </div> <div class="col-sm-12 work-item animate-in move-up animated"> <a data-fancybox="gallery" href="http://themesfoundry.net/demo/html/columba/assets/images/work-4.jpg"> <img src="./test1_files/work-4.jpg" alt="Columba"> </a> </div> </div> </div> </div>',
+    attributes: {class:'fa fa-file-image-o'}
   });
 
   bm.add('section-badges', {
