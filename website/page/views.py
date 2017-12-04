@@ -47,8 +47,8 @@ def post_update_admin(request, post_id):
         messages.success(request, _("You have update post : " + post.title))
         return redirect('page:post_list_admin')
 
-    historical_items = Post.history.filter(id=post_id).order_by('-history_id')
-    return render(request, 'page/admin/post/form.html', {'form': post_form, 'category_form': category_form, 'historical_items': historical_items, 'action': _("Update")})
+    historical_posts = Post.history.filter(id=post_id).order_by('-history_id')
+    return render(request, 'page/admin/post/form.html', {'form': post_form, 'category_form': category_form, 'historical_posts': historical_posts, 'action': _("Update")})
 
 
 @permission_required(('admin'), '/admin/login')
