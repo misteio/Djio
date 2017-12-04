@@ -1,90 +1,68 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post, Category, User
-from django.contrib.auth.decorators import permission_required, login_required
+from .models import Post, Category
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
 from core.factory import AbstractFactory
-from core.utils import create_action
 from .forms import PostAdminForm, CategoryAdminForm, HeaderPageAdminForm, FooterPageAdminForm
 from crispy_forms.utils import render_crispy_form
 from jsonview.decorators import json_view
 from django.template.context_processors import csrf
 from django.db.models import Count
-from django.core.mail import send_mail
-from django.conf import settings
 from django.http import Http404
 from constance import config
+from core.abstract_views import *
+from core.mixins import StaffOnlyMixin
+from django.contrib.admin.views.decorators import staff_member_required
+
 
 ###################################################################################
 ################################### BACKOFFICE ####################################
 ###################################################################################
 
 ############## ITEMS ##############
-@permission_required(('admin'), '/admin/login')
-def post_list_admin(request):
-    posts = Post.objects.select_related('author').all()
-    deleted_posts = Post.history.filter(history_type='-').order_by('-history_id')
-    return render(request, 'page/admin/post/list.html', {'posts': posts, 'deleted_posts': deleted_posts })
+class PostListView(StaffOnlyMixin, AbstractModelListView):
+    model_class = Post
+    template = 'page/admin/post/list.html'
 
 
-@permission_required(('admin'), '/admin/login')
-def post_create_admin(request):
-    category_form = AbstractFactory.upsert(request, CategoryAdminForm)
-    post_form = AbstractFactory.upsert(request, PostAdminForm)
-    if post_form.is_valid():
-        messages.success(request, _("You have create a new post"))
-        return redirect('page:post_list_admin')
-    return render(request, 'page/admin/post/form.html', {'form': post_form, 'category_form': category_form, 'action': _("Create")})
+class PostCreateView(StaffOnlyMixin, AbstractModelCreateView):
+    template = 'page/admin/post/form.html'
+    model_form_class = PostAdminForm
+    category_form_class = CategoryAdminForm
+    redirection_url = 'page:post_list_admin'
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 def post_update_admin(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    post_form = AbstractFactory.upsert(request, PostAdminForm, post)
-    category_form = AbstractFactory.upsert(request, CategoryAdminForm)
-    if post_form.is_valid():
-        messages.success(request, _("You have update post : " + post.title))
-        return redirect('page:post_list_admin')
-
-    historical_posts = Post.history.filter(id=post_id).order_by('-history_id')
-    return render(request, 'page/admin/post/form.html', {'form': post_form, 'category_form': category_form, 'historical_posts': historical_posts, 'action': _("Update")})
+    return abstract_model_update(request, Post, post_id, PostAdminForm, 'page/admin/post/form.html',
+                                 'page:post_list_admin', CategoryAdminForm)
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 def post_clone_admin(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    post_form = AbstractFactory.upsert(request, PostAdminForm, post)
-    category_form = AbstractFactory.upsert(request, CategoryAdminForm)
-    if post_form.is_valid():
-        messages.success(request, _("You have clone post : " + post.title))
-        return redirect('page:post_list_admin')
-
-    return render(request, 'page/admin/post/form.html', {'form': post_form, 'category_form': category_form, 'action': _("Clone")})
+    return abstract_model_clone(request, Post, post_id, PostAdminForm, 'page/admin/post/form.html',
+                                 'page:post_list_admin', CategoryAdminForm)
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 def post_revert_admin(request, post_id, history_id):
-    post = get_object_or_404(Post, id=post_id)
-    historical_item = Post.history.get(history_id=history_id)
-    post_form = AbstractFactory.upsert(request, PostAdminForm, post, historical_item)
-    category_form = AbstractFactory.upsert(request, CategoryAdminForm)
-    if post_form.is_valid():
-        messages.success(request, _("You have clone post : " + post.title))
-        return redirect('page:post_list_admin')
-
-    return render(request, 'page/admin/post/form.html', {'form': post_form, 'category_form': category_form, 'action': _("Revert")})
+    return abstract_model_revert(request, Post, post_id, history_id, PostAdminForm, 'page/admin/post/form.html',
+                                'page:post_list_admin', CategoryAdminForm)
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
+def post_restore_admin(request, history_id):
+    return abstract_model_restore(request, Post, history_id, PostAdminForm, 'page/admin/post/form.html',
+                                 'page:post_list_admin', CategoryAdminForm)
+
+
+@staff_member_required
 def post_delete_admin(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    post.delete()
-    messages.warning(request, _("You have deleted item : " + post.title))
-    return redirect('page:post_list_admin')
+    return abstract_model_delete(request, Post, post_id, 'page:post_list_admin')
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 @json_view
 def post_swap_position_admin(request, post_id, position):
     post = get_object_or_404(Post, id=post_id)
@@ -92,7 +70,8 @@ def post_swap_position_admin(request, post_id, position):
     return {'success': True, 'item_title': post.title, 'position': position}
 
 
-@permission_required(('admin'), '/admin/login')
+############## CONFIGURATION ##############
+@staff_member_required
 def config_header_admin(request):
     if request.method == 'POST':
         form = HeaderPageAdminForm(request.POST)
@@ -105,7 +84,7 @@ def config_header_admin(request):
     return render(request, 'page/admin/config/header_form.html', {'form': form })
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 def config_footer_admin(request):
     if request.method == 'POST':
         form = FooterPageAdminForm(request.POST)
@@ -119,14 +98,14 @@ def config_footer_admin(request):
 
 
 ############## CATEGORIES ##############
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 def category_list_admin(request):
     categories = Category.objects.all()
     deleted_categories = Category.history.filter(history_type='-').order_by('-history_id')
     return render(request, 'page/admin/category/list.html', {'categories': categories, 'nodes': categories, 'deleted_categories': deleted_categories})
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 def category_create_admin(request):
     category_form = AbstractFactory.upsert(request, CategoryAdminForm)
     if category_form.is_valid():
@@ -135,7 +114,7 @@ def category_create_admin(request):
     return render(request, 'page/admin/category/form.html', {'form': category_form, 'action': _("Create")})
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 def category_update_admin(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     category_form = AbstractFactory.upsert(request, CategoryAdminForm, category)
@@ -147,7 +126,7 @@ def category_update_admin(request, category_id):
     return render(request, 'page/admin/category/form.html', {'form': category_form, 'historical_items': historical_items, 'action': _("Update")})
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 def category_delete_admin(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     category.delete()
@@ -155,7 +134,7 @@ def category_delete_admin(request, category_id):
     return redirect('page:category_list_admin')
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 def category_revert_admin(request, post_id, history_id):
     category = get_object_or_404(Category, id=post_id)
     historical_category = Category.history.get(history_id=history_id)
@@ -167,7 +146,7 @@ def category_revert_admin(request, post_id, history_id):
     return render(request, 'page/admin/item/form.html', {'form': category_form, 'action': _("Revert")})
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 @json_view
 def ajax_category_save(request):
     form = CategoryAdminForm(request.POST or None)
@@ -181,7 +160,7 @@ def ajax_category_save(request):
     return {'success': False, 'form_html': form_html}
 
 
-@permission_required(('admin'), '/admin/login')
+@staff_member_required
 @json_view
 def ajax_category_move(request, node_from_id, node_to_id, action):
     if action == 'after':

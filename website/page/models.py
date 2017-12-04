@@ -6,6 +6,7 @@ from simple_history.models import HistoricalRecords
 from django.db import models
 from ordered_model.models import OrderedModel
 from mptt.models import MPTTModel, TreeForeignKey
+from .managers import ListAdminManager
 
 
 class Category(Timestamped, MPTTModel):
@@ -57,6 +58,7 @@ class Post(Timestamped, OrderedModel):
 
     # Managers
     objects = models.Manager()  # The default manager.
+    admin = ListAdminManager()
 
     class Meta:
         ordering = ('-publish',)

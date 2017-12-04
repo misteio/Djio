@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class Timestamped(models.Model):
@@ -31,4 +32,12 @@ class Trackable(models.Model):
         abstract = True
 
 
+class StaffOnlyMixin(PermissionRequiredMixin):
+
+    '''
+    A view mixin that only allows users staff
+    '''
+
+    login_url = 'admin:login'
+    permission_required = 'is_staff'
 

@@ -10,15 +10,16 @@ urlpatterns = [
     url(r'^admin/page/category/update/(?P<category_id>[0-9]+)/$', views.category_update_admin, name='category_update_admin'),
     url(r'^admin/page/category/delete/(?P<category_id>[0-9]+)/$', views.category_delete_admin, name='category_delete_admin'),
     url(r'^admin/page/category/move/(?P<node_from_id>[0-9]+)/(?P<node_to_id>[0-9]+)/(?P<action>[-\w]+)/$', views.ajax_category_move, name='category_move_ajax_admin'),
-    url(r'^admin/page/post/revert/(?P<category_id>[0-9]+)/(?P<history_id>[0-9]+)/$', views.category_revert_admin,name='category_revert_admin'),
+    url(r'^admin/page/category/revert/(?P<category_id>[0-9]+)/(?P<history_id>[0-9]+)/$', views.category_revert_admin, name='category_revert_admin'),
 
 
     # posts back
-    url(r'^admin/page/post/list$', views.post_list_admin, name='post_list_admin'),
-    url(r'^admin/page/post/create$', views.post_create_admin, name='post_create_admin'),
+    url(r'^admin/page/post/list$', views.PostListView.as_view(), name='post_list_admin'),
+    url(r'^admin/page/post/create$', views.PostCreateView.as_view(), name='post_create_admin'),
     url(r'^admin/page/post/update/(?P<post_id>[0-9]+)/$', views.post_update_admin, name='post_update_admin'),
     url(r'^admin/page/post/clone/(?P<post_id>[0-9]+)/$', views.post_clone_admin, name='post_clone_admin'),
     url(r'^admin/page/post/revert/(?P<post_id>[0-9]+)/(?P<history_id>[0-9]+)/$', views.post_revert_admin, name='post_revert_admin'),
+    url(r'^admin/page/post/restore/(?P<history_id>[0-9]+)/$', views.post_restore_admin, name='post_restore_admin'),
     url(r'^admin/page/post/delete/(?P<post_id>[0-9]+)/$', views.post_delete_admin, name='post_delete_admin'),
     url(r'^admin/page/post/swap/(?P<post_id>[0-9]+)/(?P<position>[0-9]+)/$', views.post_swap_position_admin, name='post_swap_position_admin'),
 
