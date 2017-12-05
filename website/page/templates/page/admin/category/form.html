@@ -16,17 +16,17 @@
             <li class="dropdown messages-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-history"></i>
-                    <span class="label label-success">{{ historical_categories.count }}</span>
+                    <span class="label label-success">{{ historical_categorys.count }}</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="header">You have {{ category_history.count }} versions available</li>
-                    {% for historical_category in historical_categories|slice:":10" %}
+                    <li class="header">You have {{ historical_categorys.count }} versions available</li>
+                    {% for historical_category in historical_categorys|slice:":10" %}
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
                                 <li><!-- start message -->
-                                    <a href="{% url 'page:post_revert_admin' category_id=historical_category.id history_id=historical_category.history_id %}">
-                                        <small class="text-muted"><i class="fa fa-clock-o"></i> {{ historical_post.history_date }} </small>
+                                    <a href="{% url 'page:category_revert_admin' category_id=historical_category.id history_id=historical_category.history_id %}">
+                                        <small class="text-muted"><i class="fa fa-clock-o"></i> {{ historical_category.history_date }} </small>
                                         <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ historical_category.history_user.username }}</div>
                                     </a>
                                 </li>

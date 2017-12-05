@@ -24,6 +24,7 @@ class Category(Timestamped, MPTTModel):
 
     # Managers
     objects = models.Manager()  # The default manager.
+    admin = models.Manager()  # The default manager.
 
     class Meta:
         ordering = ('lft', 'tree_id')

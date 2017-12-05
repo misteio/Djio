@@ -14,8 +14,8 @@ class AbstractModelListView(View):
         model_name = self.model_class.__name__.lower()
         model_name_plural = model_name + 's'
         models = self.model_class.admin.all()
-        deleted_models = self.model_class.history.filter(history_type='-').order_by('-history_id')
-        return render(request, self.template, {model_name_plural: models, 'deleted_' + model_name_plural : deleted_models})
+        deleted_models = self.model_class.history.filter(history_type='-').order_by('-history_id') if self.model_class.history else None
+        return render(request, self.template, {model_name_plural: models, 'deleted_' + model_name_plural: deleted_models})
 
 
 class AbstractModelCreateView(View):
@@ -25,13 +25,13 @@ class AbstractModelCreateView(View):
     redirection_url = None
 
     def get(self, request):
-        category_form = AbstractFactory.upsert(request, self.category_form_class)
+        category_form = AbstractFactory.upsert(request, self.category_form_class) if self.category_form_class else None
         model_form = AbstractFactory.upsert(request, self.model_form_class)
         return render(request, self.template,
                       {'form': model_form, 'category_form': category_form, 'action': _("Create")})
 
     def post(self, request):
-        category_form = AbstractFactory.upsert(request, self.category_form_class)
+        category_form = AbstractFactory.upsert(request, self.category_form_class) if self.category_form_class else None
         model_form = AbstractFactory.upsert(request, self.model_form_class)
         if model_form.is_valid():
             messages.success(request, _("You have create ") + model_form.instance.__str__())
@@ -46,7 +46,7 @@ def abstract_model_update(request, model_class, model_id, model_form_class, temp
     model_name = model_class.__name__.lower()
     model_name_plural = model_name + 's'
     model_form = AbstractFactory.upsert(request, model_form_class, model)
-    category_form = AbstractFactory.upsert(request, category_form_class)
+    category_form = AbstractFactory.upsert(request, category_form_class) if category_form_class else None
     if model_form.is_valid():
         messages.success(request, _("You have update : " + model_form.instance.__str__()))
         return redirect(redirection_url)

@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     # categories back
     url(r'^admin/page/category/list$', views.category_list_admin, name='category_list_admin'),
-    url(r'^admin/page/category/create$', views.category_create_admin, name='category_create_admin'),
+    url(r'^admin/page/category/create$', views.CategoryPostCreateView.as_view(), name='category_create_admin'),
     url(r'^admin/page/category/create/ajax$', views.ajax_category_save, name='category_create_admin_ajax'),
     url(r'^admin/page/category/update/(?P<category_id>[0-9]+)/$', views.category_update_admin, name='category_update_admin'),
     url(r'^admin/page/category/delete/(?P<category_id>[0-9]+)/$', views.category_delete_admin, name='category_delete_admin'),

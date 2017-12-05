@@ -105,25 +105,16 @@ def category_list_admin(request):
     return render(request, 'page/admin/category/list.html', {'categories': categories, 'nodes': categories, 'deleted_categories': deleted_categories})
 
 
-@staff_member_required
-def category_create_admin(request):
-    category_form = AbstractFactory.upsert(request, CategoryAdminForm)
-    if category_form.is_valid():
-        messages.success(request, _("You have create a new category"))
-        return redirect('page:category_list_admin')
-    return render(request, 'page/admin/category/form.html', {'form': category_form, 'action': _("Create")})
+class CategoryPostCreateView(StaffOnlyMixin, AbstractModelCreateView):
+    template = 'page/admin/category/form.html'
+    model_form_class = CategoryAdminForm
+    redirection_url = 'page:category_list_admin'
 
 
 @staff_member_required
 def category_update_admin(request, category_id):
-    category = get_object_or_404(Category, id=category_id)
-    category_form = AbstractFactory.upsert(request, CategoryAdminForm, category)
-    if category_form.is_valid():
-        messages.success(request, _("You have update category : " + category.title))
-        return redirect('page:category_list_admin')
-
-    historical_items = Category.history.filter(id=category_id).order_by('-history_id')
-    return render(request, 'page/admin/category/form.html', {'form': category_form, 'historical_items': historical_items, 'action': _("Update")})
+    return abstract_model_update(request, Category, category_id, CategoryAdminForm, 'page/admin/category/form.html',
+                                 'page:category_list_admin')
 
 
 @staff_member_required
