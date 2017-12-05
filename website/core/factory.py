@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 
 
-class AbstractFactory():
-    def upsert(request,form, item=None, historical_item=None):
+class AbstractFactory:
+    def upsert(request, form, item=None, historical_item=None):
         if request.method == 'POST':
             if item:
                 if 'clone' in request.path:
@@ -16,8 +16,7 @@ class AbstractFactory():
                 abstract_form = form(data=request.POST)
 
             if abstract_form.is_valid():
-                _post = abstract_form.save()
-                _post.save()
+                _model = abstract_form.save()
             else:
                 return abstract_form
         else:
@@ -31,8 +30,8 @@ class AbstractFactory():
         return abstract_form
 
 
-class MenuFactory():
-    def upsert(request,form, item=None):
+class MenuFactory:
+    def upsert(request, form, item=None):
         if request.method == 'POST':
             if item:
                 menu_form = form(data=request.POST, instance=item)
@@ -43,12 +42,12 @@ class MenuFactory():
                 _menu = menu_form.save(commit=False)
                 if _menu.mapping:
                     if 'class' in _menu.mapping:
-                        _object_mapping=_menu.mapping.split(':')
+                        _object_mapping = _menu.mapping.split(':')
                         _object = get_object_or_404(globals()[_object_mapping[1]], id=_object_mapping[2])
                         _menu.content_type = ContentType.objects.get_for_model(_object)
                         _menu.object_id = _object.id
                         _menu.save()
-                #If no menu mapping, we delete previous content type
+                # If no menu mapping, we delete previous content type
                 else:
                     _menu.content_type = None
                     _menu.object_id = None

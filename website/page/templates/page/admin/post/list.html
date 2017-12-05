@@ -22,7 +22,7 @@
                         <!-- inner menu: contains the actual data -->
                         <ul class="menu">
                             <li><!-- start message -->
-                                <a href="{% url 'page:post_revert_admin' post_id=deleted_post.id history_id=deleted_post.history_id %}">
+                                <a href="{% url 'page:post_restore_admin' history_id=deleted_post.history_id %}">
                                     <div class="pull-right text-danger">{{ deleted_post.title }}</div><br/>
                                     <small class="text-muted"><i class="fa fa-clock-o"></i> {{ deleted_post.history_date }} </small>
                                     <div class="pull-right text-muted"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{ deleted_post.history_user.username }}</div>
