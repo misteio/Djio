@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'constance',
     'constance.backends.database',
     'mptt',
+    'abstract',
     'core',
     'blog',
     'wishlist',

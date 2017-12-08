@@ -11,6 +11,6 @@ def tree_complete_slug(sender, instance, **kwargs):
     slug = ''
     for category in instance.category.get_ancestors():
        slug += '/' + category.slug
-    slug += '/' + instance.category.slug + '/' + instance.slug
+    slug += instance.category.slug + '/' + instance.slug
 
     instance.complete_slug = slug

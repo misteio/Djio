@@ -3,7 +3,6 @@ from .models import Post, Category
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
-from core.factory import AbstractFactory
 from .forms import PostAdminForm, CategoryAdminForm, HeaderPageAdminForm, FooterPageAdminForm
 from crispy_forms.utils import render_crispy_form
 from jsonview.decorators import json_view
@@ -11,10 +10,10 @@ from django.template.context_processors import csrf
 from django.db.models import Count
 from django.http import Http404
 from constance import config
-from core.abstract_views import *
+from abstract.views import *
 from core.mixins import StaffOnlyMixin
 from django.contrib.admin.views.decorators import staff_member_required
-
+from core.models import Menu
 
 ###################################################################################
 ################################### BACKOFFICE ####################################
@@ -101,8 +100,8 @@ def config_footer_admin(request):
 @staff_member_required
 def category_list_admin(request):
     categories = Category.objects.all()
-    deleted_categories = Category.history.filter(history_type='-').order_by('-history_id')
-    return render(request, 'page/admin/category/list.html', {'categories': categories, 'nodes': categories, 'deleted_categories': deleted_categories})
+    #deleted_categories = Category.history.filter(history_type='-').order_by('-history_id')
+    return render(request, 'page/admin/category/list.html', {'nodes': categories, 'deleted_categories': ''})
 
 
 class CategoryPostCreateView(StaffOnlyMixin, AbstractModelCreateView):
@@ -119,36 +118,17 @@ def category_update_admin(request, category_id):
 
 @staff_member_required
 def category_delete_admin(request, category_id):
-    category = get_object_or_404(Category, id=category_id)
-    category.delete()
-    messages.warning(request, _("You have deleted category : " + category.title))
-    return redirect('page:category_list_admin')
+    return abstract_model_delete(request, Category, category_id, 'page:category_list_admin')
 
 
 @staff_member_required
-def category_revert_admin(request, post_id, history_id):
-    category = get_object_or_404(Category, id=post_id)
-    historical_category = Category.history.get(history_id=history_id)
-    category_form = AbstractFactory.upsert(request, CategoryAdminForm, category, historical_category)
-    if category_form.is_valid():
-        messages.success(request, _("You have revert category : " + category.title))
-        return redirect('page:category_list_admin')
-
-    return render(request, 'page/admin/item/form.html', {'form': category_form, 'action': _("Revert")})
+def category_revert_admin(request, category_id, history_id):
+    return abstract_model_revert(request, Category, category_id, history_id, CategoryAdminForm, 'page/admin/item/form.html',
+                                 'page:category_list_admin')
 
 
-@staff_member_required
-@json_view
-def ajax_category_save(request):
-    form = CategoryAdminForm(request.POST or None)
-    if form.is_valid():
-        category = form.save()
-        return {'success': True, 'category_id': category.id, 'category_title': category.title}
-
-    ctx = {}
-    ctx.update(csrf(request))
-    form_html = render_crispy_form(form, context=ctx)
-    return {'success': False, 'form_html': form_html}
+class CategoryFormAjax(StaffOnlyMixin, AbstractAjaxFormView):
+    model_form_class = CategoryAdminForm
 
 
 @staff_member_required
@@ -171,17 +151,20 @@ def ajax_category_move(request, node_from_id, node_to_id, action):
 ###################################################################################
 def page_post_list_category(request, category_slug):
     categories = Category.objects.annotate(num_items=Count('category_items')).filter(status='published')
-    items = Post.objects.prefetch_related('participate').select_related('category').filter(status='published', category__slug=category_slug)
+    items = Post.objects.select_related('category').filter(status='published', complete_slug=category_slug)
     if len(items) == 0:
         raise Http404("Category not found")
     return render(request, 'wishlist/front/items/list.html', {'categories': categories, 'items': items })
 
 
 def post_detail(request, post_slug):
-    post = get_object_or_404(Post.objects.filter(slug=post_slug))
-    return render(request, 'page/front/post/detail.html', {'post': post })
+    menus = Menu.objects.all()
+    post = get_object_or_404(Post.objects.filter(complete_slug=post_slug))
+    return render(request, 'page/front/post/detail.html', {'post': post, 'nodes': menus })
 
 
 def home_page(request):
+    print('accueil')
     post = Post.objects.filter(slug='home').first()
-    return render(request, 'page/front/post/detail.html', {'post': post })
+    menus = Menu.objects.all()
+    return render(request, 'page/front/post/detail.html', {'post': post, 'nodes': menus })

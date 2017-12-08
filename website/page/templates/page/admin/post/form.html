@@ -128,10 +128,10 @@
                             $(category_form).find('.success-message').show();
                             iziToast.success({
                                 title: 'Success',
-                                message: 'Added category : ' + data.category_title
+                                message: 'Added category : ' + data.model_name
                             });
                             $('#modal-category').iziModal('close');
-                            $("#category_select").append($("<option></option>").attr('selected', 'selected').attr("value", data.category_id).text(data.category_title));
+                            $("#category_select").append($("<option></option>").attr('selected', 'selected').attr("value", data.model_id).text(data.model_name));
                         }
                     },
                     error: function() {

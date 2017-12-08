@@ -33,7 +33,7 @@ class Category(Timestamped, MPTTModel):
         return self.title
 
     class MPTTMeta:
-        order_insertion_by = ['slug']
+        order_insertion_by = ['title']
 
 
 class Post(Timestamped, OrderedModel):
@@ -42,8 +42,8 @@ class Post(Timestamped, OrderedModel):
         ('published', 'Published'),
     )
     title = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
-    slug = models.SlugField(max_length=250, unique_for_date='publish')
-    complete_slug = models.SlugField(max_length=250, unique=True)
+    slug = models.SlugField(max_length=250, unique_for_date='publish', blank=True, null=True)
+    complete_slug = models.SlugField(max_length=250, unique=True, blank=True, null=True)
     description = models.CharField(max_length=250)
     keywords = models.CharField(max_length=250)
     author = models.ForeignKey(User, related_name='page_posts')

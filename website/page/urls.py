@@ -6,7 +6,7 @@ urlpatterns = [
     # categories back
     url(r'^admin/page/category/list$', views.category_list_admin, name='category_list_admin'),
     url(r'^admin/page/category/create$', views.CategoryPostCreateView.as_view(), name='category_create_admin'),
-    url(r'^admin/page/category/create/ajax$', views.ajax_category_save, name='category_create_admin_ajax'),
+    url(r'^admin/page/category/create/ajax$', views.CategoryFormAjax.as_view(), name='category_create_admin_ajax'),
     url(r'^admin/page/category/update/(?P<category_id>[0-9]+)/$', views.category_update_admin, name='category_update_admin'),
     url(r'^admin/page/category/delete/(?P<category_id>[0-9]+)/$', views.category_delete_admin, name='category_delete_admin'),
     url(r'^admin/page/category/move/(?P<node_from_id>[0-9]+)/(?P<node_to_id>[0-9]+)/(?P<action>[-\w]+)/$', views.ajax_category_move, name='category_move_ajax_admin'),
@@ -29,6 +29,6 @@ urlpatterns = [
 
     # pages front
     #url(r'^(?P<category_slug>[-\w]+)/(?P<page_slug>[-\w]+)$', views.page_post_list_category, name='post_list_category_front'),
-    url(r'^(?P<post_slug>[-\w]+)$', views.post_detail, name='page_post_detail_front'),
+    url(r'^(?P<post_slug>.*)$', views.post_detail, name='page_post_detail_front'),
     url(r'^$', views.home_page, name='page_post_home_front'),
 ]

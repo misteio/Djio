@@ -4,6 +4,10 @@ from .factory import AbstractFactory
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.utils.translation import ugettext as _
+from crispy_forms.utils import render_crispy_form
+from django.template.context_processors import csrf
+import json
+from django.http import JsonResponse
 
 
 class AbstractModelListView(View):
@@ -39,6 +43,29 @@ class AbstractModelCreateView(View):
 
         return render(request, self.template,
                       {'form': model_form, 'category_form': category_form, 'action': _("Create")})
+
+
+class AbstractAjaxFormView(View):
+    model_form_class = None
+
+    def get(self, request):
+        form_html = self.generate_form(request)
+        return JsonResponse({'success': False, 'form_html': form_html})
+
+    def post(self, request):
+        form = self.model_form_class(request.POST)
+        if form.is_valid():
+            model = form.save()
+            return JsonResponse({'success': True, 'model_id': model.id, 'model_name': model.__str__()})
+
+        form_html = self.generate_form(request)
+        return JsonResponse({'success': False, 'form_html': form_html})
+
+    def generate_form(self, request):
+        form = self.model_form_class(request.POST or None)
+        ctx = {}
+        ctx.update(csrf(request))
+        return render_crispy_form(form, context=ctx)
 
 
 def abstract_model_update(request, model_class, model_id, model_form_class, template, redirection_url, category_form_class=None):
@@ -99,3 +126,5 @@ def abstract_model_delete(request, model_class, model_id, redirection_url):
     model.delete()
     messages.warning(request, _("You have deleted : " + model.__str__()))
     return redirect(redirection_url)
+
+

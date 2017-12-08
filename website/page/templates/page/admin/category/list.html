@@ -57,7 +57,7 @@
                 </a>
                 <a href="{% url 'page:post_create_admin' %}">
                     <button type="button" class="btn btn-sm btn-success"><i
-                            class="fa fa-pencil"></i> {% trans "Create a new Item" %}</button>
+                            class="fa fa-pencil"></i> {% trans "Create a new Post Page" %}</button>
                 </a>
             </h3>
             <div class="box-tools pull-right">
@@ -96,8 +96,15 @@
             </table>
         </div>
         <!-- /.box-footer-->
+    {% recursetree nodes %}
+        node id : {{ node.id }}
+            {% if children %}
+            children : {{ children }}
+        {% endif %}
+    {% endrecursetree %}
     </div>
     <!-- /.box -->
+
 {% endblock %}
 
 {% block extrafoot %}
@@ -110,8 +117,7 @@
                     "id": {{ node.id }},
                     "slug": "{{ node.slug }}",
                     "created_at": "{{ node.created_at }}",
-                    "status": "{% if node.status == 'draft' %}<span class='label label-warning'>{% trans 'Draft' %}
-                         </span>{% else %}<span class='label label-success'>{% trans 'Published' %}</span>{% endif %}",
+                    "status": "{% if node.status == 'draft' %}<span class='label label-warning'>{% trans 'Draft' %}</span>{% else %}<span class='label label-success'>{% trans 'Published' %}</span>{% endif %}",
                     {% if not node.is_leaf_node %}
                         "folder": true,
                         "children": [
