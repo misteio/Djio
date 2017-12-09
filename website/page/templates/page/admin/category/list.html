@@ -96,12 +96,6 @@
             </table>
         </div>
         <!-- /.box-footer-->
-    {% recursetree nodes %}
-        node id : {{ node.id }}
-            {% if children %}
-            children : {{ children }}
-        {% endif %}
-    {% endrecursetree %}
     </div>
     <!-- /.box -->
 
@@ -109,24 +103,20 @@
 
 {% block extrafoot %}
     <script>
-        var nodes = [
-            {% recursetree nodes %}
-                {
-                    "key": {{ node.id }},
-                    "title": "{{node.title}}",
-                    "id": {{ node.id }},
-                    "slug": "{{ node.slug }}",
-                    "created_at": "{{ node.created_at }}",
-                    "status": "{% if node.status == 'draft' %}<span class='label label-warning'>{% trans 'Draft' %}</span>{% else %}<span class='label label-success'>{% trans 'Published' %}</span>{% endif %}",
-                    {% if not node.is_leaf_node %}
-                        "folder": true,
-                        "children": [
-                            {{ children }}
-                        ]
-                    {% endif %}
-                },
-            {% endrecursetree %}
-        ]
+        var nodes = []
+        $.ajax({
+            url: Urls['page:user_rest_api'](),
+            type: 'GET',
+            async: false,
+            cache: false,
+            timeout: 3000,
+            error: function(){
+                console.log('error loading category tree')
+            },
+            success: function(msg){
+                nodes = msg['results']
+            }
+        });
         var renderColumns = function (event, data) {
             var node = data.node,
                 data = node.data,

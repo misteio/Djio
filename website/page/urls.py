@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from . import views
-
+from page.api import views as api_views
 
 urlpatterns = [
     # categories back
@@ -26,6 +26,9 @@ urlpatterns = [
     # config back
     url(r'^admin/page/config/header$', views.config_header_admin, name='config_page_header_admin'),
     url(r'^admin/page/config/footer$', views.config_footer_admin, name='config_page_footer_admin'),
+
+    # page api
+    url(regex=r'^api/page/category/list$', view=api_views.CategoryAPIListView.as_view(), name='user_rest_api'),
 
     # pages front
     #url(r'^(?P<category_slug>[-\w]+)/(?P<page_slug>[-\w]+)$', views.page_post_list_category, name='post_list_category_front'),

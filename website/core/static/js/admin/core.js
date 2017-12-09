@@ -76,7 +76,7 @@ function fancyTreeInit(fancytree, nodes, renderColumns, url){
                         progressBarColor: 'rgb(0, 255, 184)',
                         buttons: [
                             ['<button>Ok</button>', function (instance, toast) {
-                                callGet(Urls[url]({node_from_id: data.otherNode.key, node_to_id: node.key, action: data.hitMode })),
+                                getAjaxCall(Urls[url]({node_from_id: data.otherNode.key, node_to_id: node.key, action: data.hitMode })),
                                 instance.hide(toast, {transitionOut: 'fadeOut'}, 'button');
                             }, true], // true to focus
                             ['<button>' + gettext("Cancel") + '</button>', function (instance, toast) {
@@ -85,7 +85,7 @@ function fancyTreeInit(fancytree, nodes, renderColumns, url){
                         ],
                         onClosing: function(instance, toast, closedBy){
                             if(closedBy == 'timeout'){
-                                callGet(Urls[url]({node_from_id: data.otherNode.key, node_to_id: node.key, action: data.hitMode }))
+                                getAjaxCall(Urls[url]({node_from_id: data.otherNode.key, node_to_id: node.key, action: data.hitMode }))
                             }
                         },
                     });
@@ -104,10 +104,11 @@ function fancyTreeInit(fancytree, nodes, renderColumns, url){
 }
 
 
-function callGet(url){
-    $.get(url, function () {
-            console.log("success");
-        })
+function getAjaxCall(url) {
+    $.get(url, function (data) {
+        console.log("success");
+        return data;
+    })
         .done(function () {
         })
         .fail(function () {

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'constance',
     'constance.backends.database',
     'mptt',
+    'rest_framework',
     'abstract',
     'core',
     'blog',
@@ -238,3 +239,9 @@ CONSTANCE_CONFIG = {
     'MODULE_WISHLIST': (True, 'Wishlist module activation?', bool),
 }
 CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}

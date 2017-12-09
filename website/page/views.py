@@ -100,8 +100,8 @@ def config_footer_admin(request):
 @staff_member_required
 def category_list_admin(request):
     categories = Category.objects.all()
-    #deleted_categories = Category.history.filter(history_type='-').order_by('-history_id')
-    return render(request, 'page/admin/category/list.html', {'nodes': categories, 'deleted_categories': ''})
+    deleted_categories = Category.history.filter(history_type='-').order_by('-history_id')
+    return render(request, 'page/admin/category/list.html', {'nodes': categories, 'deleted_categories': deleted_categories})
 
 
 class CategoryPostCreateView(StaffOnlyMixin, AbstractModelCreateView):

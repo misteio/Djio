@@ -24,3 +24,4 @@ django-constance==2.0.0
 django-constance[database]
 python-decouple==3.1
 gunicorn==19.7.1
+djangorestframework==3.7.3
