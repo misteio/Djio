@@ -76,7 +76,7 @@ class PostAdminForm(forms.ModelForm):
                 </div>
                    <div class="col-md-6 btn-form-right">
                       <a href="#" onclick="return false;" class="btn btn-info" id="txtSelectedFile">Select a file</a>
-                        <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman?integration=custom&type=files&txtFieldId=image_input"></div>
+                        <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman/?integration=custom&type=files&txtFieldId=image_input"></div>
                         <img id="image" src="" class="direct-chat-img" width="100px" style="margin-right:10px"> 
                     </div>
                </div>

@@ -55,7 +55,7 @@ class Item(Timestamped, OrderedModel):
     )
     title = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
     slug = models.SlugField(max_length=250, unique_for_date='publish')
-    complete_slug = models.SlugField(max_length=250, unique=True)
+    complete_slug = models.SlugField(max_length=250)
     author = models.ForeignKey(User, related_name='whislist_items')
     category = models.ForeignKey(Category, related_name='category_items', blank=True)
     body = models.TextField()
