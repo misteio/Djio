@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx_container
+    ports:
+      - "80:80"
+    volumes:
+      - ./website:/website
+      - ./config/nginx:/etc/nginx/conf.d
+      - /static:/static
+      - /medias:/medias
+    depends_on:
+      - web
+  web:
+    build: .
+    container_name: djio_container
+    command: bash -c "mkdir ../medias/files && python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && python manage.py createadmin && gunicorn website.wsgi -b 0.0.0.0:8000"
+    environment:
+      - DEBUG=${DEBUG}
+      - TEMPLATE_DEBUG=${TEMPLATE_DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - SOCIAL_AUTH_FACEBOOK_KEY=${SOCIAL_AUTH_FACEBOOK_KEY}
+      - SOCIAL_AUTH_FACEBOOK_SECRET=${SOCIAL_AUTH_FACEBOOK_SECRET}
+      - SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=${SOCIAL_AUTH_GOOGLE_OAUTH2_KEY}
+      - SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=${SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET}
+      - MAILGUN_API_KEY=${MAILGUN_API_KEY}
+      - MAILGUN_SENDER_DOMAIN=${MAILGUN_SENDER_DOMAIN}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+      - EMAIL_RECIPIENTS1=${EMAIL_RECIPIENTS1}
+      - EMAIL_RECIPIENTS2=${EMAIL_RECIPIENTS2}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+
+    volumes:
+      - ./website:/website
+      - /static:/static
+      - /medias:/medias
+    expose:
+      - "8000"
+    depends_on:
+      - db
+  db:
+    image: postgres
+    container_name: postgres_container
