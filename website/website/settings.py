@@ -245,3 +245,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
+
+ADMIN_USERNAME = config('ADMIN_USERNAME')
+ADMIN_EMAIL = config('ADMIN_EMAIL')
+ADMIN_PASSWORD = config('ADMIN_PASSWORD')
