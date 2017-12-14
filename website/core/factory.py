@@ -1,33 +1,10 @@
-from wishlist.models import Item as WishlistItem, Category as WishlistCategory
-from page.models import Post as PagePost, Category as PageCategory
-from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
-
-
-class AbstractFactory:
-    def upsert(request, form, item=None, historical_item=None):
-        if request.method == 'POST':
-            if item:
-                if 'clone' in request.path:
-                    abstract_form = form(data=request.POST)
-                else:
-                    abstract_form = form(data=request.POST, instance=item)
-            else:
-                abstract_form = form(data=request.POST)
-
-            if abstract_form.is_valid():
-                _model = abstract_form.save()
-            else:
-                return abstract_form
-        else:
-            if item and historical_item:
-                abstract_form = form(instance=historical_item)
-            elif item:
-                abstract_form = form(instance=item)
-            else:
-                abstract_form = form()
-
-        return abstract_form
+from .forms import UserEditForm, ProfileEditForm
+from django.contrib import messages
+from .models import Profile
+from .utils import create_action
+from django.shortcuts import render, get_object_or_404
+from django.utils.translation import ugettext as _
 
 
 class MenuFactory:
@@ -61,3 +38,26 @@ class MenuFactory:
                 menu_form = form()
 
         return menu_form
+
+
+class UserFactory:
+    def edit(request, template):
+        if request.method == 'POST':
+            user_form = UserEditForm(instance=request.user, data=request.POST)
+            profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                messages.success(request, _('Profile updated successfully'))
+            else:
+                messages.error(request, _('Error updating your profile'))
+        else:
+            user_form = UserEditForm(instance=request.user)
+            if not hasattr(request.user, 'profile'):
+                Profile.objects.create(user=request.user)
+                create_action(request.user, 'has created a profile')
+
+            profile_form = ProfileEditForm(instance=request.user.profile)
+
+        return render(request, template, {'user_form': user_form, 'profile_form': profile_form})

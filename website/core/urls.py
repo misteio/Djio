@@ -5,9 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     # Admin
-    url(r'^admin/password-change$', views.admin_password_change, name='admin_user_password_change'),
+    url(r'^admin/account/password/change$', views.admin_password_change, name='admin_user_password_change'),
     url(r'^admin/ckupload', csrf_exempt(views.ckupload_service), name='admin_ckeditor_upload'),
     url(r'^admin/editor', views.admin_editor_html, name='admin_ckeditor_upload'),
+    url(r'^admin/account/profile/edit$', views.admin_edit_profile, name='admin_user_profile_edit'),
 
     #Front
     url(r'^login', views.front_login, name='front_user_login'),

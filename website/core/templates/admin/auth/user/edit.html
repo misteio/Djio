@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans "Profile Edit" %}
+    <small>{% trans "Profile Edit" %}</small>{% endblock %}
+{% block title_block %}{% trans "Profile Edit" %}
+    <small>{% trans "Profile Edit" %}</small>{% endblock %}
+
+{% block breadcrumb %}
+    <li><a href="#">{% trans "User" %}</a></li>
+    <li class="active">{% trans "Profile Edit" %}</li>
+{% endblock %}
+
+{% block content %}
+     <div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+
+            <div class="box-body">
+
+                <form method="post" enctype="multipart/form-data">
+                    {% crispy user_form %}
+                    {% crispy profile_form %}
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-12 row-block">
+                            <input class="btn btn-primary btn-block" type="submit"
+                                   value="{% trans 'Save changes' %}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
