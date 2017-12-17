@@ -28,7 +28,7 @@ class PostAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PostAdminForm, self).__init__(*args, **kwargs)
 
-    category = TreeNodeChoiceField(queryset=Category.objects.all())
+    category = TreeNodeChoiceField(queryset=Category.objects.all(), required=False)
     helper = FormHelper()
     helper.layout = Layout(
         HTML(open_box_form('col-lg-9 col-md-12', _('Text of body'))),
@@ -71,7 +71,7 @@ class PostAdminForm(forms.ModelForm):
                        <div class="col-md-6">
 
                    """),
-        Field('image', id='image_input'),
+        Field('image', id='image_input', required=False),
         HTML("""
                 </div>
                    <div class="col-md-6 btn-form-right">
@@ -105,6 +105,7 @@ class CategoryAdminForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CategoryAdminForm, self).__init__(*args, **kwargs)
+
 
     helper = FormHelper()
     helper.form_id = 'category-form'

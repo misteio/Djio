@@ -4,9 +4,7 @@
 
 {% block header %}
     <title>{% trans 'Edit profile' %} | {{ config.PROJECT_NAME }}</title>
-
     <meta name="description" content="{% trans 'Edition of your profil' %}">
-
 {% endblock %}
 
 {% block content %}
@@ -37,6 +35,7 @@
             <form method="post" enctype="multipart/form-data">
                 {% crispy user_form %}
                 {% crispy profile_form %}
+                {% crispy password_form %}
                 {% csrf_token %}
 
                 <div class="row">

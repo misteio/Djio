@@ -25,3 +25,4 @@ django-constance[database]
 python-decouple==3.1
 gunicorn==19.7.1
 djangorestframework==3.7.3
+django-picklefield==v1.0.0
