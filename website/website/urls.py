@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
+    url('^', include('django.contrib.auth.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += url(r'^', include('page.urls', namespace='page', app_name='page')),

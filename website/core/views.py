@@ -1,10 +1,9 @@
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth import authenticate, login, logout
-from .forms import PasswordChangeCustomForm
-from .forms import LoginForm, UserRegistrationForm, MenuAdminForm
+from .forms import PasswordChangeCustomForm, LoginForm, UserRegistrationForm, MenuAdminForm, UserEditFormAdmin, ProfileEditFormAdmin
 from .models import Profile, Menu
-from .utils import create_action,links_for_menu_items
+from .utils import create_action, links_for_menu_items
 from .factory import MenuFactory, UserFactory
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
@@ -12,6 +11,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.shortcuts import render, get_object_or_404
 from jsonview.decorators import json_view
+from django.contrib.auth.models import User
 
 
 ###Back
@@ -42,19 +42,29 @@ def admin_editor_html(request):
 
 @login_required(login_url='/login')
 def front_edit_profile(request):
-    return UserFactory.edit(request, 'front/users/edit.html')
+    return UserFactory.upsert(request, 'front/users/edit.html')
 
 
 @login_required(login_url='/login')
 def admin_edit_profile(request):
-    return UserFactory.edit(request, 'admin/auth/user/edit.html')
+    return UserFactory.upsert(request, 'admin/auth/user/edit.html')
 
 
 @permission_required(('admin'), '/admin/login')
 def user_list_admin(request):
-    users = User.objects.all()
-    return render(request, 'admin/menu/list.html', {'users': users})
+    users = User.objects.all().select_related('profile')
+    return render(request, 'admin/user/list.html', {'users': users})
 
+
+@permission_required(('admin'), '/admin/login')
+def user_create_admin(request):
+    return UserFactory.upsert(request, 'admin/user/form.html', UserEditFormAdmin, action='create')
+
+
+@permission_required(('admin'), '/admin/login')
+def user_update_admin(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    return UserFactory.upsert(request, 'admin/user/form.html', UserEditFormAdmin, ProfileEditFormAdmin, user=user)
 
 ############## MENUS ##############
 @permission_required(('admin'), '/admin/login')
@@ -151,7 +161,7 @@ def front_signup(request):
             # Create the user profile
             Profile.objects.create(user=new_user)
             create_action(new_user, 'has created an account')
-            login(request, new_user,backend='django.contrib.auth.backends.ModelBackend')
+            login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect(settings.LOGIN_REDIRECT_URL)
 
     else:

@@ -43,7 +43,7 @@ class Post(Timestamped, OrderedModel):
     )
     title = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
     slug = models.SlugField(max_length=250, unique_for_date='publish', blank=True, null=True)
-    complete_slug = models.SlugField(max_length=250, unique=True, blank=True, null=True)
+    complete_slug = models.SlugField(max_length=250, blank=True, null=True)
     description = models.CharField(max_length=250)
     keywords = models.CharField(max_length=250)
     author = models.ForeignKey(User, related_name='page_posts')

@@ -106,6 +106,7 @@ class CategoryAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CategoryAdminForm, self).__init__(*args, **kwargs)
 
+
     helper = FormHelper()
     helper.form_id = 'category-form'
     helper.layout = Layout(

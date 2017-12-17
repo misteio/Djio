@@ -5,6 +5,7 @@ from .models import Profile
 from .utils import create_action
 from django.shortcuts import render, get_object_or_404
 from django.utils.translation import ugettext as _
+from django.shortcuts import redirect
 
 
 class MenuFactory:
@@ -41,23 +42,46 @@ class MenuFactory:
 
 
 class UserFactory:
-    def edit(request, template):
+    def upsert(request, template, user_form_class=UserEditForm, profile_form_class=ProfileEditForm, user=None, action='update'):
+        if not user:
+            user = request.user
+        else:
+            #If we pass a user, it's not own profil update, so action become different
+            current_user = request.user
+
         if request.method == 'POST':
-            user_form = UserEditForm(instance=request.user, data=request.POST)
-            profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+            if action == 'update':
+                user_form = user_form_class(instance=user, data=request.POST)
+                profile_form = profile_form_class(instance=user.profile, data=request.POST, files=request.FILES)
+            else:
+                user_form = user_form_class(data=request.POST)
+                profile_form = profile_form_class(data=request.POST, files=request.FILES)
 
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
-                profile_form.save()
-                messages.success(request, _('Profile updated successfully'))
+                if action == 'update':
+                    profile_form.save()
+                    messages.success(request, _('Profile updated successfully'))
+                    if not hasattr(user, 'profile'):
+                        Profile.objects.create(user=user)
+                        create_action(user, 'update profile')
+                    if current_user:
+                        return redirect('core:user_list_admin')
+                else:
+                    messages.success(request, _('User created successfully'))
+                    profile = profile_form.save(commit=False)
+                    profile.user = user_form.instance
+                    profile.save()
+                    create_action(request.user, 'has created a user', user)
+                    return redirect('core:user_list_admin')
             else:
-                messages.error(request, _('Error updating your profile'))
+                messages.error(request, user_form.err)
         else:
-            user_form = UserEditForm(instance=request.user)
-            if not hasattr(request.user, 'profile'):
-                Profile.objects.create(user=request.user)
-                create_action(request.user, 'has created a profile')
-
-            profile_form = ProfileEditForm(instance=request.user.profile)
+            if action == 'update':
+                user_form = user_form_class(instance=user)
+                profile_form = profile_form_class(instance=user.profile)
+            else:
+                user_form = user_form_class()
+                profile_form = profile_form_class()
 
         return render(request, template, {'user_form': user_form, 'profile_form': profile_form})
