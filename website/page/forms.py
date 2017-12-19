@@ -28,7 +28,7 @@ class PostAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PostAdminForm, self).__init__(*args, **kwargs)
 
-    category = TreeNodeChoiceField(queryset=Category.objects.all())
+    category = TreeNodeChoiceField(queryset=Category.objects.all(), required=False)
     helper = FormHelper()
     helper.layout = Layout(
         HTML(open_box_form('col-lg-9 col-md-12', _('Text of body'))),
@@ -71,12 +71,12 @@ class PostAdminForm(forms.ModelForm):
                        <div class="col-md-6">
 
                    """),
-        Field('image', id='image_input'),
+        Field('image', id='image_input', required=False),
         HTML("""
                 </div>
                    <div class="col-md-6 btn-form-right">
                       <a href="#" onclick="return false;" class="btn btn-info" id="txtSelectedFile">Select a file</a>
-                        <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman?integration=custom&type=files&txtFieldId=image_input"></div>
+                        <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman/?integration=custom&type=files&txtFieldId=image_input"></div>
                         <img id="image" src="" class="direct-chat-img" width="100px" style="margin-right:10px"> 
                     </div>
                </div>
@@ -105,6 +105,7 @@ class CategoryAdminForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CategoryAdminForm, self).__init__(*args, **kwargs)
+
 
     helper = FormHelper()
     helper.form_id = 'category-form'

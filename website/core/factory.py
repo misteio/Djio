@@ -1,33 +1,11 @@
-from wishlist.models import Item as WishlistItem, Category as WishlistCategory
-from page.models import Post as PagePost, Category as PageCategory
-from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
-
-
-class AbstractFactory:
-    def upsert(request, form, item=None, historical_item=None):
-        if request.method == 'POST':
-            if item:
-                if 'clone' in request.path:
-                    abstract_form = form(data=request.POST)
-                else:
-                    abstract_form = form(data=request.POST, instance=item)
-            else:
-                abstract_form = form(data=request.POST)
-
-            if abstract_form.is_valid():
-                _model = abstract_form.save()
-            else:
-                return abstract_form
-        else:
-            if item and historical_item:
-                abstract_form = form(instance=historical_item)
-            elif item:
-                abstract_form = form(instance=item)
-            else:
-                abstract_form = form()
-
-        return abstract_form
+from .forms import UserEditForm, ProfileEditForm
+from django.contrib import messages
+from .models import Profile
+from .utils import create_action
+from django.shortcuts import render, get_object_or_404
+from django.utils.translation import ugettext as _
+from django.shortcuts import redirect
 
 
 class MenuFactory:
@@ -61,3 +39,49 @@ class MenuFactory:
                 menu_form = form()
 
         return menu_form
+
+
+class UserFactory:
+    def upsert(request, template, user_form_class=UserEditForm, profile_form_class=ProfileEditForm, user=None, action='update'):
+        if not user:
+            user = request.user
+        else:
+            #If we pass a user, it's not own profil update, so action become different
+            current_user = request.user
+
+        if request.method == 'POST':
+            if action == 'update':
+                user_form = user_form_class(instance=user, data=request.POST)
+                profile_form = profile_form_class(instance=user.profile, data=request.POST, files=request.FILES)
+            else:
+                user_form = user_form_class(data=request.POST)
+                profile_form = profile_form_class(data=request.POST, files=request.FILES)
+
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                if action == 'update':
+                    profile_form.save()
+                    messages.success(request, _('Profile updated successfully'))
+                    if not hasattr(user, 'profile'):
+                        Profile.objects.create(user=user)
+                        create_action(user, 'update profile')
+                    if 'current_user' in locals():
+                        return redirect('core:user_list_admin')
+                else:
+                    messages.success(request, _('User created successfully'))
+                    profile = profile_form.save(commit=False)
+                    profile.user = user_form.instance
+                    profile.save()
+                    create_action(request.user, 'has created a user', user)
+                    return redirect('core:user_list_admin')
+            else:
+                messages.error(request, user_form.errors)
+        else:
+            if action == 'update':
+                user_form = user_form_class(instance=user)
+                profile_form = profile_form_class(instance=user.profile)
+            else:
+                user_form = user_form_class()
+                profile_form = profile_form_class()
+
+        return render(request, template, {'user_form': user_form, 'profile_form': profile_form})

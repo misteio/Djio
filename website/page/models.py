@@ -33,7 +33,7 @@ class Category(Timestamped, MPTTModel):
         return self.title
 
     class MPTTMeta:
-        order_insertion_by = ['slug']
+        order_insertion_by = ['title']
 
 
 class Post(Timestamped, OrderedModel):
@@ -42,16 +42,16 @@ class Post(Timestamped, OrderedModel):
         ('published', 'Published'),
     )
     title = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
-    slug = models.SlugField(max_length=250, unique_for_date='publish')
-    complete_slug = models.SlugField(max_length=250, unique=True)
+    slug = models.SlugField(max_length=250, unique_for_date='publish', blank=True, null=True)
+    complete_slug = models.SlugField(max_length=250, blank=True, null=True)
     description = models.CharField(max_length=250)
     keywords = models.CharField(max_length=250)
     author = models.ForeignKey(User, related_name='page_posts')
-    category = models.ForeignKey(Category, related_name='category_posts', blank=True)
+    category = models.ForeignKey(Category, related_name='category_posts', blank=True, null=True)
     body = models.TextField()
     resume = models.TextField()
-    image = models.CharField(max_length=250, validators=[MinLengthValidator(4)])
-    image_field = models.ImageField(upload_to="page/", blank=True)
+    image = models.CharField(max_length=250, validators=[MinLengthValidator(4)], blank=True, null=True)
+    image_field = models.ImageField(upload_to="page/", blank=True, null=True)
     publish = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
 

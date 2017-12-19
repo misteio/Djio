@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
-from core.factory import AbstractFactory
+from abstract.factory import AbstractFactory
 from core.utils import create_action
 from .forms import ItemAdminForm, CategoryAdminForm, BookItemForm
 from crispy_forms.utils import render_crispy_form

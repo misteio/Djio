@@ -174,7 +174,7 @@
         </style>
     </head>
     <body>
-        <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman?integration=custom&type=files&txtFieldId=image_input"></div>
+        <div id="modal-file" class="modais" data-izimodal-title="Select a file" data-izimodal-iframeURL="/admin/roxyfileman/?integration=custom&type=files&txtFieldId=image_input"></div>
 
         <div id="gjs" style="height:0px; overflow:hidden">
         </div>
@@ -378,7 +378,7 @@
 
                     current_target = {simple_image: opts.target}
                     modal.setTitle(title);
-                    modal.setContent('<iframe width="100%" height="500px" src="/admin/roxyfileman?integration=custom&type=images&txtFieldId=image_input"> </iframe>');
+                    modal.setContent('<iframe width="100%" height="500px" src="/admin/roxyfileman/?integration=custom&type=images&txtFieldId=image_input"> </iframe>');
                     modal.open();
                 },
             });

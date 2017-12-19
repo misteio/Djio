@@ -3,8 +3,8 @@
 {% load mptt_tags %}
 {% load static %}
 
-{% block title %}{% trans "Category" %}{% endblock %}
-{% block title_block %}{% trans "Page Category" %}<small>{% trans "List" %}</small>{% endblock %}
+{% block title %}{% trans "Menu" %}{% endblock %}
+{% block title_block %}{% trans "Menu" %}<small>{% trans "List" %}</small>{% endblock %}
 {% block extrahead %}<link href="{% static 'css/admin/fancytree.css' %}" rel="stylesheet">{% endblock %}
 
 {% block breadcrumb %}
@@ -20,7 +20,7 @@
             <h3 class="box-title">
                 <a href="{% url 'core:menu_create_admin' %}">
                     <button type="button" class="btn btn-sm btn-info"><i
-                            class="fa fa-pencil"></i> {% trans "Create a new Category" %}</button>
+                            class="fa fa-pencil"></i> {% trans "Create a new Menu" %}</button>
                 </a>
             </h3>
             <div class="box-tools pull-right">
@@ -73,8 +73,7 @@
                     "id": {{ node.id }},
                     "slug": "{{ node.content_object.slug }}",
                     "created_at": "{{ node.created_at }}",
-                    "status": "{% if node.status == 'draft' %}<span class='label label-warning'>{% trans 'Draft' %}
-                         </span>{% else %}<span class='label label-success'>{% trans 'Published' %}</span>{% endif %}",
+                    "status": "{% if node.status == 'draft' %}<span class='label label-warning'>{% trans 'Draft' %}</span>{% else %}<span class='label label-success'>{% trans 'Published' %}</span>{% endif %}",
                     {% if not node.is_leaf_node %}
                         "folder": true,
                         "children": [

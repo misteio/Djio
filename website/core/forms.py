@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import PasswordChangeForm
 from django import forms
+from django.forms import CharField, PasswordInput
 from .utils import open_box_form, close_box_form, footer_form
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
@@ -88,6 +89,41 @@ class UserEditForm(forms.ModelForm):
         Field('email', css_class="form-control input-lg", placeholder=_('Email'), wrapper_class="col-md-12"),
         HTML('''</div> '''),
         )
+
+
+class UserEditFormAdmin(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'username', 'is_active', 'is_staff', 'is_superuser')
+
+    helper = FormHelper()
+    helper.form_tag = False
+    helper.layout = Layout(
+        HTML(open_box_form('col-lg-12 col-md-12', _('Edit User'))),
+        Field('username'),
+        Field('first_name'),
+        Field('last_name'),
+        Field('email'),
+        Field('is_active'),
+        Field('is_staff'),
+        Field('is_superuser'),
+    )
+
+
+class ProfileEditFormAdmin(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('city', 'zip_code', 'address', 'photo')
+
+    helper = FormHelper()
+    helper.form_tag = False
+    helper.layout = Layout(
+        Field('city'),
+        Field('zip_code'),
+        Field('address'),
+        Field('photo'),
+        HTML('''</div></div></div> '''),
+    )
 
 
 class ProfileEditForm(forms.ModelForm):

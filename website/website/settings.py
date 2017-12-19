@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'constance',
     'constance.backends.database',
     'mptt',
+    'rest_framework',
+    'abstract',
     'core',
     'blog',
     'wishlist',
@@ -86,7 +88,7 @@ ENV_PATH = os.path.abspath(os.path.dirname(__file__ + '/../../../'))
 
 STATIC_ROOT = os.path.join(ENV_PATH, 'static/')
 MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_HOST = 'http://localhost:8000/'
 
 ROOT_URLCONF = 'website.urls'
@@ -170,9 +172,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
 STATIC_URL = '/static/'
 
 
@@ -234,6 +233,17 @@ CONSTANCE_CONFIG = {
     'LOGO_URL': ('http://url/logo_url.png', 'Image Logo Type', str),
     'PAGE_HEADER': ('', 'Header of page', str),
     'PAGE_FOOTER': ('', 'Footer of page', str),
-    'MODULE_WISHLIST': (True, 'Wishlist module activation?', bool),
+    'MODULE_WISHLIST': (False, 'Wishlist module activation?', bool),
+    'MODULE_BLOG': (False, 'Wishlist module activation?', bool),
 }
 CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
+
+ADMIN_USERNAME = config('ADMIN_USERNAME')
+ADMIN_EMAIL = config('ADMIN_EMAIL')
+ADMIN_PASSWORD = config('ADMIN_PASSWORD')

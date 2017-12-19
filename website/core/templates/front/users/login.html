@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 
-{% block title %}Log-in{% endblock %}
+{% block title %}{% trans 'New account / Sign in' %}{% endblock %}
 
 {% block content %}
     <div id="heading-breadcrumbs">
@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-md-5">
                     <ul class="breadcrumb">
-                        <li><a href="index.html">Home</a>
+                        <li><a href="#">Home</a>
                         </li>
                         <li>{% trans 'New account / Sign in' %}</li>
                     </ul>
@@ -30,7 +30,6 @@
                     <fieldset>
                         <h2>{% trans 'Please sign in' %}</h2>
                         <hr class="colorgraph">
-
                         {% crispy form %}
                     </fieldset>
                 </div>

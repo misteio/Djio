@@ -1,0 +1,94 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}My Page Posts{% endblock %}
+{% block title_block %}{% trans "Users" %}<small>{% trans "List" %}</small>{% endblock %}
+{% block breadcrumb %}
+    <li><a href="#">{% trans "Users" %}</a></li>
+    <li class="active">{% trans "List" %}</li>
+{% endblock %}
+
+{% block content %}
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <a href="{% url 'page:category_create_admin' %}"><button type="button" class="btn btn-sm btn-success"><i class="fa fa-pencil"></i> {% trans "Create a new User" %}</button></a>
+            </h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="post-list" class="table table-bordered table-striped display nowrap" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>{% trans "Username" %}</th>
+                        <th>{% trans "Email" %}</th>
+                        <th>{% trans "Date joined" %}</th>
+                        <th>{% trans "Last login" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th>{% trans "First Name" %}</th>
+                        <th>{% trans "Last Name" %}</th>
+                        <th>{% trans "Actions" %}</th>
+                        <th>{% trans "Address" %}</th>
+                        <th>{% trans "City" %}</th>
+                        <th>{% trans "Zip Code" %}</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.date_joined }}</td>
+                        <td>{{ user.last_login }}</td>
+                        <td>
+                            {% if user.is_superuser %}
+                                <span class="label label-info">{% trans "SUPER USER" %}</span>
+                            {% endif %}
+                            {% if user.is_staff %}
+                                <span class="label label-warning">{% trans "STAFF USER" %}</span>
+                            {% endif %}
+                            {% if user.is_active %}
+                                <span class="label label-success">{% trans "ACTIVE" %}</span>
+                            {% else %}
+                                <span class="label label-danger">{% trans "INACTIVE" %}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>
+                            <a href="{% url 'core:user_update_admin' user_id=user.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
+                            <a href="#" onClick="return false"><button type="button" class="btn btn-danger" data-id="{{ user.id }}" data-title="{{ user.title }}"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
+                        </td>
+                        <td>{{ user.profile.address }}</td>
+                        <td>{{ user.profile.city }}</td>
+                        <td>{{ user.profile.zip_code }}</td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+    <!-- /.box -->
+{% endblock %}
+
+{% block extrafoot %}
+    <script>
+        var table = $('#post-list').DataTable({
+            rowReorder: {
+                selector: 'td:nth-child(2)'
+            },
+            responsive: true
+        })
+
+        $("#post-list").on('click', '.btn-danger', function(){
+            activeClickDelete(Urls['page:post_delete_admin']({ post_id:  $( this ).data('id')}), $( this ).data('title'));
+        })
+    </script>
+{% endblock %}
