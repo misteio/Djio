@@ -47,6 +47,8 @@ def front_edit_profile(request):
 
 @login_required(login_url='/login')
 def admin_edit_profile(request):
+    if not hasattr(request.user, 'profile'):
+        Profile.objects.create(user=request.user)
     return UserFactory.upsert(request, 'admin/auth/user/edit.html')
 
 
@@ -64,6 +66,8 @@ def user_create_admin(request):
 @permission_required(('admin'), '/admin/login')
 def user_update_admin(request, user_id):
     user = get_object_or_404(User, id=user_id)
+    if not hasattr(user, 'profile'):
+        Profile.objects.create(user=user)
     return UserFactory.upsert(request, 'admin/user/form.html', UserEditFormAdmin, ProfileEditFormAdmin, user=user)
 
 ############## MENUS ##############

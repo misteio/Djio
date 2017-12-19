@@ -65,7 +65,7 @@ class UserFactory:
                     if not hasattr(user, 'profile'):
                         Profile.objects.create(user=user)
                         create_action(user, 'update profile')
-                    if current_user:
+                    if 'current_user' in locals():
                         return redirect('core:user_list_admin')
                 else:
                     messages.success(request, _('User created successfully'))
@@ -75,7 +75,7 @@ class UserFactory:
                     create_action(request.user, 'has created a user', user)
                     return redirect('core:user_list_admin')
             else:
-                messages.error(request, user_form.err)
+                messages.error(request, user_form.errors)
         else:
             if action == 'update':
                 user_form = user_form_class(instance=user)

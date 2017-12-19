@@ -94,9 +94,8 @@ class UserEditForm(forms.ModelForm):
 class UserEditFormAdmin(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'username', 'is_active', 'is_staff', 'is_superuser','password')
+        fields = ('first_name', 'last_name', 'email', 'username', 'is_active', 'is_staff', 'is_superuser')
 
-    password = CharField(widget=PasswordInput())
     helper = FormHelper()
     helper.form_tag = False
     helper.layout = Layout(
@@ -108,7 +107,6 @@ class UserEditFormAdmin(forms.ModelForm):
         Field('is_active'),
         Field('is_staff'),
         Field('is_superuser'),
-        Field('password'),
     )
 
 

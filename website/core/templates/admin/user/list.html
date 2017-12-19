@@ -61,7 +61,7 @@
                         <td>{{ user.first_name }}</td>
                         <td>{{ user.last_name }}</td>
                         <td>
-                            <a href="{% url 'page:post_update_admin' post_id=user.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
+                            <a href="{% url 'core:user_update_admin' user_id=user.id %}"><button type="button" class="btn btn-success"><i class="fa fa-pencil-square"></i> {% trans "Edit" %}</button></a>
                             <a href="#" onClick="return false"><button type="button" class="btn btn-danger" data-id="{{ user.id }}" data-title="{{ user.title }}"><i class="fa fa-trash"></i> {% trans "Delete" %}</button></a>
                         </td>
                         <td>{{ user.profile.address }}</td>

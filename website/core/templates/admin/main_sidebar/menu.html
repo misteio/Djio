@@ -3,20 +3,21 @@
 <ul class="sidebar-menu" data-widget="tree">
     <li class="header">{% trans "Main Navigation" %}</li>
 
-
-    <li class="treeview">
-        <a href="#">
-        <i class="fa fa-rss"></i>
-        <span>Blog</span>
-        <span class="pull-right-container">
-        <i class="fa fa-angle-left pull-right"></i>
-        </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="{% url 'blog:post_list_admin' %}"><i class="fa fa-list"></i> {% trans "List" %}</a></li>
-            <li><a href="{% url 'blog:post_create_admin' %}"><i class="fa fa-pencil"></i> {% trans "Creation" %}</a></li>
-        </ul>
-    </li>
+    {% if config.MODULE_BLOG %}
+        <li class="treeview">
+            <a href="#">
+            <i class="fa fa-rss"></i>
+            <span>Blog</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="{% url 'blog:post_list_admin' %}"><i class="fa fa-list"></i> {% trans "List" %}</a></li>
+                <li><a href="{% url 'blog:post_create_admin' %}"><i class="fa fa-pencil"></i> {% trans "Creation" %}</a></li>
+            </ul>
+        </li>
+    {% endif %}
 
     <li class="treeview {% if '/page/' in request.path %}active{% endif %}">
         <a href="#">
@@ -62,39 +63,41 @@
         </ul>
     </li>
 
-    <li class="treeview {% if '/wishlist/' in request.path %}active{% endif %}">
-        <a href="#">
-            <i class="fa fa-gift"></i> <span>{% trans 'Wishlist' %}</span>
-                <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-        </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-cog"></i> {% trans 'Configuration' %}</a></li>
-            <li class="treeview {% if '/wishlist/category' in request.path %}active{% endif %}">
-                <a href="#"><i class="fa fa-list-alt"></i> {% trans 'Category' %}
+    {% if config.MODULE_WISHLIST %}
+        <li class="treeview {% if '/wishlist/' in request.path %}active{% endif %}">
+            <a href="#">
+                <i class="fa fa-gift"></i> <span>{% trans 'Wishlist' %}</span>
                     <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li {% if '/wishlist/category/list' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:category_list_admin' %}"><i class="fa list"></i> {% trans 'List' %}</a></li>
-                    <li {% if '/wishlist/category/create' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:category_create_admin' %}"><i class="fa fa-pencil"></i> {% trans 'Creation' %}</a></li>
-                </ul>
-            </li>
-            <li class="treeview {% if '/wishlist/item' in request.path %}active{% endif %}">
-                <a href="#"><i class="fa fa-file-text-o"></i> {% trans 'Item' %}
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li {% if '/wishlist/item/list' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:item_list_admin' %}"><i class="fa fa-list"></i> {% trans 'List' %}</a></li>
-                    <li {% if '/wishlist/item/create' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:item_create_admin' %}"><i class="fa fa-pencil"></i> {% trans 'Creation' %}</a></li>
-                </ul>
-            </li>
-        </ul>
-    </li>
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-cog"></i> {% trans 'Configuration' %}</a></li>
+                <li class="treeview {% if '/wishlist/category' in request.path %}active{% endif %}">
+                    <a href="#"><i class="fa fa-list-alt"></i> {% trans 'Category' %}
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li {% if '/wishlist/category/list' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:category_list_admin' %}"><i class="fa list"></i> {% trans 'List' %}</a></li>
+                        <li {% if '/wishlist/category/create' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:category_create_admin' %}"><i class="fa fa-pencil"></i> {% trans 'Creation' %}</a></li>
+                    </ul>
+                </li>
+                <li class="treeview {% if '/wishlist/item' in request.path %}active{% endif %}">
+                    <a href="#"><i class="fa fa-file-text-o"></i> {% trans 'Item' %}
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li {% if '/wishlist/item/list' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:item_list_admin' %}"><i class="fa fa-list"></i> {% trans 'List' %}</a></li>
+                        <li {% if '/wishlist/item/create' in request.path %}class="active"{% endif %}><a href="{% url 'wishlist:item_create_admin' %}"><i class="fa fa-pencil"></i> {% trans 'Creation' %}</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    {% endif %}
 
     <li class="treeview">
         <a href="#">
