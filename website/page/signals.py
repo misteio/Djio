@@ -8,9 +8,10 @@ create slug for having complete url
 
 @receiver(pre_save, sender=Post)
 def tree_complete_slug(sender, instance, **kwargs):
-    slug = ''
-    for category in instance.category.get_ancestors():
-       slug += '/' + category.slug
-    slug += instance.category.slug + '/' + instance.slug
+    if instance.category:
+        slug = ''
+        for category in instance.category.get_ancestors():
+           slug += '/' + category.slug
+        slug += instance.category.slug + '/' + instance.slug
 
-    instance.complete_slug = slug
+        instance.complete_slug = slug

@@ -15,4 +15,6 @@ def security_attributes(sender, instance, **kwargs):
 def post_compress_front(sender, type, mode, context, **kwargs):
     if context['compressed']['name'] == 'front_css':
         config.CSS_FRONT_COMPRESSED = context['compressed']['url']
-        print(context['compressed']['url'])
+
+    if context['compressed']['name'] == 'front_js':
+        config.JS_FRONT_COMPRESSED = context['compressed']['url']

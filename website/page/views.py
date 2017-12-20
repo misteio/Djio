@@ -159,12 +159,8 @@ def page_post_list_category(request, category_slug):
 
 def post_detail(request, post_slug):
     menus = Menu.objects.all()
-    post = get_object_or_404(Post.objects.filter(complete_slug=post_slug))
+    post = Post.objects.filter(complete_slug=post_slug).first()
+    if not post:
+        post = get_object_or_404(Post.objects.filter(complete_slug__isnull=True))
     return render(request, 'page/front/post/detail.html', {'post': post, 'nodes': menus })
 
-
-def home_page(request):
-    print('accueil')
-    post = Post.objects.filter(slug='home').first()
-    menus = Menu.objects.all()
-    return render(request, 'page/front/post/detail.html', {'post': post, 'nodes': menus })

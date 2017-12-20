@@ -228,7 +228,8 @@ CACHES = {
 
 CONSTANCE_CONFIG = {
     'CSS_FRONT_COMPRESSED': ('/static/CACHE/css/yourfile.css', 'Url of file css compressed', str),
-    'WEBSITE_MEDIA_URL': ('http://localhost:8000', 'Url of file css compressed', str),
+    'JS_FRONT_COMPRESSED': ('/static/CACHE/js/yourfile.js', 'Url of file js compressed', str),
+    'WEBSITE_MEDIA_URL': ('http://localhost:8000', 'Url medias', str),
     'PROJECT_NAME': ('Project Name', 'name of your project', str),
     'LOGO_URL': ('http://url/logo_url.png', 'Image Logo Type', str),
     'PAGE_HEADER': ('', 'Header of page', str),

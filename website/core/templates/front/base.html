@@ -82,19 +82,21 @@
         {% block content %}{% endblock %}
     </div>
     {{ config.PAGE_FOOTER|safe }}
-    <script src="{% static 'js/front/jquery.min.js' %}"></script>
-    <script src="{% static 'js/front/jquery.cookie.js' %}"></script>
-    <script src="{% static 'js/front/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/front/moment.js' %}"></script>
-    <script src="{% static 'js/front/bootstrap-datepicker.js' %}"></script>
-    <script src="{% static 'js/front/owl.carousel.js' %}"></script>
-    <script src="{% static 'js/front/appear.js' %}"></script>
-    <script src="{% static 'js/front/jquery.fancybox.min.js' %}"></script>
-    <script src="{% static 'js/front/odometer.min.js' %}"></script>
-    <script src="{% static 'js/front/steller.js' %}"></script>
-    <script src="{% static 'js/front/jquery.bootstrap-touchspin.js' %}"></script>
-    <script src="{% static 'js/front/jquery.elevateZoom-3.0.8.min.js' %}"></script>
-    <script src="{% static 'js/front/custom.js' %}"></script>
+
+    {% compress js file front_js %}
+        <script src="{% static 'js/front/jquery.min.js' %}"></script>
+        <script src="{% static 'js/front/jquery.cookie.js' %}"></script>
+        <script src="{% static 'js/front/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/front/bootstrap-datepicker.js' %}"></script>
+        <script src="{% static 'js/front/owl.carousel.js' %}"></script>
+        <script src="{% static 'js/front/appear.js' %}"></script>
+        <script src="{% static 'js/front/jquery.fancybox.min.js' %}"></script>
+        <script src="{% static 'js/front/odometer.min.js' %}"></script>
+        <script src="{% static 'js/front/steller.js' %}"></script>
+        <script src="{% static 'js/front/jquery.bootstrap-touchspin.js' %}"></script>
+        <script src="{% static 'js/front/jquery.elevateZoom-3.0.8.min.js' %}"></script>
+        <script src="{% static 'js/front/custom.js' %}"></script>
+    {% endcompress %}
 
     <script>
     $(document).ready(function () {

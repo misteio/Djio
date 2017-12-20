@@ -21,7 +21,6 @@
         <link href="{% static 'css/front/custom.css' %}" rel="stylesheet">
         <script src="{% static 'js/admin/jquery.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/filestack.js' %}"></script>
-        <script src="{% static 'js/admin/grapesjs/editor.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/perfect-scrollbar.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/toastr.min.js' %}"></script>
         <script src="{% static 'js/admin/ckeditor/ckeditor.js' %}"></script>
@@ -32,7 +31,6 @@
         <script src="{% static 'js/admin/grapesjs/grapesjs-blocks-basic.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-preset-webpage.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-plugin-forms.min.js' %}"></script>
-        <script src="{% static 'js/admin/grapesjs/grapesjs-aviary.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-navbar.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-component-countdown.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapejs-ckeditor.js' %}"></script>
@@ -182,7 +180,7 @@
             var editor = grapesjs.init({
                     canvas: {
                         styles: ['{{ config.WEBSITE_MEDIA_URL }}{{ config.CSS_FRONT_COMPRESSED }}'],
-                        scripts: ['https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', 'http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js']
+                        scripts: ['{{ config.WEBSITE_MEDIA_URL }}{{ config.JS_FRONT_COMPRESSED }}']
                     },
 
                     components: window.parent.document.getElementById('body') ? window.parent.document.getElementById('body').value : '',
