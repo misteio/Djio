@@ -1,27 +1,14 @@
 CKEDITOR.editorConfig = function( config ) {
 	config.toolbar = [
-		//{ name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },
-		//{ name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
-		{ name: 'links', items: [ 'Link', 'Unlink' ] },
-		//{ name: 'tools', items: [ 'Maximize' ] },
-		'/',
-		{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'Embed' ] },
-		{ name: 'alignment', items : [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-		{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'HorizontalRule' ] },
-		'/',
-		{ name: 'pageinsertion', items:['Format','Styles', 'RemoveFormat'] },
+		{ name: 'clipboard', items: [ 'Undo', 'Redo', '-', 'Link', 'Unlink', '-', 'Bold', 'Italic', 'Underline', 'Strike', '-','Format','Styles', 'RemoveFormat' ] },
 	];
 
 	config.stylesSet = 'my_styles';
-	config.allowedContent = true;
-	config.templates_files=['/static/js/admin/ckeditor/ckeditor_template.js'];
-	config.templates='site';
-	config.protectedSource.push(/<i[^>]*><\/i>/g);
-	config.extraAllowedContent = 'span(*)';
-	config.filebrowserBrowseUrl= '/admin/roxyfileman/';
-	config.filebrowserUploadUrl = '/admin/ckeditor-upload';
 
 };
+
+CKEDITOR.dtd.$editable.span = 1
+CKEDITOR.dtd.$editable.a = 1
 
 CKEDITOR.stylesSet.add( 'my_styles', [
     // Inline styles.
@@ -29,7 +16,6 @@ CKEDITOR.stylesSet.add( 'my_styles', [
     { name: 'Green', element: 'span', attributes: { 'class': 'label label-success' } },
     { name: 'Red', element: 'span', attributes: { 'class': 'label label-danger' } },
     { name: 'Yellow', element: 'span', attributes: { 'class': 'label label-warning' } },
-
 ]);
 
 

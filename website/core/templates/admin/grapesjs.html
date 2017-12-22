@@ -19,7 +19,8 @@
         <link href="{% static 'css/front/style.default.css' %}" rel="stylesheet" id="theme-stylesheet">
         <!-- Custom stylesheet - for your changes -->
         <link href="{% static 'css/front/custom.css' %}" rel="stylesheet">
-        <script src="{% static 'js/admin/jquery.js' %}"></script>
+        <script src="{% static 'js/admin/grapesjs/editor.js' %}"></script>
+
         <script src="{% static 'js/admin/grapesjs/filestack.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/perfect-scrollbar.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/toastr.min.js' %}"></script>
@@ -31,6 +32,7 @@
         <script src="{% static 'js/admin/grapesjs/grapesjs-blocks-basic.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-preset-webpage.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-plugin-forms.min.js' %}"></script>
+        <script src="{% static 'js/admin/grapesjs/grapesjs-aviary.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-navbar.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapesjs-component-countdown.min.js' %}"></script>
         <script src="{% static 'js/admin/grapesjs/grapejs-ckeditor.js' %}"></script>
@@ -202,7 +204,6 @@
                                 filebrowserImageUploadUrl: '/admin/ckupload/',
                                 language: 'fr',
                                 customConfig: '{% static "js/admin/ckeditor/ckeditor_config.js" %}',
-                                extraPlugins: 'embed,autoembed,image2,justify,templates,pageinsertion,autogrow',
                             }
                         }
                     },
@@ -347,7 +348,6 @@
                 console.log('Stored ', e);
             });
             editor.on('load', function () {
-                console.log(editor.getCss())
             });
 
 
@@ -364,7 +364,7 @@
                     sender && sender.set('active', 0); // turn off the button
                     editor.store();
                     var s = window.parent.document.getElementById('body');
-                    s.value = "<style>"+ editor.getCss() +  "</style>" + editor.getHtml();
+                    s.value = editor.getHtml();
                     window.parent.renderHtml();
                 },
             });

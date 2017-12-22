@@ -116,22 +116,6 @@ grapesjs.plugins.add('gjs-preset-webpage', function(editor, opts) {
   /****************** BLOCKS *************************/
 
   var bm = editor.BlockManager;
-  bm.add('link-block', {
-    label: 'Link Block',
-    attributes: {class:'fa fa-link'},
-    category: 'Basic',
-    content: {
-      type:'link',
-      editable: false,
-      droppable: true,
-      style:{
-        display: 'inline-block',
-        padding: '5px',
-        'min-height': '50px',
-        'min-width': '50px'
-      }
-    },
-  });
 
   bm.add('quote', {
     label: 'Quote',
