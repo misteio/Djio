@@ -207,19 +207,23 @@ jQuery(document).ready(function($) {
 
         $.ajax({
             type: "POST",
-            url: 'contact.php',
+            url: 'send',
             dataType: 'json',
             cache: false,
             data: $('#contact-form').serialize(),
             success: function(data) {
-
-                if (data.info !== 'error') {
+                alert('Votre message a bien été envoyé')
+                if (data.success !== 'error') {
                     $this.parents('form').find('input[type=text],textarea,select').filter(':visible').val('');
-                    message.hide().removeClass('success').removeClass('error').addClass('success').html(data.msg).fadeIn('slow').delay(5000).fadeOut('slow');
+                    $this.hide().removeClass('success').removeClass('error').addClass('success').html(data.msg).fadeIn('slow').delay(5000).fadeOut('slow');
                 } else {
-                    message.hide().removeClass('success').removeClass('error').addClass('error').html(data.msg).fadeIn('slow').delay(5000).fadeOut('slow');
+                    $this.hide().removeClass('success').removeClass('error').addClass('error').html(data.msg).fadeIn('slow').delay(5000).fadeOut('slow');
                 }
-            }
+            },
+            error: function (request, error) {
+                console.log(arguments);
+                alert("Vous devez remplir tous les champs");
+            },
         });
     });
     //================================================
@@ -227,7 +231,6 @@ jQuery(document).ready(function($) {
     //===============================================
 
     var firstDayOfMonth = function() {
-        // your special logic...
         return 5;
     };
     var d = new Date();

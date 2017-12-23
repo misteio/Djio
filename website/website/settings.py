@@ -201,7 +201,7 @@ ANYMAIL = {
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
-EMAIL_RECIPIENTS = [(config('EMAIL_RECIPIENTS1')), (config('EMAIL_RECIPIENTS2'))]
+EMAIL_RECIPIENTS = [config('EMAIL_RECIPIENTS1')]
 
 THUMBNAIL_ALIASES = {
     '': {

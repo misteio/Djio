@@ -9,10 +9,11 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.conf import settings
 from django.utils.translation import ugettext as _
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from jsonview.decorators import json_view
 from django.contrib.auth.models import User
-
+from django.core.mail import send_mail
+from django.views.decorators.csrf import csrf_exempt
 
 ###Back
 
@@ -172,3 +173,18 @@ def front_signup(request):
         user_form = UserRegistrationForm()
     return render(request, 'front/users/signup.html', {'user_form': user_form})
 
+
+
+@csrf_exempt
+@json_view
+def myajaxformview(request):
+    if request.method == 'POST':
+        if request.is_ajax():
+            print(settings.EMAIL_RECIPIENTS)
+            send_mail(_("Message from " + request.POST['name'] + ': ' + request.POST['mail'] + ': ' + request.POST['website']),
+                      request.POST['comment'],
+                      settings.DEFAULT_FROM_EMAIL, settings.EMAIL_RECIPIENTS)
+
+            return {'success': True}
+
+    return render(request)

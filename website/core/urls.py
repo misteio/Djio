@@ -14,8 +14,7 @@ urlpatterns = [
     url(r'^logout', views.front_logout, name='front_user_logout'),
     url(r'^signup', views.front_signup, name='front_user_signup'),
     url(r'^account/profile-edit$', views.front_edit_profile, name='front_user_profile_edit'),
-
-
+    url(r'^send', views.myajaxformview, name='myajaxformview'),
 
     #Menu
     url(r'^admin/menu/list$', views.menu_list_admin, name='menu_list_admin'),
