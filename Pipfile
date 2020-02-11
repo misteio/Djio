@@ -11,7 +11,7 @@ name = "pypi"
 
 [packages]
 
-Django = "==1.11.6"
+Django = "==1.11.28"
 django-crispy-forms = "==1.7.0"
 django-debug-toolbar = "==1.8"
 django-js-reverse = "==0.7.3"
